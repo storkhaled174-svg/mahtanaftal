@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "engine_edges": [
+    {
+      "id": "l2:import.B03.to.src.tools.BackendSession.tsx",
+      "level": "L2",
+      "kind": "shared_import",
+      "from_ref": "page:B03",
+      "to_ref": "file:src/tools/BackendSession.tsx",
+      "carries": [
+        "source_file:app/(backend)/adminregister/page.tsx",
+        "symbols:useAdminSession"
+      ],
+      "evidence_refs": [
+        "page:B03",
+        "file:app/(backend)/adminregister/page.tsx",
+        "file:src/tools/BackendSession.tsx"
+      ],
+      "description": "page:B03 imports file:src/tools/BackendSession.tsx via app/(backend)/adminregister/page.tsx"
+    },
+    {
+      "id": "l2:import.B05.to.src.base.BaseActionFun.ts",
+      "level": "L2",
+      "kind": "component_import",
+      "from_ref": "page:B05",
+      "to_ref": "file:src/@base/BaseActionFun.ts",
+      "carries": [
+        "source_file:src/backend/actions/AdminContentSupport.ts",
+        "symbols:withResult"
+      ],
+      "evidence_refs": [
+        "page:B05",
+        "file:src/backend/actions/AdminContentSupport.ts",
+        "file:src/@base/BaseActionFun.ts"
+      ],
+      "description": "page:B05 imports file:src/@base/BaseActionFun.ts via src/backend/actions/AdminContentSupport.ts"
+    }
+  ]
+}

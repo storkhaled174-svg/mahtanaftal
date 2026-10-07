@@ -1,0 +1,128 @@
+/* ========================================
+ * THEME-STYLE.CSS - Frontend (Portal & Order Platform)
+ * ======================================== */
+:root {
+  /* 字体字号 */
+  --font-size-display: 56px;
+  --font-size-h1: 44px;
+  --font-size-h2: 32px;
+  --font-size-h3: 24px;
+  --font-size-h4: 20px;
+  --font-size-base: 16px;
+  --font-size-sm-body: 14px;
+  --font-size-caption: 12px;
+
+  /* 字体字重 */
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  /* 行高 */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.7;
+
+  /* 字间距 */
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-base: 0;
+  --letter-spacing-wide: 0.01em;
+
+  /* 基础色彩 */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* 语义化颜色映射 (Naftal Mhatati Midnight Palette) */
+  --color-background: #090e17;
+  --color-foreground: #f8fafc;
+  --color-card: #0e172a;
+  --color-card-foreground: #f8fafc;
+  --color-popover: #0e172a;
+  --color-popover-foreground: #f8fafc;
+
+  /* 主色调 (Naftal Official Yellow) */
+  --color-primary: #faeb1a;
+  --color-primary-foreground: #143067;
+
+  /* 次要色彩 (Naftal Official Deep Navy) */
+  --color-secondary: #143067;
+  --color-secondary-foreground: #f8fafc;
+
+  /* 静音色彩 */
+  --color-muted: #111e38;
+  --color-muted-foreground: #cbd5e1;
+
+  /* 强调色 (Golden Industrial Accent) */
+  --color-accent: #f8dc05;
+  --color-accent-foreground: #143067;
+
+  /* 功能性颜色 */
+  --color-destructive: #b91c1c;
+  --color-destructive-foreground: #ffffff;
+  --color-success: #047857;
+  --color-success-foreground: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-foreground: #ffffff;
+  --color-info: #143067;
+  --color-info-foreground: #ffffff;
+
+  /* 边框和输入框 */
+  --color-border: #1f3563;
+  --color-input: #14223d;
+  --color-ring: #faeb1a;
+
+  /* 图表色系 */
+  --color-chart-1: #faeb1a;
+  --color-chart-2: #38bdf8;
+  --color-chart-3: #34d399;
+  --color-chart-4: #f87171;
+  --color-chart-5: #a78bfa;
+
+  /* 侧边栏相关颜色 */
+  --color-sidebar-background: #090e17;
+  --color-sidebar-foreground: #f8fafc;
+  --color-sidebar-primary: #faeb1a;
+  --color-sidebar-primary-foreground: #143067;
+  --color-sidebar-accent: #143067;
+  --color-sidebar-accent-foreground: #f8fafc;
+  --color-sidebar-border: #1f3563;
+  --color-sidebar-ring: #faeb1a;
+
+  /* 交互态颜色 (Hover/Active) */
+  --color-primary-hover: #f8dc05;
+  --color-secondary-hover: #1b3d82;
+  --color-accent-hover: #faeb1a;
+  --color-destructive-hover: #991b1b;
+
+  /* 链接颜色 */
+  --color-link: #faeb1a;
+  --color-link-hover: #f8dc05;
+
+  /* 骨架屏/加载态 */
+  --color-skeleton: #111e38;
+
+  /* 代码块 */
+  --color-code-background: #111e38;
+  --color-code-foreground: #f8fafc;
+
+  /* 引用块 */
+  --color-blockquote-border: #1f3563;
+  --color-blockquote-background: #0e172a;
+}
+
+/* theme autofill contract:start */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--color-foreground) !important;
+  caret-color: var(--color-foreground);
+}
+
+input:autofill {
+  color: var(--color-foreground) !important;
+  caret-color: var(--color-foreground);
+}
+/* theme autofill contract:end */

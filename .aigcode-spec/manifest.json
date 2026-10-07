@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-05T10:13:29.511314Z",
+  "project_root": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo",
+  "model": "gemini-3.7-flash",
+  "used_ai": true,
+  "diagnostics": {
+    "ref_lint": {
+      "total_refs": 161,
+      "invalid_refs": 0,
+      "by_file": {
+        "SPEC.md": {
+          "total_refs": 10,
+          "invalid_refs": 0
+        },
+        "references/change-recipes.md": {
+          "total_refs": 79,
+          "invalid_refs": 0
+        },
+        "references/domain-model.md": {
+          "total_refs": 0,
+          "invalid_refs": 0
+        },
+        "references/flows.md": {
+          "total_refs": 28,
+          "invalid_refs": 0
+        },
+        "references/implementation-map.md": {
+          "total_refs": 1,
+          "invalid_refs": 0
+        },
+        "references/payment.md": {
+          "total_refs": 22,
+          "invalid_refs": 0
+        },
+        "references/risks.md": {
+          "total_refs": 9,
+          "invalid_refs": 0
+        },
+        "references/update-playbooks.md": {
+          "total_refs": 12,
+          "invalid_refs": 0
+        }
+      },
+      "low_confidence_files": [],
+      "diagnostics": []
+    },
+    "markdown_structure": []
+  },
+  "package_map": {
+    "entry": "SPEC.md",
+    "fact_flows": "references/flows.md",
+    "fact_domain_model": "references/domain-model.md",
+    "fact_implementation_map": "references/implementation-map.md",
+    "derived_update_playbooks": "references/update-playbooks.md",
+    "derived_change_recipes": "references/change-recipes.md",
+    "fact_payment": "references/payment.md",
+    "derived_risks": "references/risks.md",
+    "engine_edges": "indexes/engine_edges.json",
+    "full_index": "indexes/full_index.json",
+    "raw_evidence": "raw/evidence_pack.json",
+    "raw_semantic_delta": "raw/semantic_delta.json"
+  },
+  "ref_resolution": {
+    "page": "indexes/full_index.json#/ref_whitelist/pages",
+    "iface": "indexes/full_index.json#/interfaces",
+    "model": "indexes/full_index.json#/ref_whitelist/models",
+    "field": "indexes/full_index.json#/ref_whitelist/field_tokens",
+    "route": "indexes/full_index.json#/routes",
+    "symbol": "indexes/full_index.json#/symbols",
+    "file": "indexes/full_index.json#/files",
+    "l1": "indexes/engine_edges.json#/engine_edges",
+    "l2": "indexes/engine_edges.json#/engine_edges",
+    "evidence": "indexes/full_index.json#/grounding_aliases"
+  },
+  "inputs": {
+    "shared_data": {
+      "path": "/root/code/generated/sub/sub7/PROJ_926079ba/shared_data.json"
+    }
+  },
+  "outputs": {
+    "spec_markdown": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/SPEC.md",
+    "flows_reference": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/references/flows.md",
+    "domain_model_reference": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/references/domain-model.md",
+    "implementation_map": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/references/implementation-map.md",
+    "update_playbooks": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/references/update-playbooks.md",
+    "change_recipes": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/references/change-recipes.md",
+    "payment": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/references/payment.md",
+    "risks": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/references/risks.md",
+    "engine_edges": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/indexes/engine_edges.json",
+    "full_index": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/indexes/full_index.json",
+    "evidence_pack": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/raw/evidence_pack.json",
+    "manifest": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/manifest.json",
+    "semantic_delta": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo/.aigcode-spec/raw/semantic_delta.json"
+  },
+  "metrics": {
+    "timings_ms": {
+      "read": 8.505,
+      "extract": 306.344,
+      "compress": 3.041,
+      "ai": 11560.078,
+      "write": 91.838,
+      "total": 16424.933
+    },
+    "update_ai_payload": {
+      "total_payload_chars": 175727,
+      "max_payload_chars": 41053,
+      "invoked_documents": [
+        "spec_markdown",
+        "flows_markdown",
+        "domain_model_markdown",
+        "update_playbooks_markdown",
+        "risks_markdown"
+      ],
+      "skipped_documents": [],
+      "document_impacts": {
+        "spec_markdown": {
+          "should_update": true,
+          "reasons": [
+            "entry_summary_relevant_delta",
+            "baseline_mentions_changed_ref"
+          ],
+          "changed_refs": [
+            "page:B01",
+            "page:B02",
+            "page:B03",
+            "page:B04",
+            "page:B05",
+            "page:F01",
+            "page:F02",
+            "page:F03",
+            "page:F04",
+            "payment:profile"
+          ]
+        },
+        "flows_markdown": {
+          "should_update": true,
+          "reasons": [
+            "flow_fact_delta:pages",
+            "baseline_mentions_changed_ref"
+          ],
+          "changed_refs": [
+            "page:B01",
+            "page:B02",
+            "page:B03",
+            "page:B04",
+            "page:B05",
+            "page:F01",
+            "page:F02",
+            "page:F03",
+            "page:F04",
+            "payment:profile"
+          ]
+        },
+        "domain_model_markdown": {
+          "should_update": true,
+          "reasons": [
+            "domain_page_binding_delta",
+            "baseline_mentions_changed_ref"
+          ],
+          "changed_refs": [
+            "page:B01",
+            "page:B02",
+            "page:B03",
+            "page:B04",
+            "page:B05",
+            "page:F01",
+            "page:F02",
+            "page:F03",
+            "page:F04",
+            "payment:profile"
+          ]
+        },
+        "update_playbooks_markdown": {
+          "should_update": true,
+          "reasons": [
+            "playbook_navigation_delta:pages",
+            "baseline_mentions_changed_ref"
+          ],
+          "changed_refs": [
+            "page:B01",
+            "page:B02",
+            "page:B03",
+            "page:B04",
+            "page:B05",
+            "page:F01",
+            "page:F02",
+            "page:F03",
+            "page:F04",
+            "payment:profile"
+          ]
+        },
+        "risks_markdown": {
+          "should_update": true,
+          "reasons": [
+            "risk_page_constraint_delta",
+            "baseline_mentions_changed_ref"
+          ],
+          "changed_refs": [
+            "page:B01",
+            "page:B02",
+            "page:B03",
+            "page:B04",
+            "page:B05",
+            "page:F01",
+            "page:F02",
+            "page:F03",
+            "page:F04",
+            "payment:profile"
+          ]
+        }
+      },
+      "by_document": {
+        "spec_markdown": {
+          "document": "SPEC.md",
+          "skipped": false,
+          "document_impact": {
+            "should_update": true,
+            "reasons": [
+              "entry_summary_relevant_delta",
+              "baseline_mentions_changed_ref"
+            ],
+            "changed_refs": [
+              "page:B01",
+              "page:B02",
+              "page:B03",
+              "page:B04",
+              "page:B05",
+              "page:F01",
+              "page:F02",
+              "page:F03",
+              "page:F04",
+              "payment:profile"
+            ]
+          },
+          "payload_chars": 40154,
+          "semantic_delta_chars": 35428,
+          "baseline_excerpt_chars": 1682,
+          "existing_current_update_chars": 0
+        },
+        "domain_model_markdown": {
+          "document": "references/domain-model.md",
+          "skipped": false,
+          "document_impact": {
+            "should_update": true,
+            "reasons": [
+              "domain_page_binding_delta",
+              "baseline_mentions_changed_ref"
+            ],
+            "changed_refs": [
+              "page:B01",
+              "page:B02",
+              "page:B03",
+              "page:B04",
+              "page:B05",
+              "page:F01",
+              "page:F02",
+              "page:F03",
+              "page:F04",
+              "payment:profile"
+            ]
+          },
+          "payload_chars": 13434,
+          "semantic_delta_chars": 9555,
+          "baseline_excerpt_chars": 952,
+          "existing_current_update_chars": 0
+        },
+        "flows_markdown": {
+          "document": "references/flows.md",
+          "skipped": false,
+          "document_impact": {
+            "should_update": true,
+            "reasons": [
+              "flow_fact_delta:pages",
+              "baseline_mentions_changed_ref"
+            ],
+            "changed_refs": [
+              "page:B01",
+              "page:B02",
+              "page:B03",
+              "page:B04",
+              "page:B05",
+              "page:F01",
+              "page:F02",
+              "page:F03",
+              "page:F04",
+              "payment:profile"
+            ]
+          },
+          "payload_chars": 41053,
+          "semantic_delta_chars": 35428,
+          "baseline_excerpt_chars": 2479,
+          "existing_current_update_chars": 0
+        },
+        "update_playbooks_markdown": {
+          "document": "references/update-playbooks.md",
+          "skipped": false,
+          "document_impact": {
+            "should_update": true,
+            "reasons": [
+              "playbook_navigation_delta:pages",
+              "baseline_mentions_changed_ref"
+            ],
+            "changed_refs": [
+              "page:B01",
+              "page:B02",
+              "page:B03",
+              "page:B04",
+              "page:B05",
+              "page:F01",
+              "page:F02",
+              "page:F03",
+              "page:F04",
+              "payment:profile"
+            ]
+          },
+          "payload_chars": 40060,
+          "semantic_delta_chars": 35428,
+          "baseline_excerpt_chars": 1520,
+          "existing_current_update_chars": 0
+        },
+        "risks_markdown": {
+          "document": "references/risks.md",
+          "skipped": false,
+          "document_impact": {
+            "should_update": true,
+            "reasons": [
+              "risk_page_constraint_delta",
+              "baseline_mentions_changed_ref"
+            ],
+            "changed_refs": [
+              "page:B01",
+              "page:B02",
+              "page:B03",
+              "page:B04",
+              "page:B05",
+              "page:F01",
+              "page:F02",
+              "page:F03",
+              "page:F04",
+              "payment:profile"
+            ]
+          },
+          "payload_chars": 41026,
+          "semantic_delta_chars": 35428,
+          "baseline_excerpt_chars": 2546,
+          "existing_current_update_chars": 0
+        }
+      }
+    }
+  }
+}

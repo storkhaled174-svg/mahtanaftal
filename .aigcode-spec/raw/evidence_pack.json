@@ -1,0 +1,2276 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-10-05T10:13:13.406385Z",
+  "project": {
+    "project_id": "PROJ_926079ba_snap_20261005_100226_814",
+    "root": "/root/code/generated/PROJ_926079ba_snap_20261005_100226_814/aigcode-demo",
+    "platforms": [
+      "backend",
+      "frontend"
+    ],
+    "language": "zh-CN",
+    "generation_chain": null
+  },
+  "pages": [
+    {
+      "id": "page:F01",
+      "page_id": "F01",
+      "en_name": "HomePage",
+      "name": "الرئيسية وطلب الإطارات",
+      "platform": "frontend",
+      "route_path": "/",
+      "requirement_ref": "req.page.F01",
+      "content": "复刻代码。الواجهة الافتتاحية الترحيبية للمنصة الوطنية الرسمية «نفطال محطتي» لتوزيع إطارات المركبات المعتمدة بشفافية في 58 ولاية جزائرية؛ تتضمن العنوان السيادي، رسالة الشفافية ومكافحة المضاربة، أزرار الانتقال السريع إلى استمارة حجز الإطارات، ورابط استعراض الكتالوج الرسمي. يعرض هذا القسم بنفس الهيئة لكلا الدورين (زائر المنصة وزبون المنصة).\n复刻代码。مصفوفة المؤشرات والأرقام الرسمية للمنصة: تغطية شاملة لـ 58 ولاية، اعتماد حصري لعلامتي Continental و Iris، حجز مباشر دون وسطاء، وأسعار مقننة وثابتة بالدينار الجزائري عبر محطات نفطال. محتوى تعريفي متطابق لجميع الزوار والزبائن.\n复刻代码。دليل خطوات الاستفادة من المنصة الوطنية: 1) استعراض المقاسات المتوفرة والأسعار الرسمية، 2) ملء نموذج الطلب وتأكيد الهوية الوطنية والبطاقة الذهبية، 3) استخراج وصل التسجيل بالرقم المرجعي NM-2026، 4) التوجه لمحطة نفطال المعنية للاستلام والتركيب. محتوى إرشادي موحد لكلا الدورين.\n复刻代码。المزايا والمبررات الاستراتيجية للمنصة: الشفافية في التوزيع، أسعار رسمية ثابتة دون مضاربة، إطارات أصلية معتمدة ومضمونة، وتغطية وطنية شاملة بدون أي وسيط تجاري. محتوى توعوي عام لجميع المستخدمين.\n复刻代码。كتالوج الإطارات الوطني المعتمد؛ يقرأ من كيان مخزون ومقاسات الإطارات tire_stock مع التزام تام بالانحرافات المقررة (deviations): استبدال صور الإطارات بمواصفات تقنية دقيقة للعجلات وتجريدها من أي صور وفق الاشتراطات الرسمية، حصر العلامات في Continental و Iris، إلغاء حقل طراز الإطار وحصر العرض والتصفية في العلامة والمقاس الفني المحدد size وصنف المركبة category (سياحية TOURISM، نفعية UTILITY، رباعية الدفع SUV)، مع إظهار مؤشر السرعة والحمولة speed_index، السعر الرسمي بالدينار الجزائري price_dzd، وحالة التوفر بالمحطات is_available مع كمية المخزون المتاح available_stock. يعرض هذا القسم نفس البيانات بدقة لكلا الدورين (زائر المنصة وزبون المنصة).\n复刻代码。استمارة التسجيل السيادية الموحدة لحجز الإطارات؛ تقرأ التقسيم الإداري الوطني من كيان algerian_wilaya (قائمة الولايات الـ 58 وبلدياتها الرسمية communes)، وتقرأ المقاسات والأسعار المعتمدة من كيان tire_stock لحساب السعر الإجمالي، وتؤسس لإنشاء سجل الطلبية tire_order. تطبيق تام للانحرافات والقواعد المقننة: كافة الحقول إجبارية دون استثناء؛ حصر الاختيار في العلامة التجارية (Continental أو Iris) ثم اختيار المقاس المتاح size مباشرة من القائمة المنسدلة دون كتابة يدوية ودون حقل طراز؛ حصر كمية الإطارات quantity في الخيارات المقننة (1 أو 2 أو 3 أو 4 حصراً)؛ حساب المبلغ الإجمالي total_price_dzd تلقائياً (السعر الفردي × الكمية دون رسوم خفية)؛ التحقق من الاسم الكامل customer_name، ورقم الهاتف الجزائري الأول phone_number والثاني secondary_phone الإجباريين (يبدآن بـ 05، 06، أو 07)، ورقم بطاقة التعريف الوطنية البيومترية national_id_number، ورقم البطاقة الذهبية المشفر dahabia_card_number المشترط لـ 18 رقماً تماماً، وتاريخ نهاية صلاحيتها dahabia_expiry بصيغة MM/YY. كلا الدورين (زائر المنصة وزبون المنصة) مخولان بالتسجيل، مع تميز الزبون المسجل بالملء التلقائي المسبق لبيانات هويته وهاتفه وربط الطلبية بحسابه customer.\n复刻代码。قسم تعريفي رسمي بمؤسسة نفطال، دورها الوطني في تأمين الطاقة ولواحق السيارات، التزامها بالخدمة العمومية، وتاريخها في توفير الإطارات المطاطية عالية الجودة للمواطنين بأسعار مقننة. محتوى مؤسسي عام وموحد لكافة المستخدمين.\n复刻代码。قسم قنوات الدعم والتواصل والأسئلة الشائعة؛ يقرأ من كيان platform_faq للأسئلة المفعلة (is_active = true) حسب تصنيفاتها (طلبيات ORDERS، دفع PAYMENT، توصيل ومحطات DELIVERY، ضمان WARRANTY)، ويقرأ من كيان support_channel لوسائل الدعم المفعلة كأرقام الاتصال (الرقم الأخضر 1050)، البريد الإلكتروني، وصفحات التواصل وأوقات الخدمة. متاح للمعاينة لكلا الدورين بنفس السوية.\n复刻代码。النافذة المنبثقة التفاعلية لوصل التسجيل الرسمي الأولي؛ تظهر فور تأكيد تسجيل الطلبية tire_order وتستعرض تفاصيل الحجز الأساسية: رقم الطلبية المرجعي السيادي المولد بصيغة NM-2026-XXXX، الاسم واللقب، رقم الهاتف، الولاية والبلدية، العلامة والمقاس، الكمية والمبلغ الإجمالي بالدينار، وحالة الطلبية الابتدائية (NEW)، مع أزرار لتحميل ملخص الوصل والانتقال إلى صفحة التتبع الرسمية F02. تخدم الزائر والزبون المسجل فور إتمام الطلب بنجاح.",
+      "key_interactions": "تسجيل طلبية الإطارات السيادية عبر ملء النموذج بكافة الحقول الإجبارية (الاسم واللقب، رقما الهاتف الجزائريان، الولاية والبلدية، العلامة والمقاس المختاران من القائمة المحددة، الكمية 1-4، بطاقة التعريف الوطنية، والبطاقة الذهبية 18 رقماً مع تاريخ الصلاحية MM/YY)؛ يتم إنشاء سجل الطلبية tire_order بالحالة NEW وتوليد الرقم المرجعي NM-2026-XXXX وحساب المبلغ الإجمالي، وربط حساب الزبون customer اختيارياً، ثم فتح نافذة وصل التسجيل المنبثقة. متاحة لزائر المنصة وزبون المنصة.\nالانتقال إلى صفحة تتبع الطلبية والوصل F02 مصحوباً برقم الطلبية المرجعي orderNumber لاستعراض حالة الطلب والوصل الرقمي الرسمي وطباعته. متاح للزائر والزبون المسجل. → [F02]\nالانتقال إلى صفحة دخول الزبون F03 لتمكين الزبائن من تسجيل الدخول إلى حساباتهم لمتابعة سجل طلبياتهم. متاح لزائر المنصة. → [F03]\nتصفية كتالوج الإطارات tire_stock حسب العلامة التجارية المعتمدة (Continental أو Iris) وصنف المركبة (سياحية، نفعية، رباعية الدفع) لتحديث قائمة المقاسات والمخزون والأسعار المعروضة تفاعلياً دون تعديل في قاعدة البيانات. متاحة للزائر والزبون بالقدر نفسه.\nاختيار الولاية من قائمة التقسيم الإداري algerian_wilaya لتحديث قائمة البلديات التابعة لها حصراً في استمارة الطلب. تفاعل محلي متاح للزائر والزبون.\nاختيار العلامة التجارية (Continental أو Iris) في استمارة الطلب لتحديث قائمة مقاسات الإطارات المتوفرة وسعرها الفردي بالدينار المقروء من tire_stock وإعادة احتساب المبلغ الإجمالي فورياً. تفاعل محلي متاح للزائر والزبون.",
+      "auth_requirements": "GUEST,CUSTOMER",
+      "route_params": [],
+      "page_params": {},
+      "truth_model_refs": {
+        "page_data_from": [],
+        "page_data_write": []
+      },
+      "implementation_model_refs": {
+        "reads": [],
+        "writes": []
+      },
+      "thirdparty_api_types": [],
+      "files": {
+        "source_action": "src/frontend/actions/HomePage.ts",
+        "hook": "src/frontend/hooks/useHomePage.ts",
+        "view": "src/frontend/components/HomePageView.tsx",
+        "types": "src/frontend/types/HomePage.ts",
+        "rpc_stub": "lib/rpc-generated/src/frontend/actions/HomePage.ts"
+      },
+      "symbols": [],
+      "interfaces": [],
+      "domain_refs": [
+        "evidence:flow.002.F01.HomePage",
+        "evidence:flow.003.F01.HomePage",
+        "evidence:state.001.F01.HomePage"
+      ]
+    },
+    {
+      "id": "page:F02",
+      "page_id": "F02",
+      "en_name": "OrderTracking",
+      "name": "تتبع الطلبية والوصل",
+      "platform": "frontend",
+      "route_path": "/ordertracking",
+      "requirement_ref": "req.page.F02",
+      "content": "نموذج البحث والاستعلام الرسمي عن طلبيات الإطارات، يتيح للمستخدم إدخال رقم الطلبية المرجعي السيادي (بصيغة NM-2026-XXXX) الذي يمكن جلبه تلقائياً من معلمة المسار الاختيارية orderNumber، بالإضافة إلى إدخال رقم الهاتف المسجل للتحقق من هوية صاحب الطلبية. كلا الدورين (زائر المنصة guest والزبون المسجل customer) متطابقان تماماً في العرض والصلاحيات (同视图同权) للبحث عن الطلبية ومراجعة بياناتها الرسمية.\nبطاقة عرض الحالة التشغيلية للطلبية وتفاصيل الحصة المحجوزة، وتستعرض: رقم الطلبية، حالة الطلبية التشغيلية (جديدة NEW، قيد المعالجة وتخصيص الحصة PROCESSING، مكتملة ومستلمة COMPLETED، ملغية CANCELLED)، الاسم واللقب، ولاية وبلدية الاستلام، العلامة المختارة (Continental أو Iris)، مقاس العجلة، الكمية (1 إلى 4 إطارات)، السعر الفردي، والمبلغ الإجمالي المستحق بالدينار الجزائري المحسوب بدقة، بالإضافة إلى أي ملاحظات تشغيلية مسجلة من إدارة نفطال. زائر المنصة والزبون المسجل يريان نفس التفاصيل دون تمييز.\nمعاينة وتنسيق وصل التسجيل الرقمي الرسمي لطلبية نفطال محطتي، المهيأ للطباعة الورقية أو الحفظ الرقمي، متضمناً شعار نفطال الرسمي، الرقم المرجعي السيادي، الاسم ورقم بطاقة التعريف الوطنية البيومترية، رقم البطاقة الذهبية المشفر (18 رقماً) وتاريخ صلاحيتها، تفاصيل الإطارات والمبلغ الإجمالي، وختم المصادقة الرقمية لاعتماده مباشرة لدى مركز نفطال بالولاية المحددة.",
+      "key_interactions": "تنفيذ استعلام البحث والتحقق بمطابقة رقم الطلبية المرجعي ورقم الهاتف المسجل، وجلب بيانات الطلبية المطابقة من قاعدة البيانات وتحديث عرض ملخص الحالة والوصل الرقمي في الصفحة.\nتفعيل أمر الطباعة المباشر من المتصفح لوصل التسجيل الرقمي الرسمي المعتمد لتقديمه عند استلام الإطارات في محطة نفطال.",
+      "auth_requirements": "GUEST,CUSTOMER",
+      "route_params": [],
+      "page_params": {
+        "orderNumber=xxx": "tire_order"
+      },
+      "truth_model_refs": {
+        "page_data_from": [],
+        "page_data_write": []
+      },
+      "implementation_model_refs": {
+        "reads": [],
+        "writes": []
+      },
+      "thirdparty_api_types": [],
+      "files": {
+        "source_action": "src/frontend/actions/OrderTracking.ts",
+        "hook": "src/frontend/hooks/useOrderTracking.ts",
+        "view": "src/frontend/components/OrderTrackingView.tsx",
+        "types": "src/frontend/types/OrderTracking.ts",
+        "page_entry": "app/(frontend)/ordertracking/page.tsx",
+        "rpc_stub": "lib/rpc-generated/src/frontend/actions/OrderTracking.ts"
+      },
+      "symbols": [],
+      "interfaces": [],
+      "domain_refs": [
+        "evidence:flow.004.F02.OrderTracking"
+      ]
+    },
+    {
+      "id": "page:F03",
+      "page_id": "F03",
+      "en_name": "CustomerLogin",
+      "name": "دخول الزبون",
+      "platform": "frontend",
+      "route_path": "/customerlogin",
+      "requirement_ref": "req.page.F03",
+      "content": "ترويسة وبوابة تعريفية بالمنصة الوطنية الرسمية 'نفطال محطتي' (Naftal Mhatati)، تعرض هوية المؤسسة وشعار نفطال، مع بيان توضيحي بأن فضاء الدخول مخصص للمواطنين والزبائن للوصول إلى حساباتهم ومتابعة طلبيات حجز إطارات المركبات (Continental و Iris) عبر الولايات الـ 58.\nنموذج تسجيل دخول الزبائن المعتمد، يقتصر حصرياً على بيانات الاعتماد الأساسية: اسم المستخدم أو رقم الهاتف المسجل (username)، وحقل كلمة المرور المشفرة (password_hash). لا يحتوي النموذج على محدد أدوار لكون البوابة مخصصة وموجهة حصرياً لدور 'زبون طالب للإطارات' (customer). يتضمن النموذج زر التحقق وتسجيل الدخول، مع رابط موجه لإنشاء حساب زبون جديد لمن لا يملك حساباً مسبقاً.",
+      "key_interactions": "إدخال بيانات الاعتماد (اسم المستخدم/رقم الهاتف وكلمة المرور) وتأكيد تسجيل الدخول للتحقق من هوية الزبون ومطابقتها، ثم التوجيه مباشرة إلى الصفحة الرئيسية لمتابعة وحجز الإطارات. → [F01]\nالضغط على رابط 'إنشاء حساب جديد' للانتقال إلى استمارة تسجيل حساب زبون جديد في المنصة. → [F04]",
+      "auth_requirements": "",
+      "route_params": [],
+      "page_params": {},
+      "truth_model_refs": {
+        "page_data_from": [],
+        "page_data_write": []
+      },
+      "implementation_model_refs": {
+        "reads": [],
+        "writes": []
+      },
+      "thirdparty_api_types": [],
+      "files": {
+        "source_action": "src/frontend/actions/CustomerLogin.ts",
+        "hook": "src/frontend/hooks/useCustomerLogin.ts",
+        "view": "src/frontend/components/CustomerLoginView.tsx",
+        "types": "src/frontend/types/CustomerLogin.ts",
+        "page_entry": "app/(frontend)/customerlogin/page.tsx",
+        "rpc_stub": "lib/rpc-generated/src/frontend/actions/CustomerLogin.ts"
+      },
+      "symbols": [],
+      "interfaces": [],
+      "domain_refs": [
+        "evidence:flow.005.pages.F03-B03"
+      ]
+    },
+    {
+      "id": "page:F04",
+      "page_id": "F04",
+      "en_name": "CustomerRegister",
+      "name": "تسجيل حساب زبون",
+      "platform": "frontend",
+      "route_path": "/customerregister",
+      "requirement_ref": "req.page.F04",
+      "content": "بطاقة الترحيب والتعريف بالبوابة الرقمية نفطال محطتي، توضح شروط التسجيل والاستفادة من حصص الإطارات المعتمدة للمواطنين. التسجيل المتاح في هذه الواجهة مخصص حصراً لصفة زبون (CUSTOMER)؛ لذا لا يتضمن النموذج قائمة لاختيار الأدوار حيث يتم تعيين دور الزبون تلقائياً لكل حساب مسجل جديد، في حين يتم إنشاء وإدارة حسابات مسؤولي نفطال (ADMIN) عبر الإدارة المركزية مسبقاً.\nنموذج إنشاء حساب زبون جديد، يقتصر على حقول الاعتماد والبيانات الأساسية المعتمدة: الاسم واللقب (full_name)، اسم المستخدم أو رقم الهاتف كمعرف دخول وحيد (username)، كلمة المرور المشفرة (password_hash) مع حقل تأكيد كلمة المرور، رقم الهاتف الرئيسي (phone_number)، ورقم بطاقة التعريف الوطنية البيومترية (national_id_number).\nقسم التوجيه والروابط التبادلية المخصص للمستخدمين الذين يملكون حساباً مسبقاً في المنصة، يحتوي على إشعار واضح وزر انتقال مباشر إلى صفحة تسجيل الدخول (F03).",
+      "key_interactions": "إرسال نموذج التسجيل والتحقق من صحة المدخلات وتفرد اسم المستخدم، وإنشاء سجل حساب زبون جديد في المنصة بالدور التشغيلي الافتراضي CUSTOMER، ثم الانتقال فوراً إلى صفحة دخول الزبون (F03). → [F03]\nالنقر على رابط الانتقال المباشر 'لديك حساب بالفعل؟ تسجيل الدخول' للتوجه إلى صفحة دخول الزبون (F03). → [F03]",
+      "auth_requirements": "",
+      "route_params": [],
+      "page_params": {},
+      "truth_model_refs": {
+        "page_data_from": [],
+        "page_data_write": []
+      },
+      "implementation_model_refs": {
+        "reads": [],
+        "writes": []
+      },
+      "thirdparty_api_types": [],
+      "files": {
+        "source_action": "src/frontend/actions/CustomerRegister.ts",
+        "hook": "src/frontend/hooks/useCustomerRegister.ts",
+        "view": "src/frontend/components/CustomerRegisterView.tsx",
+        "types": "src/frontend/types/CustomerRegister.ts",
+        "page_entry": "app/(frontend)/customerregister/page.tsx",
+        "rpc_stub": "lib/rpc-generated/src/frontend/actions/CustomerRegister.ts"
+      },
+      "symbols": [],
+      "interfaces": [],
+      "domain_refs": [
+        "evidence:flow.005.pages.F03-B03"
+      ]
+    },
+    {
+      "id": "page:B01",
+      "page_id": "B01",
+      "en_name": "AdminDashboard",
+      "name": "لوحة الإدارة والتحكم التشغيلي",
+      "platform": "backend",
+      "route_path": "/",
+      "requirement_ref": "req.page.B01",
+      "content": "复刻代码。استعراض المؤشرات الإحصائية العامة للأداء التشغيلي لمنصة نفطال محطتي: إجمالي عدد الطلبيات المسجلة من كينونة tire_order، وعدد الطلبيات الجديدة (NEW)، والطلبيات قيد المعالجة وتخصيص الحصة (PROCESSING)، والطلبيات المكتملة المسلمة بالمحطات (COMPLETED)، وحجم المبيعات الإجمالي المحقق بالدينار الجزائري (مجموع total_price_dzd للطلبيات المعتمدة غير الملغاة)، ومعدل توفر المخزون العام للإطارات من كينونة tire_stock والتنبيهات للمقاسات التي بلغت حد التنبيه الأدنى min_threshold.\n复刻代码。شريط أدوات التصفية والبحث المتقدم الموجه لمشرف نفطال: البحث الفوري بالاسم واللقب (customer_name)، أو برقم الهاتف (phone_number أو secondary_phone)، أو بالرقم المرجعي السيادي الموحد بصيغة NM-2026-XXXX (order_number)؛ والتصفية المترابطة جغرافياً باختيار الولاية (wilaya) من قائمة الـ 58 ولاية والبلدية (commune) التابعة لها من كينونة algerian_wilaya؛ والتصفية حسب العلامة التجارية (brand: CONTINENTAL / IRIS)؛ وحالة الطلبية (status: NEW, PROCESSING, COMPLETED, CANCELLED)، مع زر تفريغ الفلاتر وإعادة ضبط الجدول.\n复刻代码。جدول تدفق طلبيات الإطارات الرسمي المستند إلى كينونة tire_order وفق معايير التصفية المطبقة: يستعرض لكل طلبية رقم التسجيل المرجعي (order_number)، اسم الزبون (customer_name)، رقم الهاتف، الولاية والبلدية، العلامة والمقاس (tire_size)، عدد الإطارات المحجوزة (quantity: 1، 2، 3، أو 4)، المبلغ الإجمالي المحسوب بالدينار (total_price_dzd)، وشارة الحالة التشغيلية بألوان مميزة لكل مرحلة (NEW, PROCESSING, COMPLETED, CANCELLED). يشتمل كل سطر على أزرار التحكم السريع: زر فتح نافذة معاينة هوية وبيانات الزبون (customer_modal)، زر فتح نافذة تحرير الطلبية (edit_order_modal)، أزرار الانتقال المباشر للحالات (بدء المعالجة، إتمام التسليم، الإلغاء)، وزر حذف السجل غير المطابق.\n复刻代码。لوحة إدارة المخزون الوطني المعتمد والأسعار الرسمية من كينونة tire_stock: جدول تفصيلي يعرض مقاسات Continental و Iris مع تحديد صنف المركبة (category: TOURISM, UTILITY, SUV)، المقاس الفني المعتمد (size)، مؤشر السرعة والحمولة (speed_index)، السعر الفردي الرسمي بالدينار الجزائري (price_dzd)، رصيد المخزون المتوفر (available_stock)، المخزون المحجوز للطلبيات (reserved_stock)، حد التنبيه الأدنى (min_threshold)، ومفتاح حالة التوفر الفوري (is_available الذي يتعطل تلقائياً في حال نفاذ المخزون). تتضمن اللوحة زر إضافة مقاس جديد وأزرار التعديل الفوري للكميات والأسعار.\n复刻代码。إدارة المحتوى التوعوي وقنوات الاتصال الرسمية: تنقسم إلى قسمين رئيسيين؛ الأول لإدارة بنك الأسئلة الشائعة من كينونة platform_faq (عرض قائمة الأسئلة النشطة وغير النشطة، إضافة سؤال جديد، تعديل نص السؤال question والإجابة answer، وتحديد التصنيف بين ORDERS, PAYMENT, DELIVERY, WARRANTY مع تبديل حالة التفعيل is_active)؛ والقسم الثاني لإدارة قنوات الدعم والمساعدة من كينونة support_channel (تحيين بيانات الرقم الأخضر 1050، أرقام الهواتف البديلة، البريد، وصف ساعات العمل، ومفتاح تفعيل القناة is_active).\n复刻代码。نافذة تفاصيل الزبون والتوثيق السيادي للطلبية المنبثقة من جدول الطلبيات: تعرض السجل الكامل للمواطن في كينونة tire_order لتمكين المشرف من التدقيق الأمني والإداري، بما يشمل: الاسم واللقب، رقم الهاتف الأول والثاني، الولاية والبلدية، رقم بطاقة التعريف الوطنية البيومترية (national_id_number)، ورقم البطاقة الذهبية المشفر المكون حصراً من 18 رقماً (dahabia_card_number)، وتاريخ نهاية صلاحيتها (dahabia_expiry MM/YY)، وملاحظات الإدارة المسجلة مسبقاً، دون السماح بالتعديل غير المصرح.\n复刻代码。نافذة تعديل الطلبية المنبثقة لمشرف نفطال: نموذج تفاعلي لتعديل بيانات سجل tire_order، يشمل إمكانية تعديل كمية الإطارات (quantity: 1، 2، 3، أو 4) أو المقاس من قائمة المقاسات المعتمدة، مما يعيد احتساب السعر الإجمالي (total_price_dzd) فوراً بالمعادلة المغلقة (السعر الفردي unit_price_dzd * الكمية quantity)، إضافة وتحديث ملاحظات المشرف الإدارية (notes)، وتغيير حالة الطلبية (status) وفق مسار دورة الحياة المسموح بها.",
+      "key_interactions": "بدء معالجة الطلبية وتخصيص الحصة: نقل حالة الطلبية status في tire_order من NEW إلى PROCESSING، مع اقتطاع الكمية المطلوبة من المخزون المتوفر available_stock وإضافتها إلى المخزون المحجوز reserved_stock في tire_stock، وتحديث شارة السطر في جدول الطلبيات ومؤشرات kpi_section.\nتأكيد استلام الإطارات في محطة نفطال: نقل حالة الطلبية status في tire_order من PROCESSING إلى COMPLETED عند حضور المواطن وتأكيد استلام حصته، وتثبيت خصم الكمية من المخزون المحجوز reserved_stock في tire_stock وزيادة عداد الطلبيات المكتملة في kpi_section.\nإلغاء الطلبية من الإدارة لعدم المطابقة: نقل حالة الطلبية status في tire_order من PROCESSING إلى CANCELLED، مع إعادة الكمية المحجوزة من reserved_stock إلى المخزون المتوفر available_stock في tire_stock وتحديث إجمالي المبيعات وعداد الطلبيات الملغاة.\nإلغاء الطلبية مباشرة من قبل الإدارة: نقل حالة الطلبية status في tire_order من NEW إلى CANCELLED لعدم صحة البيانات المدخلة أو مطابقة الشروط، وتحديث مؤشرات الأداء وجدول الطلبيات.\nحفظ تعديلات الطلبية من نافذة edit_order_modal: تحديث ملاحظات الإدارة (notes)، وتعديل المقاس (tire_size) والكمية (quantity)، وإعادة احتساب المبلغ الإجمالي (total_price_dzd = unit_price_dzd * quantity) وتحديث السجل في tire_order مع انعكاس البيانات في جدول الطلبيات.\nحذف الطلبية نهائياً: حذف سجل الطلبية غير الصالحة أو المكررة من tire_order بعد تأكيد المشرف، وتحديث جدول الطلبيات والإحصائيات العامة.\nإضافة أو تعديل مقاس في كتالوج المخزون: كتابة سجل في tire_stock يتضمن العلامة التجارية (CONTINENTAL أو IRIS حصراً)، المقاس (size)، الصنف (category)، السعر بالدينار (price_dzd)، المخزون المتوفر (available_stock)، حد التنبيه الأدنى (min_threshold)، ومؤشر السرعة (speed_index)، مع تحديث حالة التوفر is_available تلقائياً (true إذا كان المخزون > 0، وfalse إذا بلغ الصفر).\nإضافة أو تحديث سؤال شائع: حفظ السجل في platform_faq بنص السؤال (question)، الإجابة المعتمدة (answer)، التصنيف (category: ORDERS, PAYMENT, DELIVERY, WARRANTY)، وحالة التفعيل (is_active) لعرضه في الواجهة العامة.\nتحديث بيانات قنوات الدعم والمساعدة: حفظ بيانات القناة في support_channel بتعديل القيمة (value كالرقم الأخضر 1050 أو الرابط الرسمي)، وتحديث الوصف وساعات العمل (description) وحالة النشاط (is_active).",
+      "auth_requirements": "ADMIN",
+      "route_params": [],
+      "page_params": {},
+      "truth_model_refs": {
+        "page_data_from": [],
+        "page_data_write": []
+      },
+      "implementation_model_refs": {
+        "reads": [],
+        "writes": []
+      },
+      "thirdparty_api_types": [],
+      "files": {
+        "source_action": "src/backend/actions/AdminDashboard.ts",
+        "hook": "src/backend/hooks/useAdminDashboard.ts",
+        "view": "src/backend/components/AdminDashboardView.tsx",
+        "types": "src/backend/types/AdminDashboard.ts",
+        "page_entry": "app/(backend)/admindashboard/page.tsx",
+        "rpc_stub": "lib/rpc-generated/src/backend/actions/AdminDashboard.ts"
+      },
+      "symbols": [],
+      "interfaces": [],
+      "domain_refs": [
+        "evidence:flow.006.B01.AdminDashboard",
+        "evidence:flow.007.B01.AdminDashboard",
+        "evidence:flow.008.B01.AdminDashboard",
+        "evidence:state.001.F01.HomePage"
+      ]
+    },
+    {
+      "id": "page:B02",
+      "page_id": "B02",
+      "en_name": "AdminLogin",
+      "name": "دخول إدارة نفطال",
+      "platform": "backend",
+      "route_path": "/adminlogin",
+      "requirement_ref": "req.page.B02",
+      "content": "ترويسة أمنية خاصة بالبوابة الإدارية لمشرفي نفطال، تتضمن شعار إدارة نفطال وتأكيداً على أن الولوج مقتصر حصرياً على مسؤولي المراكز والمشرفين المعتمدين لضمان أمان معالجة وتوزيع حصص الإطارات ومتابعة المخزون الوطني.\nنموذج تسجيل الدخول الإداري الآمن، يقتصر على بيانات الاعتماد الرسمية للمشرف: معرف المشرف (اسم المستخدم أو الهاتف المهني المعتمد) وحقل كلمة المرور المشفرة (password_hash). لا يشتمل النموذج على اختيار الأدوار لكون البوابة الإدارية مقتصرة بالكامل على دور 'مسؤول إدارة نفطال' (admin). يتضمن زر الولوج المعتمد ورابطاً إدارياً للانتقال إلى إنشاء حساب مشرف جديد للمصادقة.",
+      "key_interactions": "إدخال بيانات اعتماد المشرف والضغط على زر تسجيل الدخول للتحقق من الصلاحيات الإدارية وتوجيهه مباشرة إلى لوحة الإدارة والتحكم التشغيلي. → [B01]\nالضغط على خيار 'إنشاء حساب مشرف جديد' المخصص للمشرفين الجدد للانتقال إلى استمارة التسجيل الإداري. → [B03]",
+      "auth_requirements": "",
+      "route_params": [],
+      "page_params": {},
+      "truth_model_refs": {
+        "page_data_from": [],
+        "page_data_write": []
+      },
+      "implementation_model_refs": {
+        "reads": [],
+        "writes": []
+      },
+      "thirdparty_api_types": [],
+      "files": {
+        "source_action": "src/backend/actions/AdminLogin.ts",
+        "hook": "src/backend/hooks/useAdminLogin.ts",
+        "view": "src/backend/components/AdminLoginView.tsx",
+        "types": "src/backend/types/AdminLogin.ts",
+        "page_entry": "app/(backend)/adminlogin/page.tsx",
+        "rpc_stub": "lib/rpc-generated/src/backend/actions/AdminLogin.ts"
+      },
+      "symbols": [],
+      "interfaces": [],
+      "domain_refs": [
+        "evidence:flow.005.pages.F03-B03"
+      ]
+    },
+    {
+      "id": "page:B03",
+      "page_id": "B03",
+      "en_name": "AdminRegister",
+      "name": "تسجيل مشرف جديد",
+      "platform": "backend",
+      "route_path": "/adminregister",
+      "requirement_ref": "req.page.B03",
+      "content": "ترويسة شاشة تسجيل مشرف إداري جديد لمراكز نفطال، تتضمن الهوية الرسمية لنفطال محطتي، وتوضيحاً للمشرف بأن التسجيل يمنحه صلاحية إدارية كاملة (ADMIN) لإدارة كتالوج ومخزون الإطارات والطلبيات عبر المنصة.\nنموذج إنشاء الحساب الإداري المعتمد ويشمل حقول بيانات الاعتماد: الاسم واللقب (full_name)، اسم المستخدم أو رقم الهاتف المعتمد (username)، كلمة المرور المشفرة (password_hash) وتأكيد كلمة المرور، ورقم الهاتف للتواصل (phone_number). يوضح النموذج بصورة ثابتة أن الحساب المُنشأ يُسجل حصراً بدور مشرف إدارة (ADMIN) دون إتاحة خيار لاختيار أدوار أخرى نظراً لخصوصية البوابة الإدارية.",
+      "key_interactions": "إرسال بيانات المشرف الجديد والتحقق من فرادة اسم المستخدم واكتمال الحقول وتشفير كلمة المرور وتثبيت الدور التشغيلي كمسؤول (ADMIN) وإنشاء سجل الحساب، ثم التوجيه لصفحة تسجيل الدخول الإدارية. → [B02]\nالنقر على رابط العودة المباشر لصفحة تسجيل دخول إدارة نفطال (B02) لمن يمتلك حساباً مسبقاً. → [B02]",
+      "auth_requirements": "",
+      "route_params": [],
+      "page_params": {},
+      "truth_model_refs": {
+        "page_data_from": [],
+        "page_data_write": []
+      },
+      "implementation_model_refs": {
+        "reads": [],
+        "writes": []
+      },
+      "thirdparty_api_types": [],
+      "files": {
+        "source_action": "src/backend/actions/AdminRegister.ts",
+        "hook": "src/backend/hooks/useAdminRegister.ts",
+        "view": "src/backend/components/AdminRegisterView.tsx",
+        "types": "src/backend/types/AdminRegister.ts",
+        "page_entry": "app/(backend)/adminregister/page.tsx",
+        "rpc_stub": "lib/rpc-generated/src/backend/actions/AdminRegister.ts"
+      },
+      "symbols": [],
+      "interfaces": [],
+      "domain_refs": [
+        "evidence:flow.005.pages.F03-B03"
+      ]
+    },
+    {
+      "id": "page:B04",
+      "page_id": "B04",
+      "en_name": "AdminStockManagement",
+      "name": "إدارة المخزون والمقاسات والأسعار",
+      "platform": "backend",
+      "route_path": "/adminstockmanagement",
+      "requirement_ref": "req.page.B04",
+      "content": "شريط المؤشرات الإحصائية لمخزون الإطارات، يعرض ملخصاً حياً لإجمالي المقاسات المسجلة تحت علامتي Continental و Iris، والكمية الإجمالية للمخزون المتوفر (available_stock)، وإجمالي الإطارات المحجوزة للطلبيات المؤكدة (reserved_stock)، وعدد المقاسات التي بلغت أو انخفضت عن حد التنبيه الأدنى (min_threshold) للتحذير من النفاذ الوشيك.\nجدول متكامل لإدارة مقاسات وأسعار ومخزون الإطارات لمشرف نفطال (Admin)، مع شريط تصفية حسب العلامة التجارية (CONTINENTAL أو IRIS حصراً)، صنف المركبة (TOURISM، UTILITY، SUV)، وحالة التوفر (is_available). يعرض الجدول لكل عنصر: العلامة التجارية، المقاس الفني (size)، الصنف، مؤشر السرعة والحمولة (speed_index)، السعر الرسمي المعتمد بالدينار الجزائري (price_dzd)، المخزون المتوفر (available_stock)، المخزون المحجوز (reserved_stock)، حد التنبيه (min_threshold)، وشارة حالة التوفر المحدثة، مع إمكانية الفرز والبحث.\nلوحة إدخال وتعديل بيانات المقاسات والأسعار، تتيح إضافة مقاس جديد معتمد لإحدى العلامتين (Continental أو Iris) أو تعديل السعر الفردي بالدينار الجزائري (price_dzd) وتعديل المخزون المتوفر (available_stock) وحد التنبيه (min_threshold)، مع تطبيق قاعدة العمل الصارمة بتعطيل التوفر تلقائياً (is_available = false) عند انخفاض المخزون إلى الصفر.",
+      "key_interactions": "إضافة مقاس إطار جديد معتمد من علامتي Continental أو Iris وتحديد صنف المركبة، السعر الفردي بالدينار الجزائري، مؤشر السرعة والحمولة، الكمية الابتدائية للمخزون، وحد التنبيه الأدنى، وحفظ السجل الجديد في قاعدة البيانات وتحديث جدول ومؤشرات المخزون فورياً.\nتحديث السعر الرسمي بالدينار الجزائري أو تعديل كمية المخزون المتوفر أو حد التنبيه لمقاس محدد، مع إعادة احتساب حالة التوفر تلقائياً لتصبح غير متاحة إذا وصل المخزون المتوفر إلى الصفر، وتحديث السجلات في جدول المخزون.\nالتبديل اليدوي لحالة جاهزية وتوفر المقاس (is_available) للتعليق المؤقت أو استئناف العرض بالمحطات مع الالتزام بقيد نفطال بأن نفاد المخزون يمنع تفعيل التوفر.",
+      "auth_requirements": "ADMIN",
+      "route_params": [],
+      "page_params": {},
+      "truth_model_refs": {
+        "page_data_from": [],
+        "page_data_write": []
+      },
+      "implementation_model_refs": {
+        "reads": [],
+        "writes": []
+      },
+      "thirdparty_api_types": [],
+      "files": {
+        "source_action": "src/backend/actions/AdminStockManagement.ts",
+        "hook": "src/backend/hooks/useAdminStockManagement.ts",
+        "view": "src/backend/components/AdminStockManagementView.tsx",
+        "types": "src/backend/types/AdminStockManagement.ts",
+        "page_entry": "app/(backend)/adminstockmanagement/page.tsx",
+        "rpc_stub": "lib/rpc-generated/src/backend/actions/AdminStockManagement.ts"
+      },
+      "symbols": [],
+      "interfaces": [],
+      "domain_refs": [
+        "evidence:flow.007.B01.AdminDashboard"
+      ]
+    },
+    {
+      "id": "page:B05",
+      "page_id": "B05",
+      "en_name": "AdminContentSupport",
+      "name": "إدارة المحتوى والدعم والأسئلة الشائعة",
+      "platform": "backend",
+      "route_path": "/admincontentsupport",
+      "requirement_ref": "req.page.B05",
+      "content": "جدول إدارة واستعراض الأسئلة الشائعة (platform_faq) المعتمدة في منصة نفطال محطتي، مع شريط أدوات للفرز والبحث وتصفية القائمة حسب تصنيف السؤال (category: ORDERS لطلبيات الإطارات، PAYMENT لعمليات الدفع بالبطاقة الذهبية، DELIVERY للاستلام بالمحطات، WARRANTY للضمان وخدمات ما بعد البيع) وحسب حالة الظهور (is_active). يعرض الجدول لكل عنصر: نص السؤال (question)، مقتطف الإجابة (answer)، تصنيف السؤال (category)، وحالة النشاط (is_active) مع زر سريع لتبديل التفعيل وزر فتح نموذج التعديل.\nنموذج منبثق لإنشاء وتعديل بيانات السؤال الشائع (platform_faq). يحتوي النموذج على الحقول الإلزامية: حقل نص السؤال الموجه للزبائن (question)، حقل نص الإجابة التوضيحية الرسمية من نفطال (answer)، قائمة اختيار تصنيف السؤال (category) المحصورة بالقيم المعتمدة (ORDERS، PAYMENT، DELIVERY، WARRANTY)، وخيار تفعيل السؤال (is_active) لتمكينه من الظهور في الواجهة العامة للزبائن فور الحفظ.\nجدول إدارة قنوات الاتصال والدعم الفني المباشر (support_channel). يستعرض وسائل التواصل الرسمية المسجلة وتفاصيلها: اسم القناة (title، مثل الرقم الأخضر 1050 أو البريد الإلكتروني الرسمي)، قيمة وسيلة الاتصال (value كالأرقام والروابط)، الوصف التشغيلي وتفاصيل الدوام ومركز النداء (description)، ومؤشر حالة تفعيل القناة (is_active) في الواجهة للمواطنين، مع أزرار التحكم في التعديل والتعطيل.\nنموذج إضافة وتحديث قناة دعم واتصال رسمي (support_channel). يشتمل على حقل إدخال اسم القناة وتسميتها الرسمية (title)، حقل قيمة وسيلة الاتصال كرقم الهاتف أو عنوان البريد الإلكتروني (value)، حقل الوصف التشغيلي لأوقات الخدمة وملاحظات مركز الاتصال (description)، ومفتاح تفعيل القناة (is_active) لعرضها الفوري في منصة المواطنين.",
+      "key_interactions": "تسجيل سؤال شائع جديد في النظام مع تحديد نصه (question) وإجابته التوضيحية (answer) وتصنيفه (category) وحالة تفعيله (is_active).\nتحديث بيانات سؤال شائع قائم وتعديل نصه أو إجابته أو تصنيفه بما يطابق الإجراءات التنظيمية الجديدة لنفطال.\nتبديل حالة تفعيل السؤال الشائع (is_active) فورياً للتحكم في إظهاره أو حجبه عن واجهة المواطنين العامة.\nإضافة قناة اتصال ودعم فني جديدة (support_channel) مع إدخال تسمية القناة (title) وقيمتها (value) ووصفها التشغيلي (description) وحالة التفعيل (is_active).\nتعديل بيانات قناة اتصال ودعم فني معتمدة وتحديث رقمها أو بريدها أو مواقيت العمل التشغيلية.\nتبديل حالة نشاط وسيلة الاتصال (is_active) لتفعيل ظهورها للمواطنين أو إيقافها مؤقتاً في البوابة الرقمية.",
+      "auth_requirements": "ADMIN",
+      "route_params": [],
+      "page_params": {},
+      "truth_model_refs": {
+        "page_data_from": [],
+        "page_data_write": []
+      },
+      "implementation_model_refs": {
+        "reads": [],
+        "writes": []
+      },
+      "thirdparty_api_types": [],
+      "files": {
+        "source_action": "src/backend/actions/AdminContentSupport.ts",
+        "hook": "src/backend/hooks/useAdminContentSupport.ts",
+        "view": "src/backend/components/AdminContentSupportView.tsx",
+        "types": "src/backend/types/AdminContentSupport.ts",
+        "page_entry": "app/(backend)/admincontentsupport/page.tsx",
+        "rpc_stub": "lib/rpc-generated/src/backend/actions/AdminContentSupport.ts"
+      },
+      "symbols": [],
+      "interfaces": [],
+      "domain_refs": [
+        "evidence:flow.008.B01.AdminDashboard"
+      ]
+    }
+  ],
+  "ifaces": [],
+  "models": [
+    {
+      "id": "model:AccountUser",
+      "name": "AccountUser",
+      "fields": [
+        {
+          "id": "model:AccountUser#id",
+          "name": "id",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": true,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AccountUser#fullName",
+          "name": "fullName",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AccountUser#username",
+          "name": "username",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": true,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AccountUser#passwordHash",
+          "name": "passwordHash",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AccountUser#role",
+          "name": "role",
+          "type": "UserRole",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [
+            "ADMIN",
+            "CUSTOMER"
+          ],
+          "comment": ""
+        },
+        {
+          "id": "model:AccountUser#phoneNumber",
+          "name": "phoneNumber",
+          "type": "String",
+          "is_optional": true,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AccountUser#nationalIdNumber",
+          "name": "nationalIdNumber",
+          "type": "String",
+          "is_optional": true,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AccountUser#createdAt",
+          "name": "createdAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AccountUser#updatedAt",
+          "name": "updatedAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AccountUser#tireOrders",
+          "name": "tireOrders",
+          "type": "TireOrder",
+          "is_optional": false,
+          "is_list": true,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": "TireOrder",
+          "enum_values": [],
+          "comment": ""
+        }
+      ],
+      "relation_refs": [
+        "model:TireOrder"
+      ],
+      "comment": ""
+    },
+    {
+      "id": "model:AlgerianWilaya",
+      "name": "AlgerianWilaya",
+      "fields": [
+        {
+          "id": "model:AlgerianWilaya#id",
+          "name": "id",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": true,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AlgerianWilaya#code",
+          "name": "code",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": true,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AlgerianWilaya#nameAr",
+          "name": "nameAr",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AlgerianWilaya#communes",
+          "name": "communes",
+          "type": "Json",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AlgerianWilaya#createdAt",
+          "name": "createdAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:AlgerianWilaya#updatedAt",
+          "name": "updatedAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        }
+      ],
+      "relation_refs": [],
+      "comment": ""
+    },
+    {
+      "id": "model:PlatformFaq",
+      "name": "PlatformFaq",
+      "fields": [
+        {
+          "id": "model:PlatformFaq#id",
+          "name": "id",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": true,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:PlatformFaq#question",
+          "name": "question",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:PlatformFaq#answer",
+          "name": "answer",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:PlatformFaq#category",
+          "name": "category",
+          "type": "FaqCategory",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [
+            "ORDERS",
+            "PAYMENT",
+            "DELIVERY",
+            "WARRANTY"
+          ],
+          "comment": ""
+        },
+        {
+          "id": "model:PlatformFaq#isActive",
+          "name": "isActive",
+          "type": "Boolean",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:PlatformFaq#createdAt",
+          "name": "createdAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:PlatformFaq#updatedAt",
+          "name": "updatedAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        }
+      ],
+      "relation_refs": [],
+      "comment": ""
+    },
+    {
+      "id": "model:SupportChannel",
+      "name": "SupportChannel",
+      "fields": [
+        {
+          "id": "model:SupportChannel#id",
+          "name": "id",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": true,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:SupportChannel#title",
+          "name": "title",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:SupportChannel#value",
+          "name": "value",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:SupportChannel#description",
+          "name": "description",
+          "type": "String",
+          "is_optional": true,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:SupportChannel#isActive",
+          "name": "isActive",
+          "type": "Boolean",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:SupportChannel#createdAt",
+          "name": "createdAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:SupportChannel#updatedAt",
+          "name": "updatedAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        }
+      ],
+      "relation_refs": [],
+      "comment": ""
+    },
+    {
+      "id": "model:TireOrder",
+      "name": "TireOrder",
+      "fields": [
+        {
+          "id": "model:TireOrder#id",
+          "name": "id",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": true,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#orderNumber",
+          "name": "orderNumber",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": true,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#customerName",
+          "name": "customerName",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#phoneNumber",
+          "name": "phoneNumber",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#secondaryPhone",
+          "name": "secondaryPhone",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#wilaya",
+          "name": "wilaya",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#commune",
+          "name": "commune",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#brand",
+          "name": "brand",
+          "type": "TireBrand",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [
+            "CONTINENTAL",
+            "IRIS"
+          ],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#tireSize",
+          "name": "tireSize",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#quantity",
+          "name": "quantity",
+          "type": "Int",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#unitPriceDzd",
+          "name": "unitPriceDzd",
+          "type": "Decimal",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#totalPriceDzd",
+          "name": "totalPriceDzd",
+          "type": "Decimal",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#nationalIdNumber",
+          "name": "nationalIdNumber",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#dahabiaCardNumber",
+          "name": "dahabiaCardNumber",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#dahabiaExpiry",
+          "name": "dahabiaExpiry",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#status",
+          "name": "status",
+          "type": "OrderStatus",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [
+            "NEW",
+            "PROCESSING",
+            "COMPLETED",
+            "CANCELLED"
+          ],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#notes",
+          "name": "notes",
+          "type": "String",
+          "is_optional": true,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#customerId",
+          "name": "customerId",
+          "type": "String",
+          "is_optional": true,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": true,
+          "related_model": "AccountUser",
+          "enum_values": [],
+          "comment": "FK → AccountUser.id"
+        },
+        {
+          "id": "model:TireOrder#customer",
+          "name": "customer",
+          "type": "AccountUser",
+          "is_optional": true,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": "AccountUser",
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#createdAt",
+          "name": "createdAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireOrder#updatedAt",
+          "name": "updatedAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        }
+      ],
+      "relation_refs": [
+        "model:AccountUser"
+      ],
+      "comment": ""
+    },
+    {
+      "id": "model:TireStock",
+      "name": "TireStock",
+      "fields": [
+        {
+          "id": "model:TireStock#id",
+          "name": "id",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": true,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#brand",
+          "name": "brand",
+          "type": "TireBrand",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [
+            "CONTINENTAL",
+            "IRIS"
+          ],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#size",
+          "name": "size",
+          "type": "String",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#category",
+          "name": "category",
+          "type": "TireCategory",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [
+            "TOURISM",
+            "UTILITY",
+            "SUV"
+          ],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#priceDzd",
+          "name": "priceDzd",
+          "type": "Decimal",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#availableStock",
+          "name": "availableStock",
+          "type": "Int",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#reservedStock",
+          "name": "reservedStock",
+          "type": "Int",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#minThreshold",
+          "name": "minThreshold",
+          "type": "Int",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#speedIndex",
+          "name": "speedIndex",
+          "type": "String",
+          "is_optional": true,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#isAvailable",
+          "name": "isAvailable",
+          "type": "Boolean",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#createdAt",
+          "name": "createdAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        },
+        {
+          "id": "model:TireStock#updatedAt",
+          "name": "updatedAt",
+          "type": "DateTime",
+          "is_optional": false,
+          "is_list": false,
+          "is_id": false,
+          "is_unique": false,
+          "is_foreign_key": false,
+          "related_model": null,
+          "enum_values": [],
+          "comment": ""
+        }
+      ],
+      "relation_refs": [],
+      "comment": ""
+    }
+  ],
+  "enums": [
+    {
+      "id": "enum:FaqCategory",
+      "name": "FaqCategory",
+      "values": [
+        "ORDERS",
+        "PAYMENT",
+        "DELIVERY",
+        "WARRANTY"
+      ]
+    },
+    {
+      "id": "enum:OrderStatus",
+      "name": "OrderStatus",
+      "values": [
+        "NEW",
+        "PROCESSING",
+        "COMPLETED",
+        "CANCELLED"
+      ]
+    },
+    {
+      "id": "enum:TireBrand",
+      "name": "TireBrand",
+      "values": [
+        "CONTINENTAL",
+        "IRIS"
+      ]
+    },
+    {
+      "id": "enum:TireCategory",
+      "name": "TireCategory",
+      "values": [
+        "TOURISM",
+        "UTILITY",
+        "SUV"
+      ]
+    },
+    {
+      "id": "enum:UserRole",
+      "name": "UserRole",
+      "values": [
+        "ADMIN",
+        "CUSTOMER"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "route:AdminContentSupport",
+      "name": "AdminContentSupport",
+      "page_ref": "page:B05",
+      "platform": "backend",
+      "path": "/admincontentsupport",
+      "params": [],
+      "navigate_methods": [
+        {
+          "name": "navigateTo",
+          "params": [],
+          "path_literal": null
+        }
+      ],
+      "file": "src/backend/route-params.ts"
+    },
+    {
+      "id": "route:AdminDashboard",
+      "name": "AdminDashboard",
+      "page_ref": "page:B01",
+      "platform": "backend",
+      "path": "/admindashboard",
+      "params": [],
+      "navigate_methods": [
+        {
+          "name": "navigateTo",
+          "params": [],
+          "path_literal": null
+        }
+      ],
+      "file": "src/backend/route-params.ts"
+    },
+    {
+      "id": "route:AdminLogin",
+      "name": "AdminLogin",
+      "page_ref": "page:B02",
+      "platform": "backend",
+      "path": "/adminlogin",
+      "params": [],
+      "navigate_methods": [
+        {
+          "name": "navigateTo",
+          "params": [],
+          "path_literal": null
+        }
+      ],
+      "file": "src/backend/route-params.ts"
+    },
+    {
+      "id": "route:AdminRegister",
+      "name": "AdminRegister",
+      "page_ref": "page:B03",
+      "platform": "backend",
+      "path": "/adminregister",
+      "params": [],
+      "navigate_methods": [
+        {
+          "name": "navigateTo",
+          "params": [],
+          "path_literal": null
+        }
+      ],
+      "file": "src/backend/route-params.ts"
+    },
+    {
+      "id": "route:AdminStockManagement",
+      "name": "AdminStockManagement",
+      "page_ref": "page:B04",
+      "platform": "backend",
+      "path": "/adminstockmanagement",
+      "params": [],
+      "navigate_methods": [
+        {
+          "name": "navigateTo",
+          "params": [],
+          "path_literal": null
+        }
+      ],
+      "file": "src/backend/route-params.ts"
+    },
+    {
+      "id": "route:CustomerLogin",
+      "name": "CustomerLogin",
+      "page_ref": "page:F03",
+      "platform": "frontend",
+      "path": "/customerlogin",
+      "params": [],
+      "navigate_methods": [
+        {
+          "name": "navigateTo",
+          "params": [],
+          "path_literal": null
+        }
+      ],
+      "file": "src/frontend/route-params.ts"
+    },
+    {
+      "id": "route:CustomerRegister",
+      "name": "CustomerRegister",
+      "page_ref": "page:F04",
+      "platform": "frontend",
+      "path": "/customerregister",
+      "params": [],
+      "navigate_methods": [
+        {
+          "name": "navigateTo",
+          "params": [],
+          "path_literal": null
+        }
+      ],
+      "file": "src/frontend/route-params.ts"
+    },
+    {
+      "id": "route:HomePage",
+      "name": "HomePage",
+      "page_ref": "page:F01",
+      "platform": "frontend",
+      "path": "/",
+      "params": [],
+      "navigate_methods": [
+        {
+          "name": "navigateTo",
+          "params": [],
+          "path_literal": null
+        }
+      ],
+      "file": "src/frontend/route-params.ts"
+    },
+    {
+      "id": "route:OrderTracking",
+      "name": "OrderTracking",
+      "page_ref": "page:F02",
+      "platform": "frontend",
+      "path": "/ordertracking",
+      "params": [
+        {
+          "id": "route:OrderTracking#orderNumber",
+          "name": "orderNumber",
+          "source_table": "TireOrder",
+          "source_column": "orderNumber",
+          "description": "来自 TireOrder 表的唯一订单编号 orderNumber，非主键 id",
+          "token": "field:TireOrder.orderNumber"
+        }
+      ],
+      "navigate_methods": [
+        {
+          "name": "navigateTo",
+          "params": [
+            "orderNumber"
+          ],
+          "path_literal": null
+        }
+      ],
+      "file": "src/frontend/route-params.ts"
+    }
+  ],
+  "symbols": [],
+  "engine_edges": [
+    {
+      "id": "l2:import.B03.to.src.tools.BackendSession.tsx",
+      "level": "L2",
+      "kind": "shared_import",
+      "from_ref": "page:B03",
+      "to_ref": "file:src/tools/BackendSession.tsx",
+      "carries": [
+        "source_file:app/(backend)/adminregister/page.tsx",
+        "symbols:useAdminSession"
+      ],
+      "evidence_refs": [
+        "page:B03",
+        "file:app/(backend)/adminregister/page.tsx",
+        "file:src/tools/BackendSession.tsx"
+      ],
+      "description": "page:B03 imports file:src/tools/BackendSession.tsx via app/(backend)/adminregister/page.tsx"
+    },
+    {
+      "id": "l2:import.B05.to.src.base.BaseActionFun.ts",
+      "level": "L2",
+      "kind": "component_import",
+      "from_ref": "page:B05",
+      "to_ref": "file:src/@base/BaseActionFun.ts",
+      "carries": [
+        "source_file:src/backend/actions/AdminContentSupport.ts",
+        "symbols:withResult"
+      ],
+      "evidence_refs": [
+        "page:B05",
+        "file:src/backend/actions/AdminContentSupport.ts",
+        "file:src/@base/BaseActionFun.ts"
+      ],
+      "description": "page:B05 imports file:src/@base/BaseActionFun.ts via src/backend/actions/AdminContentSupport.ts"
+    }
+  ],
+  "grounding": [
+    {
+      "id": "evidence:flow.001",
+      "alias": "evidence:flow.001",
+      "kind": "core_flow",
+      "title": "核心功能流程",
+      "text": "# 核心功能流程\n\nمنصة نفطال محطتي (Naftal Mhatati) هي البوابة الرقمية الوطنية الرسمية لتوزيع إطارات المركبات المعتمدة (Continental و Iris) في الجزائر، تتيح للمواطنين تصفح المقاسات المتوفرة وحجز حصصهم الرسمية في 58 ولاية بشفافية عبر بطاقة التعريف الوطنية والبطاقة الذهبية، مع توفير لوحة تحكم إدارية خاصة ومؤمنة لمتابعة الطلبيات والمخزون وخدمات الإسناد.",
+      "source_field": "core_flows",
+      "page_refs": [],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:flow.002.F01.HomePage",
+      "alias": "evidence:flow.002.F01.HomePage",
+      "kind": "core_flow",
+      "title": "تصفح كتالوج الإطارات والمعلومات",
+      "text": "## تصفح كتالوج الإطارات والمعلومات\nاستعراض كتالوج الإطارات الوطني المعتمد الذي يقتصر حصرياً على علامتي Continental و Iris، والاطلاع على المقاسات المحددة والأسعار الرسمية وحالة التوفر بالمحطات بدون وسيط، والتعرف على آلية عمل المنصة ومميزاتها والأسئلة الشائعة ومعلومات الاتصال ومن نحن.\n参与角色：زائر المنصة、زبون طالب للإطارات。\n- F01 الرئيسية وطلب الإطارات：الواجهة الرئيسية واستعراض الكتالوج وتسجيل الطلبيات（写入：tire_order）\n\n- 状态口径 `tire_order.brand` (enum(CONTINENTAL,IRIS)): علامة الإطار المختارة حصراً بين Continental و Iris\n\n- 状态口径 `tire_order.status` (enum(NEW,PROCESSING,COMPLETED,CANCELLED)): الحالة التشغيلية للطلبية: جديدة، قيد المعالجة، مكتملة، ملغية",
+      "source_field": "core_flows",
+      "page_refs": [
+        "page:F01"
+      ],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:flow.003.F01.HomePage",
+      "alias": "evidence:flow.003.F01.HomePage",
+      "kind": "core_flow",
+      "title": "تسجيل طلبية الإطارات السيادية",
+      "text": "## تسجيل طلبية الإطارات السيادية\nتسجيل طلبية الإطارات عبر النموذج السيادي الموحد بإدخال كافة الحقول الإجبارية: الاسم واللقب، رقم الهاتف، رقم الهاتف الثاني، الولاية، البلدية، العلامة، مقاس العجلة المختار من القائمة، عدد الإطارات (1، 2، 3، أو 4 حصراً)، رقم بطاقة التعريف الوطنية، رقم البطاقة الذهبية (18 رقماً حصراً)، وتاريخ نهاية صلاحيتها، والحصول على وصل التسجيل برقم الطلبية المرجعي NM-2026.\n参与角色：زائر المنصة、زبون طالب للإطارات。\n- F01 الرئيسية وطلب الإطارات：الواجهة الرئيسية واستعراض الكتالوج وتسجيل الطلبيات（写入：tire_order）\n\n- 状态口径同前：`tire_order.brand`。\n\n- 状态口径同前：`tire_order.status`。",
+      "source_field": "core_flows",
+      "page_refs": [
+        "page:F01"
+      ],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:flow.004.F02.OrderTracking",
+      "alias": "evidence:flow.004.F02.OrderTracking",
+      "kind": "core_flow",
+      "title": "تتبع الطلبية وطباعة الوصل",
+      "text": "## تتبع الطلبية وطباعة الوصل\nتتبع حالة الطلبية واستعراض وطباعة وصل التسجيل الرقمي الرسمي بالاعتماد على الرقم المرجعي للطلبية NM-2026 ورقم الهاتف.\n参与角色：زائر المنصة、زبون طالب للإطارات。\n- F02 تتبع الطلبية والوصل：الاستعلام عن حالة الطلبية وطباعة وصل التسجيل الرسمي",
+      "source_field": "core_flows",
+      "page_refs": [
+        "page:F02"
+      ],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:flow.005.pages.F03-B03",
+      "alias": "evidence:flow.005.pages.F03-B03",
+      "kind": "core_flow",
+      "title": "المصادقة وإدارة الحسابات",
+      "text": "## المصادقة وإدارة الحسابات\nمصادقة الهوية الرقمية وتسجيل الحسابات والولوج الآمن للوحة التحكم الخاصة بإدارة نفطال ومساحة الزبون لحماية السجلات والبيانات المصرفية والشخصية المشفرة.\n- F03 دخول الزبون：تسجيل دخول زبائن المنصة لمتابعة طلبياتهم\n- F04 تسجيل حساب زبون：إنشاء حساب زبون جديد في المنصة（写入：account_user）\n- B02 دخول إدارة نفطال：تسجيل دخول المشرفين المعتمدين للوحة التحكم\n- B03 تسجيل مشرف جديد：إنشاء حساب إداري مصادق لمشرفي مراكز نفطال（写入：account_user）\n\n- 状态口径 `account_user.role` (enum(ADMIN,CUSTOMER)): طبيعة وصلاحيات الحساب في المنصة",
+      "source_field": "core_flows",
+      "page_refs": [
+        "page:F03",
+        "page:F04",
+        "page:B02",
+        "page:B03"
+      ],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:flow.006.B01.AdminDashboard",
+      "alias": "evidence:flow.006.B01.AdminDashboard",
+      "kind": "core_flow",
+      "title": "إدارة ومتابعة الطلبيات",
+      "text": "## إدارة ومتابعة الطلبيات\nإدارة تدفق طلبيات الإطارات في لوحة التحكم التشغيلية، والبحث والتصفية بالاسم ورقم الهاتف ورقم الطلبية والولاية والبلدية، والاطلاع على تفاصيل هوية العميل والبطاقة الذهبية المشفرة، وتعديل وحذف الطلبيات، وتغيير حالتها التشغيلية (جديدة، قيد المعالجة، مكتملة، ملغية).\n参与角色：مسؤول إدارة نفطال。\n- B01 لوحة الإدارة والتحكم التشغيلي：مركز التحكم التشغيلي وإدارة الطلبيات والمخزون والمحتوى（写入：tire_order, tire_stock, platform_faq, support_channel）\n\n- 状态口径 `tire_stock.brand` (enum(CONTINENTAL,IRIS)): العلامة المعتمدة حصراً (Continental أو Iris)\n\n- 状态口径 `tire_stock.category` (enum(TOURISM,UTILITY,SUV)): تصنيف العجلة سياحية أو نفعية أو رباعية الدفع\n\n- 状态口径 `platform_faq.category` (enum(ORDERS,PAYMENT,DELIVERY,WARRANTY)): مجال السؤال: طلبيات، دفع، توصيل، أو ضمان\n\n- 状态口径同前：`tire_order.brand`。\n\n- 状态口径同前：`tire_order.status`。",
+      "source_field": "core_flows",
+      "page_refs": [
+        "page:B01"
+      ],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:flow.007.B01.AdminDashboard",
+      "alias": "evidence:flow.007.B01.AdminDashboard",
+      "kind": "core_flow",
+      "title": "إدارة المخزون والأسعار والمقاسات",
+      "text": "## إدارة المخزون والأسعار والمقاسات\nإدارة كتالوج الإطارات والمقاسات المتاحة والمخزون وحالة التوفر (متوفر، غير متوفر) وتعديل الأسعار بالدينار الجزائري وإضافة مقاسات جديدة لكل من Continental و Iris وتحديد مؤشرات السرعة والحمولة.\n参与角色：مسؤول إدارة نفطال。\n- B01 لوحة الإدارة والتحكم التشغيلي：مركز التحكم التشغيلي وإدارة الطلبيات والمخزون والمحتوى（写入：tire_order, tire_stock, platform_faq, support_channel）\n- B04 إدارة المخزون والمقاسات والأسعار：إدارة مقاسات وأسعار ومخزون علامتي Continental و Iris（写入：tire_stock）\n\n- 状态口径同前：`tire_stock.brand`。\n\n- 状态口径同前：`tire_stock.category`。\n\n- 状态口径同前：`platform_faq.category`。\n\n- 状态口径同前：`tire_order.brand`。\n\n- 状态口径同前：`tire_order.status`。",
+      "source_field": "core_flows",
+      "page_refs": [
+        "page:B01",
+        "page:B04"
+      ],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:flow.008.B01.AdminDashboard",
+      "alias": "evidence:flow.008.B01.AdminDashboard",
+      "kind": "core_flow",
+      "title": "إدارة المحتوى وقنوات الدعم",
+      "text": "## إدارة المحتوى وقنوات الدعم\nإدارة وتحيين محتوى الأسئلة الشائعة (FAQ) وقنوات الاتصال والدعم الفني المباشر (مثل الرقم الأخضر 1050 وصفحة التواصل) والمعلومات التعريفية لمنصة نفطال محطتي.\n参与角色：مسؤول إدارة نفطال。\n- B01 لوحة الإدارة والتحكم التشغيلي：مركز التحكم التشغيلي وإدارة الطلبيات والمخزون والمحتوى（写入：tire_order, tire_stock, platform_faq, support_channel）\n- B05 إدارة المحتوى والدعم والأسئلة الشائعة：تحيين الأسئلة الشائعة وقنوات الاتصال والدعم الفني（写入：platform_faq, support_channel）\n\n- 状态口径同前：`tire_stock.brand`。\n\n- 状态口径同前：`tire_stock.category`。\n\n- 状态口径同前：`platform_faq.category`。\n\n- 状态口径同前：`tire_order.brand`。\n\n- 状态口径同前：`tire_order.status`。",
+      "source_field": "core_flows",
+      "page_refs": [
+        "page:B01",
+        "page:B05"
+      ],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:rule.001",
+      "alias": "evidence:rule.001",
+      "kind": "domain_constraint",
+      "title": "领域业务规则（按实体）",
+      "text": "## 领域业务规则（按实体）",
+      "source_field": "domain_constraints",
+      "page_refs": [],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:rule.002",
+      "alias": "evidence:rule.002",
+      "kind": "domain_constraint",
+      "title": "حساب المستخدم ومشرف نفطال（account_user）",
+      "text": "### حساب المستخدم ومشرف نفطال（account_user）\n- يجب أن يكون اسم المستخدم فريداً على مستوى المنصة ولا يتكرر لأكثر من حساب.\n- يحظر تعديل دور الحساب التشغيلي إلا من قبل مسؤول النظام المخول.\n- username: معرف تسجيل الدخول المعتمد للمستخدم أو المشرف\n- password_hash: تجزئة كلمة المرور للتحقق من الهوية الرقمية\n- role: طبيعة وصلاحيات الحساب في المنصة\n- phone_number: رقم الهاتف المسجل للتواصل\n- national_id_number: رقم التعريف الوطني البيومتري",
+      "source_field": "domain_constraints",
+      "page_refs": [],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:rule.003",
+      "alias": "evidence:rule.003",
+      "kind": "domain_constraint",
+      "title": "الولاية والبلدية الجزائرية（algerian_wilaya）",
+      "text": "### الولاية والبلدية الجزائرية（algerian_wilaya）\n- رمز الولاية ثابت وفريد ويمثل التقسيم الإداري الرسمي للجمهورية الجزائرية.\n- تحتوي كل ولاية على قائمة بلدياتها الرسمية ولا يمكن اختيار بلدية خارج ولايتها.\n- code: بيانات رسمية معيارية محملة مسبقاً (seed) من التقسيم الإداري الوطني الجزائري من 01 إلى 58\n- name_ar: اسم الولاية الرسمي بالعربية من بيانات النظام المهيأة مسبقاً (seed)\n- communes: قائمة البلديات المعتمدة محملة مسبقاً من قاعدة بيانات التقسيم الإداري (seed)",
+      "source_field": "domain_constraints",
+      "page_refs": [],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:rule.004",
+      "alias": "evidence:rule.004",
+      "kind": "domain_constraint",
+      "title": "مخزون ومقاسات الإطارات（tire_stock）",
+      "text": "### مخزون ومقاسات الإطارات（tire_stock）\n- العلامات المسموحة محصورة في Continental و Iris ويمنع إدراج علامات غير معتمدة.\n- لا يمكن تعديل السعر أو المخزون إلا من قبل المشرفين المخولين في لوحة التحكم الإدارية.\n- يصبح المقاس غير متاح تلقائياً إذا انخفض المخزون المتوفر إلى الصفر.\n- brand: العلامة المعتمدة حصراً (Continental أو Iris)\n- size: المقاس الفني للعجلة ويتم اختياره من القائمة المحددة دون إدخال يدوي\n- category: تصنيف العجلة سياحية أو نفعية أو رباعية الدفع\n- price_dzd: السعر الرسمي المعتمد للإطار الواحد بالدينار الجزائري\n- available_stock: كمية الإطارات المتاحة فعلياً للحجز والتوزيع\n- reserved_stock: كمية الإطارات المخصصة لطلبيات مؤكدة قيد التنفيذ\n- min_threshold: الحد الأدنى الذي يطلق تنبيه نقص المخزون عند الوصول إليه\n- speed_index: مؤشر السرعة والحمولة القياسي للعجلة\n- is_available: جاهزية المقاس للطلب الفوري في محطات نفطال",
+      "source_field": "domain_constraints",
+      "page_refs": [],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:rule.005",
+      "alias": "evidence:rule.005",
+      "kind": "domain_constraint",
+      "title": "الأسئلة الشائعة（platform_faq）",
+      "text": "### الأسئلة الشائعة（platform_faq）\n- يتم إنشاء وتعديل الأسئلة الشائعة من قبل مشرف المنصة فقط.\n- الأسئلة النشطة فقط هي التي تظهر لزوار المنصة في الواجهة الرئيسية.\n- question: صيغة السؤال الشائع الموجه للزبائن\n- answer: الإجابة التوضيحية المعتمدة من نفطال\n- category: مجال السؤال: طلبيات، دفع، توصيل، أو ضمان\n- is_active: ظهور السؤال في الواجهة العامة للزبائن",
+      "source_field": "domain_constraints",
+      "page_refs": [],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:rule.006",
+      "alias": "evidence:rule.006",
+      "kind": "domain_constraint",
+      "title": "قناة الاتصال والدعم（support_channel）",
+      "text": "### قناة الاتصال والدعم（support_channel）\n- يتولى مشرف إدارة نفطال تحديث وسائل وقنوات التواصل الرسمية.\n- title: تسمية وسيلة الاتصال مثل الرقم الأخضر 1050\n- value: رقم الهاتف أو البريد الإلكتروني أو رابط الفيسبوك الرسمي\n- description: أوقات الخدمة وتفاصيل مركز الاتصال\n- is_active: تفعيل وسيلة الاتصال في الواجهة",
+      "source_field": "domain_constraints",
+      "page_refs": [],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:rule.007",
+      "alias": "evidence:rule.007",
+      "kind": "domain_constraint",
+      "title": "طلبية الإطارات الرسمية（tire_order）",
+      "text": "### طلبية الإطارات الرسمية（tire_order）\n- كافة الحقول إجبارية دون استثناء: الاسم واللقب، رparamقما الهاتف، الولاية، البلدية، العلامة، المقاس، عدد الإطارات، رقم التعريف الوطني، رقم الذهبية (18 رقماً)، وتاريخ نهاية صلاحيتها.\n- يجب أن يتكون رقم البطاقة الذهبية من 18 رقماً تماماً دون أي أحرف أو رموز.\n- رقم الهاتف الأول والثاني إجباريان ويجب أن يطابقا أرقام الهواتف النقالة الجزائرية الصالحة (05، 06، 07).\n- عدد الإطارات مسموح به حصراً بالخيارات: 1 إطار، 2 إطارات، 3 إطارات، 4 إطارات.\n- المبلغ الإجمالي محسوب بالمعادلة المغلقة: السعر الفردي مضروب في عدد الإطارات، ولا توجد أي مصاريف إضافية.\n- لا يمكن تعديل حالة الطلبية أو حذفها إلا من قبل مسؤولي إدارة نفطال المخولين في لوحة التحكم.\n- order_number: الرقم المرجعي السيادي الموحد بصيغة NM-2026-XXXX\n- customer_name: الاسم واللقب الكامل لصاحب الطلبية\n- phone_number: رقم الهاتف الجزائري الرئيسي ويبدأ بـ 05 أو 06 أو 07\n- secondary_phone: رقم هاتف جزائري ثان إجباري ويبدأ بـ 05 أو 06 أو 07\n- wilaya: اسم الولاية المختارة من قائمة الولايات الـ 58\n- commune: اسم البلدية المختارة التابعة للولاية\n- brand: علامة الإطار المختارة حصراً بين Continental و Iris\n- tire_size: مقاس العجلة المختار من القائمة المرتبطة بالعلامة\n- quantity: كمية الإطارات المطلوبة: 1 أو 2 أو 3 أو 4 حصراً\n- unit_price_dzd: سعر الإطار الواحد بالدينار الجزائري\n- total_price_dzd: المبلغ الإجمالي = السعر الفردي مضروباً في كمية الإطارات، بدون رسوم إضافية\n- national_id_number: رقم بطاقة التعريف الوطنية البيومترية، أرقام فقط\n- dahabia_card_number: رقم البطاقة الذهبية المشفر المكون حصراً ودقيقاً من 18 رقماً\n- dahabia_expiry: تاريخ نهاية الصلاحية بصيغة شهر/سنة MM/YY\n- status: الحالة التشغيلية للطلبية: جديدة، قيد المعالجة، مكتملة، ملغية\n- notes: ملاحظات داخلية لمشرفي مراكز نفطال\n- customer: ارتباط الحساب إذا كان الزبون مسجلاً بالمنصة",
+      "source_field": "domain_constraints",
+      "page_refs": [],
+      "model_refs": []
+    },
+    {
+      "id": "evidence:state.001.F01.HomePage",
+      "alias": "evidence:state.001.F01.HomePage",
+      "kind": "status_transition",
+      "title": "[{\"entity\": \"tire_order\", \"transitions\": [{\"field\": \"status\", \"from\": \"__create__\", \"to\": \"NEW\", \"action\": \"تسجيل الزبون",
+      "text": "[{\"entity\": \"tire_order\", \"transitions\": [{\"field\": \"status\", \"from\": \"__create__\", \"to\": \"NEW\", \"action\": \"تسجيل الزبون للطلبية بالواجهة الرسمية\", \"at\": \"F01\", \"page\": \"HomePage\"}, {\"field\": \"status\", \"from\": \"NEW\", \"to\": \"PROCESSING\", \"action\": \"بدء معالجة الطلبية وتخصيص الحصة\", \"at\": \"B01\", \"page\": \"AdminDashboard\"}, {\"field\": \"status\", \"from\": \"PROCESSING\", \"to\": \"COMPLETED\", \"action\": \"تأكيد استلام الإطارات في محطة نفطال\", \"at\": \"B01\", \"page\": \"AdminDashboard\"}, {\"field\": \"status\", \"from\": \"PROCESSING\", \"to\": \"CANCELLED\", \"action\": \"إلغاء الطلبية من الإدارة لعدم المطابقة\", \"at\": \"B01\", \"page\": \"AdminDashboard\"}, {\"field\": \"status\", \"from\": \"NEW\", \"to\": \"CANCELLED\", \"action\": \"إلغاء الطلبية مباشرة من قبل الإدارة\", \"at\": \"B01\", \"page\": \"AdminDashboard\"}]}]",
+      "source_field": "status_transition",
+      "page_refs": [
+        "page:F01",
+        "page:B01"
+      ],
+      "model_refs": []
+    }
+  ],
+  "files": [
+    {
+      "path": "app/(backend)/admincontentsupport/page.tsx",
+      "kind": "page_entry",
+      "exists": true
+    },
+    {
+      "path": "app/(backend)/admindashboard/page.tsx",
+      "kind": "page_entry",
+      "exists": true
+    },
+    {
+      "path": "app/(backend)/adminlogin/page.tsx",
+      "kind": "page_entry",
+      "exists": true
+    },
+    {
+      "path": "app/(backend)/adminregister/page.tsx",
+      "kind": "page_entry",
+      "exists": true
+    },
+    {
+      "path": "app/(backend)/adminstockmanagement/page.tsx",
+      "kind": "page_entry",
+      "exists": true
+    },
+    {
+      "path": "app/(frontend)/customerlogin/page.tsx",
+      "kind": "page_entry",
+      "exists": true
+    },
+    {
+      "path": "app/(frontend)/customerregister/page.tsx",
+      "kind": "page_entry",
+      "exists": true
+    },
+    {
+      "path": "app/(frontend)/ordertracking/page.tsx",
+      "kind": "page_entry",
+      "exists": true
+    },
+    {
+      "path": "lib/rpc-generated/src/backend/actions/AdminContentSupport.ts",
+      "kind": "rpc_stub",
+      "exists": true
+    },
+    {
+      "path": "lib/rpc-generated/src/backend/actions/AdminDashboard.ts",
+      "kind": "rpc_stub",
+      "exists": true
+    },
+    {
+      "path": "lib/rpc-generated/src/backend/actions/AdminLogin.ts",
+      "kind": "rpc_stub",
+      "exists": true
+    },
+    {
+      "path": "lib/rpc-generated/src/backend/actions/AdminRegister.ts",
+      "kind": "rpc_stub",
+      "exists": true
+    },
+    {
+      "path": "lib/rpc-generated/src/backend/actions/AdminStockManagement.ts",
+      "kind": "rpc_stub",
+      "exists": true
+    },
+    {
+      "path": "lib/rpc-generated/src/frontend/actions/CustomerLogin.ts",
+      "kind": "rpc_stub",
+      "exists": true
+    },
+    {
+      "path": "lib/rpc-generated/src/frontend/actions/CustomerRegister.ts",
+      "kind": "rpc_stub",
+      "exists": true
+    },
+    {
+      "path": "lib/rpc-generated/src/frontend/actions/HomePage.ts",
+      "kind": "rpc_stub",
+      "exists": true
+    },
+    {
+      "path": "lib/rpc-generated/src/frontend/actions/OrderTracking.ts",
+      "kind": "rpc_stub",
+      "exists": true
+    },
+    {
+      "path": "src/@base/BaseActionFun.ts",
+      "kind": "component_import",
+      "exists": true
+    },
+    {
+      "path": "src/backend/actions/AdminContentSupport.ts",
+      "kind": "source_action",
+      "exists": true
+    },
+    {
+      "path": "src/backend/actions/AdminDashboard.ts",
+      "kind": "source_action",
+      "exists": true
+    },
+    {
+      "path": "src/backend/actions/AdminLogin.ts",
+      "kind": "source_action",
+      "exists": true
+    },
+    {
+      "path": "src/backend/actions/AdminRegister.ts",
+      "kind": "source_action",
+      "exists": true
+    },
+    {
+      "path": "src/backend/actions/AdminStockManagement.ts",
+      "kind": "source_action",
+      "exists": true
+    },
+    {
+      "path": "src/backend/components/AdminContentSupportView.tsx",
+      "kind": "view",
+      "exists": true
+    },
+    {
+      "path": "src/backend/components/AdminDashboardView.tsx",
+      "kind": "view",
+      "exists": true
+    },
+    {
+      "path": "src/backend/components/AdminLoginView.tsx",
+      "kind": "view",
+      "exists": true
+    },
+    {
+      "path": "src/backend/components/AdminRegisterView.tsx",
+      "kind": "view",
+      "exists": true
+    },
+    {
+      "path": "src/backend/components/AdminStockManagementView.tsx",
+      "kind": "view",
+      "exists": true
+    },
+    {
+      "path": "src/backend/hooks/useAdminContentSupport.ts",
+      "kind": "hook",
+      "exists": true
+    },
+    {
+      "path": "src/backend/hooks/useAdminDashboard.ts",
+      "kind": "hook",
+      "exists": true
+    },
+    {
+      "path": "src/backend/hooks/useAdminLogin.ts",
+      "kind": "hook",
+      "exists": true
+    },
+    {
+      "path": "src/backend/hooks/useAdminRegister.ts",
+      "kind": "hook",
+      "exists": true
+    },
+    {
+      "path": "src/backend/hooks/useAdminStockManagement.ts",
+      "kind": "hook",
+      "exists": true
+    },
+    {
+      "path": "src/backend/route-params.ts",
+      "kind": "route_params",
+      "exists": true
+    },
+    {
+      "path": "src/backend/types/AdminContentSupport.ts",
+      "kind": "types",
+      "exists": true
+    },
+    {
+      "path": "src/backend/types/AdminDashboard.ts",
+      "kind": "types",
+      "exists": true
+    },
+    {
+      "path": "src/backend/types/AdminLogin.ts",
+      "kind": "types",
+      "exists": true
+    },
+    {
+      "path": "src/backend/types/AdminRegister.ts",
+      "kind": "types",
+      "exists": true
+    },
+    {
+      "path": "src/backend/types/AdminStockManagement.ts",
+      "kind": "types",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/actions/CustomerLogin.ts",
+      "kind": "source_action",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/actions/CustomerRegister.ts",
+      "kind": "source_action",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/actions/HomePage.ts",
+      "kind": "source_action",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/actions/OrderTracking.ts",
+      "kind": "source_action",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/components/CustomerLoginView.tsx",
+      "kind": "view",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/components/CustomerRegisterView.tsx",
+      "kind": "view",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/components/HomePageView.tsx",
+      "kind": "view",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/components/OrderTrackingView.tsx",
+      "kind": "view",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/hooks/useCustomerLogin.ts",
+      "kind": "hook",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/hooks/useCustomerRegister.ts",
+      "kind": "hook",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/hooks/useHomePage.ts",
+      "kind": "hook",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/hooks/useOrderTracking.ts",
+      "kind": "hook",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/route-params.ts",
+      "kind": "route_params",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/types/CustomerLogin.ts",
+      "kind": "types",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/types/CustomerRegister.ts",
+      "kind": "types",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/types/HomePage.ts",
+      "kind": "types",
+      "exists": true
+    },
+    {
+      "path": "src/frontend/types/OrderTracking.ts",
+      "kind": "types",
+      "exists": true
+    },
+    {
+      "path": "src/tools/BackendSession.tsx",
+      "kind": "shared_import",
+      "exists": true
+    }
+  ],
+  "infrastructure": [
+    {
+      "capability": "auth-guard-action",
+      "path": "src/backend/action_utils.ts",
+      "platform": "backend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "auth-guard-action",
+      "path": "src/frontend/action_utils.ts",
+      "platform": "frontend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "auth-guard-route",
+      "path": "src/tools/AppAuthGuard.tsx",
+      "platform": "app",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "auth-guard-route",
+      "path": "src/tools/BackendAuthGuard.tsx",
+      "platform": "backend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "auth-guard-route",
+      "path": "src/tools/FrontendAuthGuard.tsx",
+      "platform": "frontend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "auth-ui",
+      "path": "src/app/auth/rpc-auth.tsx",
+      "platform": "app",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "auth-ui",
+      "path": "src/backend/auth/rpc-auth.tsx",
+      "platform": "backend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "auth-ui",
+      "path": "src/frontend/auth/rpc-auth.tsx",
+      "platform": "frontend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "navigation-shell",
+      "path": "src/components/layout/backend/Sidebar.tsx",
+      "platform": "backend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "navigation-shell",
+      "path": "src/components/layout/frontend/Footer.tsx",
+      "platform": "frontend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "navigation-shell",
+      "path": "src/components/layout/frontend/Navigation.tsx",
+      "platform": "frontend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "route-registry",
+      "path": "src/backend/route-params.ts",
+      "platform": "backend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "route-registry",
+      "path": "src/frontend/route-params.ts",
+      "platform": "frontend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "session",
+      "path": "src/tools/AppSession.tsx",
+      "platform": "app",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "session",
+      "path": "src/tools/BackendSession.tsx",
+      "platform": "backend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "session",
+      "path": "src/tools/FrontendSession.tsx",
+      "platform": "frontend",
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/ai-definitions.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/ai/openai-compat.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/auth-definitions.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/auth/AuthState.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/auth/google.route.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/auth/google.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/auth/index.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/common.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/context.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/index.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/payment-definitions.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/payment/alipay.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/payment/amount.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/payment/clink.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/payment/nowpayments.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/payment/stripe.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-infra",
+      "path": "server/thirdparty/secret-resolver.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    },
+    {
+      "capability": "thirdparty-types",
+      "path": "src/types/thirdparty.d.ts",
+      "platform": null,
+      "read_only": false,
+      "note": ""
+    }
+  ],
+  "payment": {
+    "profile": {
+      "target_markets": {
+        "values": [
+          "DZ"
+        ],
+        "source": "ai_inferred",
+        "confidence": 0.95,
+        "evidence_refs": [
+          "page:F01",
+          "page:F02",
+          "page:B01"
+        ],
+        "confirmed": false
+      },
+      "product_types": {
+        "values": [
+          "physical"
+        ],
+        "source": "ai_inferred",
+        "confidence": 0.95,
+        "evidence_refs": [
+          "page:F01",
+          "page:B01"
+        ],
+        "confirmed": false
+      },
+      "billing_modes": {
+        "values": [
+          "one_time"
+        ],
+        "source": "ai_inferred",
+        "confidence": 0.95,
+        "evidence_refs": [
+          "page:F01",
+          "page:B01"
+        ],
+        "confirmed": false
+      },
+      "payment_rails": {
+        "values": [
+          "fiat"
+        ],
+        "source": "ai_inferred",
+        "confidence": 0.95,
+        "evidence_refs": [
+          "page:F01",
+          "page:F02",
+          "page:B01"
+        ],
+        "confirmed": false
+      }
+    },
+    "nowpayments_pricing": null,
+    "selected_providers": [],
+    "recommended_providers": [
+      "stripe",
+      "clink"
+    ],
+    "recommendation_notes": [],
+    "implemented_providers": [],
+    "page_refs": [],
+    "interface_refs": [],
+    "order_model_refs": [
+      "model:TireOrder"
+    ],
+    "status_field_refs": [
+      "model:TireOrder#status"
+    ],
+    "callback_pages": [],
+    "infrastructure_paths": [
+      "server/thirdparty/payment-definitions.ts",
+      "server/thirdparty/payment/alipay.ts",
+      "server/thirdparty/payment/amount.ts",
+      "server/thirdparty/payment/clink.ts",
+      "server/thirdparty/payment/nowpayments.ts",
+      "server/thirdparty/payment/stripe.ts"
+    ],
+    "warnings": []
+  },
+  "warnings": []
+}
