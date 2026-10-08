@@ -2,20 +2,22 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { toast } from "sonner";
-import { StockFilterState, StockKpiData, TireStockDto } from "@/backend/types/AdminStockManagement";
-import { getStockManagementData, createTireStock, updateTireStock, toggleTireAvailability } from "@/backend/actions/AdminStockManagement";
-import HeaderSection from "@/backend/components/AdminStockManagement/HeaderSection";
-import KpiMetricCards from "@/backend/components/AdminStockManagement/KpiMetricCards";
-import FilterToolbar from "@/backend/components/AdminStockManagement/FilterToolbar";
-import StockTable from "@/backend/components/AdminStockManagement/StockTable";
-import CreateStockDrawer, { NewTireStockPayload } from "@/backend/components/AdminStockManagement/CreateStockDrawer";
-import EditStockModal from "@/backend/components/AdminStockManagement/EditStockModal";
+import { StockFilterState, StockKpiData, TireStockDto } from "../types/AdminStockManagement";
+import { getStockManagementData, createTireStock, updateTireStock, toggleTireAvailability } from "../actions/AdminStockManagement";
+import HeaderSection from "../components/AdminStockManagement/HeaderSection";
+import KpiMetricCards from "../components/AdminStockManagement/KpiMetricCards";
+import FilterToolbar from "../components/AdminStockManagement/FilterToolbar";
+import StockTable from "../components/AdminStockManagement/StockTable";
+import CreateStockDrawer, { NewTireStockPayload } from "../components/AdminStockManagement/CreateStockDrawer";
+import EditStockModal from "../components/AdminStockManagement/EditStockModal";
+
 const formatSyncTime = (date: Date): string => {
   const hours = date.getHours().toString().padStart(2, "0");
   const minutes = date.getMinutes().toString().padStart(2, "0");
   const seconds = date.getSeconds().toString().padStart(2, "0");
   return `${hours}:${minutes}:${seconds}`;
 };
+
 export default function AdminStockManagementPage() {
   const [items, setItems] = useState<TireStockDto[]>([]);
   const [kpi, setKpi] = useState<StockKpiData>({
@@ -77,6 +79,7 @@ export default function AdminStockManagementPage() {
       }
     }
   }, []);
+
   useEffect(() => {
     loadDashboardData(false);
   }, [loadDashboardData]);
@@ -210,7 +213,9 @@ export default function AdminStockManagementPage() {
       stockLevel: prev.stockLevel === "LOW_STOCK" ? "ALL" : "LOW_STOCK"
     }));
   };
-  return <div className="w-full max-w-full min-w-0 overflow-x-hidden p-4 lg:p-6">
+
+  return (
+    <div className="w-full max-w-full min-w-0 overflow-x-hidden p-4 lg:p-6">
       <div className="flex min-w-0 flex-col gap-6">
         {/* 1. رأس الصفحة والتحكم العام */}
         <HeaderSection lastSyncTime={lastSyncTime} isRefreshing={isRefreshing} onRefresh={handleRefresh} onOpenCreateDrawer={() => setIsCreateDrawerOpen(true)} />
@@ -249,5 +254,6 @@ export default function AdminStockManagementPage() {
 
       {/* 6. نافذة تعديل السعر والمخزون وحد التنبيه */}
       <EditStockModal item={editingItem} isOpen={editingItem !== null} onClose={() => setEditingItem(null)} onSubmit={handleEditStock} />
-    </div>;
+    </div>
+  );
 }
