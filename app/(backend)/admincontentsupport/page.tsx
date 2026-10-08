@@ -2,15 +2,16 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { toast } from "sonner";
-import { PlatformFaq, SupportChannel, FaqFilterState, FaqFormData, SupportChannelFormData, ContentSupportStats } from "@/backend/types/AdminContentSupport";
-import { getContentSupportWorkbenchData, createPlatformFaq, updatePlatformFaq, togglePlatformFaqStatus, createSupportChannel, updateSupportChannel, toggleSupportChannelStatus } from "@/backend/actions/AdminContentSupport";
-import AdminContentSupportHeader from "@/backend/components/AdminContentSupport/AdminContentSupportHeader";
-import FaqFiltersToolbar from "@/backend/components/AdminContentSupport/FaqFiltersToolbar";
-import FaqDataTable from "@/backend/components/AdminContentSupport/FaqDataTable";
-import SupportChannelsGrid from "@/backend/components/AdminContentSupport/SupportChannelsGrid";
-import FaqFormModal from "@/backend/components/AdminContentSupport/FaqFormModal";
-import SupportChannelModal from "@/backend/components/AdminContentSupport/SupportChannelModal";
-import FaqDetailModal from "@/backend/components/AdminContentSupport/FaqDetailModal";
+import { PlatformFaq, SupportChannel, FaqFilterState, FaqFormData, SupportChannelFormData, ContentSupportStats } from "../types/AdminContentSupport";
+import { getContentSupportWorkbenchData, createPlatformFaq, updatePlatformFaq, togglePlatformFaqStatus, createSupportChannel, updateSupportChannel, toggleSupportChannelStatus } from "../actions/AdminContentSupport";
+import AdminContentSupportHeader from "../components/AdminContentSupport/AdminContentSupportHeader";
+import FaqFiltersToolbar from "../components/AdminContentSupport/FaqFiltersToolbar";
+import FaqDataTable from "../components/AdminContentSupport/FaqDataTable";
+import SupportChannelsGrid from "../components/AdminContentSupport/SupportChannelsGrid";
+import FaqFormModal from "../components/AdminContentSupport/FaqFormModal";
+import SupportChannelModal from "../components/AdminContentSupport/SupportChannelModal";
+import FaqDetailModal from "../components/AdminContentSupport/FaqDetailModal";
+
 export default function AdminContentSupportPage() {
   // Primary State
   const [faqs, setFaqs] = useState<PlatformFaq[]>([]);
@@ -89,7 +90,7 @@ export default function AdminContentSupportPage() {
         id,
         isActive: nextState
       });
-      setFaqs(prev => prev.map((faq, index) => faq.id === id ? updated : faq));
+      setFaqs(prev => prev.map((faq) => faq.id === id ? updated : faq));
       if (selectedFaqDetail && selectedFaqDetail.id === id) {
         setSelectedFaqDetail(updated);
       }
@@ -113,7 +114,6 @@ export default function AdminContentSupportPage() {
   const handleSaveFaq = async (formData: FaqFormData, id?: string) => {
     try {
       if (id) {
-        // Update existing FAQ
         const updated = await updatePlatformFaq({
           id,
           question: formData.question,
@@ -121,13 +121,12 @@ export default function AdminContentSupportPage() {
           category: formData.category,
           isActive: formData.isActive
         });
-        setFaqs(prev => prev.map((item, index) => item.id === id ? updated : item));
+        setFaqs(prev => prev.map((item) => item.id === id ? updated : item));
         if (selectedFaqDetail && selectedFaqDetail.id === id) {
           setSelectedFaqDetail(updated);
         }
         toast.success("تم تحديث بيانات السؤال الشائع المعتمد بنجاح");
       } else {
-        // Create new FAQ
         const created = await createPlatformFaq({
           question: formData.question,
           answer: formData.answer,
@@ -151,7 +150,7 @@ export default function AdminContentSupportPage() {
         id,
         isActive: nextState
       });
-      setChannels(prev => prev.map((ch, index) => ch.id === id ? updated : ch));
+      setChannels(prev => prev.map((ch) => ch.id === id ? updated : ch));
       toast.success(nextState ? "تم تفعيل وسيلة الاتصال للمواطنين في مركز الدعم" : "تم تعطيل وسيلة الاتصال مؤقتاً في البوابة الرقمية");
     } catch (err) {
       toast.error("حدث خطأ أثناء تعديل حالة وسيلة الاتصال");
@@ -168,7 +167,6 @@ export default function AdminContentSupportPage() {
   const handleSaveChannel = async (formData: SupportChannelFormData, id?: string) => {
     try {
       if (id) {
-        // Update existing Channel
         const updated = await updateSupportChannel({
           id,
           title: formData.title,
@@ -176,10 +174,9 @@ export default function AdminContentSupportPage() {
           description: formData.description || null,
           isActive: formData.isActive
         });
-        setChannels(prev => prev.map((item, index) => item.id === id ? updated : item));
+        setChannels(prev => prev.map((item) => item.id === id ? updated : item));
         toast.success("تم تحديث بيانات قناة الاتصال بنجاح");
       } else {
-        // Create new Channel
         const created = await createSupportChannel({
           title: formData.title,
           value: formData.value,
@@ -195,10 +192,8 @@ export default function AdminContentSupportPage() {
     }
   };
   return <div className="w-full max-w-full min-w-0 overflow-x-hidden p-4 lg:p-6 flex flex-col gap-6" dir="rtl">
-      {/* Top Header & Overview KPI Metric Cards */}
       <AdminContentSupportHeader stats={stats} onOpenNewFaq={handleOpenNewFaq} onOpenNewChannel={handleOpenNewChannel} />
 
-      {/* Main Section 1: FAQs Workbench Grid */}
       <section data-controller-name="جدول إدارة واستعراض الأسئلة الشائعة" className="flex min-w-0 flex-col gap-4">
         <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -215,23 +210,19 @@ export default function AdminContentSupportPage() {
           </span>
         </div>
 
-        {/* Filters and Search Bar */}
         <FaqFiltersToolbar filters={filters} onFilterChange={setFilters} onReset={() => setFilters({
         search: "",
         category: "ALL",
         status: "ALL"
       })} filteredCount={filteredFaqs.length} totalCount={faqs.length} />
 
-        {/* Data Table with Min Width Enforcement */}
         <FaqDataTable faqs={filteredFaqs} onToggleActive={handleToggleFaqActive} onEdit={handleEditFaq} onViewDetails={handleViewFaqDetail} />
       </section>
 
-      {/* Main Section 2: Support Channels Grid */}
       <section data-controller-name="جدول إدارة قنوات الاتصال والدعم الفني المباشر" className="mt-2 border-t border-border/60 pt-6">
         <SupportChannelsGrid channels={channels} onToggleActive={handleToggleChannelActive} onEdit={handleEditChannel} onAddNew={handleOpenNewChannel} />
       </section>
 
-      {/* Modals & Dialogs Layer */}
       <FaqFormModal isOpen={isFaqModalOpen} onClose={() => setIsFaqModalOpen(false)} faqToEdit={faqToEdit} onSave={handleSaveFaq} />
 
       <SupportChannelModal isOpen={isChannelModalOpen} onClose={() => setIsChannelModalOpen(false)} channelToEdit={channelToEdit} onSave={handleSaveChannel} />
