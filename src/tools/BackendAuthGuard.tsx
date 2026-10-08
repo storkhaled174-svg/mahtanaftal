@@ -8,7 +8,7 @@ export default function BackendAuthGuard({ children }: { children: React.ReactNo
   const router = useRouter();
   const pathname = usePathname();
   const session = useAdminSession();
-  const need_auth = ['/admindashboard','/adminstockmanagement','/admincontentsupport'];
+  const need_auth = ['/admindashboard','/adminstockmanagement','/admincontentsupport','/adminregister'];
   const normalizePath = (path: string) => {
     if (!path || path === '/') return '/';
     return path.endsWith('/') ? path.slice(0, -1) : path;
@@ -41,5 +41,6 @@ export default function BackendAuthGuard({ children }: { children: React.ReactNo
     }
   }, [pathname, router, session]);
 
+  if (need_auth.some(matchesAuthPath) && (!session._hasHydrated || !session.token || session.role !== 'ADMIN')) return null;
   return children;
 }

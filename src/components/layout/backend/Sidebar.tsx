@@ -27,6 +27,7 @@ export function Sidebar() {
     icon: FileQuestion
   }];
   const handleLogout = () => {
+    void fetch('/api/admin/logout', {method:'POST'});
     reset();
     router.push("/adminlogin");
   };

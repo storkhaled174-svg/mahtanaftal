@@ -121,7 +121,7 @@ export default function OrderReceiptModal({
           </div>
 
           <div className="space-y-1 rounded-lg border border-border bg-background p-3.5 text-right" data-api-unique-id='orderreceiptmodal-r734c35bfdf0a28da-s1475221654' data-api-unique-page-name='src/frontend/components/HomePage/OrderReceiptModal'>
-            <span className="text-xs text-muted-foreground" data-api-unique-id='orderreceiptmodal-r8e4409d91ba49ea4-s1475221654' data-api-unique-page-name='src/frontend/components/HomePage/OrderReceiptModal'>البطاقة الذهبية المسجلة (18 رقماً):</span>
+            <span className="text-xs text-muted-foreground" data-api-unique-id='orderreceiptmodal-r8e4409d91ba49ea4-s1475221654' data-api-unique-page-name='src/frontend/components/HomePage/OrderReceiptModal'>آخر 8 أرقام من البطاقة الذهبية (مخفية جزئياً):</span>
             <div className="font-mono font-bold text-foreground" dir="ltr" data-api-unique-id='orderreceiptmodal-rd8a0546418ca7936-s1475221654' data-api-unique-page-name='src/frontend/components/HomePage/OrderReceiptModal'>{receipt.edahabiaMasked}</div>
           </div>
         </div>

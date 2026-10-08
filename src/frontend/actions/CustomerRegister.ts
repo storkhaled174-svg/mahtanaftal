@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/tools/prisma';
-import { hashPassword, withResult } from '@/frontend/action_utils';
+import { hashPassword, withResult } from '../action_utils';
 import {
   CustomerRegisterInput,
   CustomerRegisterOutput,
@@ -37,6 +37,9 @@ export async function registerCustomer(
     if (!input.password || input.password.length < 6) {
       throw new Error('كلمة المرور يجب أن لا تقل عن 6 أحرف أو أرقام');
     }
+
+    if (!/^(05|06|07)[0-9]{8}$/.test(trimmedPhone)) throw new Error('رقم الهاتف غير صالح');
+    if (!/^[0-9]{18}$/.test(trimmedNIN)) throw new Error('رقم التعريف الوطني يجب أن يتكون من 18 رقماً');
 
     // التحقق من عدم وجود حساب مسبق بنفس اسم المستخدم
     const existingUser = await prisma.accountUser.findUnique({

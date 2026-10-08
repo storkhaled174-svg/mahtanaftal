@@ -1,7 +1,9 @@
 'use server';
 
+import { getAuthContext, ForbiddenError } from '../action_utils';
+
 import prisma from '@/tools/prisma';
-import { withResult } from '@/backend/action_utils';
+import { withResult } from '../action_utils';
 import {
   AdminDashboardDataOutput,
   OrderItem,
@@ -27,6 +29,7 @@ import {
 // Action 1: Get complete dashboard state & seed if empty
 export async function getAdminDashboardData(): Promise<AdminDashboardDataOutput> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     // 1. Fetch Orders with newest first
     const ordersRaw = await prisma.tireOrder.findMany({
       orderBy: { createdAt: 'desc' },
@@ -46,7 +49,7 @@ export async function getAdminDashboardData(): Promise<AdminDashboardDataOutput>
       unitPriceDzd: o.unitPriceDzd.toNumber(), // data-from: TireOrder-unitPriceDzd
       totalPriceDzd: o.totalPriceDzd.toNumber(), // data-from: TireOrder-totalPriceDzd
       nationalIdNumber: o.nationalIdNumber, // data-from: TireOrder-nationalIdNumber
-      dahabiaCardNumber: o.dahabiaCardNumber, // data-from: TireOrder-dahabiaCardNumber
+      dahabiaCardNumber: o.dahabiaCardNumber.slice(-8), // data-from: TireOrder-dahabiaCardNumber
       dahabiaExpiry: o.dahabiaExpiry, // data-from: TireOrder-dahabiaExpiry
       status: o.status as OrderStatus, // data-from: TireOrder-status
       notes: o.notes, // data-from: TireOrder-notes
@@ -162,6 +165,7 @@ export async function getAdminDashboardData(): Promise<AdminDashboardDataOutput>
 // Action 2: Update Order Status & Synchronize Stock Quota Allocation
 export async function updateOrderStatus(input: UpdateOrderStatusInput): Promise<OrderItem> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const { orderId, newStatus } = input;
 
     const order = await prisma.tireOrder.findUnique({
@@ -243,7 +247,7 @@ export async function updateOrderStatus(input: UpdateOrderStatusInput): Promise<
       unitPriceDzd: updatedOrder.unitPriceDzd.toNumber(), // data-from: TireOrder-unitPriceDzd
       totalPriceDzd: updatedOrder.totalPriceDzd.toNumber(), // data-from: TireOrder-totalPriceDzd
       nationalIdNumber: updatedOrder.nationalIdNumber, // data-from: TireOrder-nationalIdNumber
-      dahabiaCardNumber: updatedOrder.dahabiaCardNumber, // data-from: TireOrder-dahabiaCardNumber
+      dahabiaCardNumber: updatedOrder.dahabiaCardNumber.slice(-8), // data-from: TireOrder-dahabiaCardNumber
       dahabiaExpiry: updatedOrder.dahabiaExpiry, // data-from: TireOrder-dahabiaExpiry
       status: updatedOrder.status as OrderStatus, // data-from: TireOrder-status
       notes: updatedOrder.notes, // data-from: TireOrder-notes
@@ -257,6 +261,7 @@ export async function updateOrderStatus(input: UpdateOrderStatusInput): Promise<
 // Action 3: Update Order Details from EditOrderModal
 export async function updateOrderDetails(input: UpdateOrderDetailsInput): Promise<OrderItem> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const {
       orderId,
       customerName,
@@ -314,7 +319,7 @@ export async function updateOrderDetails(input: UpdateOrderDetailsInput): Promis
       unitPriceDzd: updated.unitPriceDzd.toNumber(), // data-from: TireOrder-unitPriceDzd
       totalPriceDzd: updated.totalPriceDzd.toNumber(), // data-from: TireOrder-totalPriceDzd
       nationalIdNumber: updated.nationalIdNumber, // data-from: TireOrder-nationalIdNumber
-      dahabiaCardNumber: updated.dahabiaCardNumber, // data-from: TireOrder-dahabiaCardNumber
+      dahabiaCardNumber: updated.dahabiaCardNumber.slice(-8), // data-from: TireOrder-dahabiaCardNumber
       dahabiaExpiry: updated.dahabiaExpiry, // data-from: TireOrder-dahabiaExpiry
       status: updated.status as OrderStatus, // data-from: TireOrder-status
       notes: updated.notes, // data-from: TireOrder-notes
@@ -328,6 +333,7 @@ export async function updateOrderDetails(input: UpdateOrderDetailsInput): Promis
 // Action 4: Delete Order
 export async function deleteOrder(orderId: string): Promise<{ success: boolean; id: string }> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const existing = await prisma.tireOrder.findUnique({
       where: { id: orderId },
     });
@@ -364,6 +370,7 @@ export async function deleteOrder(orderId: string): Promise<{ success: boolean; 
 // Action 5: Add New Tire Stock to Catalog
 export async function addTireStock(input: AddTireStockInput): Promise<TireSizeStock> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const created = await prisma.tireStock.create({
       data: {
         brand: input.brand,
@@ -398,6 +405,7 @@ export async function addTireStock(input: AddTireStockInput): Promise<TireSizeSt
 // Action 6: Update Tire Stock & Price
 export async function updateTireStock(input: UpdateTireStockInput): Promise<TireSizeStock> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const updated = await prisma.tireStock.update({
       where: { id: input.stockId },
       data: {
@@ -428,6 +436,7 @@ export async function updateTireStock(input: UpdateTireStockInput): Promise<Tire
 // Action 7: Toggle Stock Availability Directly
 export async function toggleStockAvailability(stockId: string): Promise<TireSizeStock> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const stock = await prisma.tireStock.findUnique({
       where: { id: stockId },
     });
@@ -464,6 +473,7 @@ export async function toggleStockAvailability(stockId: string): Promise<TireSize
 // Action 8: Add Platform FAQ
 export async function addPlatformFaq(input: AddPlatformFaqInput): Promise<PlatformFaqItem> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const created = await prisma.platformFaq.create({
       data: {
         question: input.question,
@@ -488,6 +498,7 @@ export async function addPlatformFaq(input: AddPlatformFaqInput): Promise<Platfo
 // Action 9: Update Platform FAQ
 export async function updatePlatformFaq(input: UpdatePlatformFaqInput): Promise<PlatformFaqItem> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const updated = await prisma.platformFaq.update({
       where: { id: input.faqId },
       data: {
@@ -513,6 +524,7 @@ export async function updatePlatformFaq(input: UpdatePlatformFaqInput): Promise<
 // Action 10: Delete Platform FAQ
 export async function deletePlatformFaq(faqId: string): Promise<{ success: boolean; id: string }> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     await prisma.platformFaq.delete({
       where: { id: faqId },
     });
@@ -523,6 +535,7 @@ export async function deletePlatformFaq(faqId: string): Promise<{ success: boole
 // Action 11: Update Support Channel
 export async function updateSupportChannel(input: UpdateSupportChannelInput): Promise<SupportChannelItem> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const updated = await prisma.supportChannel.update({
       where: { id: input.channelId },
       data: {

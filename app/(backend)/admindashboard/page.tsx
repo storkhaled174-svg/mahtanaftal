@@ -11,6 +11,9 @@ import CatalogStockSection from "@/backend/components/AdminDashboard/CatalogStoc
 import ContentSupportSection from "@/backend/components/AdminDashboard/ContentSupportSection";
 import CustomerModal from "@/backend/components/AdminDashboard/CustomerModal";
 import EditOrderModal from "@/backend/components/AdminDashboard/EditOrderModal";
+import { useRouter } from 'next/navigation';
+import { useAdminSession } from '@/tools/BackendSession';
+import { changeAdminPassword } from '@/backend/actions/AdminLogin';
 import AdminLockScreen from "@/backend/components/AdminDashboard/AdminLockScreen";
 import AdminSecurityBar from "@/backend/components/AdminDashboard/AdminSecurityBar";
 import UpdatePasswordModal from "@/backend/components/AdminDashboard/UpdatePasswordModal";
@@ -59,6 +62,8 @@ function mapChannelToUi(c: SupportChannelItem): UiSupportChannel {
   };
 }
 export default function AdminDashboardPage() {
+  const router = useRouter();
+  const session = useAdminSession();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Security Lock State for Orders Management
@@ -76,101 +81,30 @@ export default function AdminDashboardPage() {
   const [confirmPasswordInput, setConfirmPasswordInput] = useState<string>("");
   const [updateError, setUpdateError] = useState<string>("");
 
-  // Check Session Storage on mount
   useEffect(() => {
-    try {
-      const storedAuth = typeof window !== "undefined" ? sessionStorage.getItem("naftal_admin_auth") : null;
-      if (storedAuth === "true") {
-        setIsAuthenticated(true);
-      }
-    } catch {
-      // ignore
-    } finally {
-      setAuthChecked(true);
-    }
-  }, []);
-
-  const getValidPasswords = (): string[] => {
-    const defaults = ["bach na9ch", "bachna9ch", "naftal2026", "123456"];
-    try {
-      const custom = typeof window !== "undefined" ? localStorage.getItem("naftal_admin_custom_password") : null;
-      if (custom && custom.trim()) {
-        return [custom.trim(), ...defaults];
-      }
-    } catch {
-      // ignore
-    }
-    return defaults;
-  };
+    setAuthChecked(session._hasHydrated);
+    setIsAuthenticated(Boolean(session.token) && session.role === 'ADMIN');
+  }, [session.token, session.role, session._hasHydrated]);
 
   const handleUnlock = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    setIsVerifying(true);
-    setPasswordError("");
-
-    setTimeout(() => {
-      const val = passwordInput.trim();
-      const validList = getValidPasswords();
-      if (validList.includes(val)) {
-        try {
-          sessionStorage.setItem("naftal_admin_auth", "true");
-        } catch {
-          // ignore
-        }
-        setIsAuthenticated(true);
-        setPasswordInput("");
-        toast.success("تم تأكيد الرمز وفك قفل إدارة الطلبيات بنجاح");
-      } else {
-        setPasswordError("كلمة السر غير صحيحة. يرجى إدخال الرمز المعتمد.");
-        toast.error("فشل التحقق: كلمة السر غير صحيحة");
-      }
-      setIsVerifying(false);
-    }, 200);
+    e?.preventDefault();
+    router.replace('/adminlogin/');
   };
-
-  const handleLockAndExit = () => {
-    try {
-      sessionStorage.removeItem("naftal_admin_auth");
-    } catch {
-      // ignore
-    }
-    setIsAuthenticated(false);
-    setPasswordInput("");
-    setPasswordError("");
-    toast.info("تم قفل لوحة التحكم والخروج بنجاح 🔒");
+  const handleLockAndExit = async () => {
+    await fetch('/api/admin/logout', {method:'POST'});
+    session.reset();
+    router.replace('/adminlogin/');
   };
-
-  const handleUpdatePassword = (e: React.FormEvent) => {
+  const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    setUpdateError("");
-    const cur = currentPasswordInput.trim();
-    const np = newPasswordInput.trim();
-    const cp = confirmPasswordInput.trim();
-
-    const validList = getValidPasswords();
-    if (!validList.includes(cur)) {
-      setUpdateError("كلمة السر الحالية غير مطابقة");
-      return;
-    }
-    if (!np || np.length < 4) {
-      setUpdateError("كلمة السر الجديدة يجب أن تتكون من 4 أحرف أو أرقام على الأقل");
-      return;
-    }
-    if (np !== cp) {
-      setUpdateError("تأكيد كلمة السر الجديدة غير متطابق");
-      return;
-    }
-
+    setUpdateError('');
+    if (newPasswordInput !== confirmPasswordInput) { setUpdateError('تأكيد كلمة السر الجديدة غير متطابق'); return; }
     try {
-      localStorage.setItem("naftal_admin_custom_password", np);
-      toast.success("تم تحديث كلمة سر لوحة التحكم بنجاح");
+      await changeAdminPassword({currentPassword:currentPasswordInput,newPassword:newPasswordInput});
+      toast.success('تم تحديث كلمة السر في الحساب الإداري');
       setIsUpdatePasswordOpen(false);
-      setCurrentPasswordInput("");
-      setNewPasswordInput("");
-      setConfirmPasswordInput("");
-    } catch {
-      toast.error("تعذر حفظ كلمة السر في المتصفح");
-    }
+      setCurrentPasswordInput(''); setNewPasswordInput(''); setConfirmPasswordInput('');
+    } catch (error) { setUpdateError(error instanceof Error ? error.message : 'تعذر تحديث كلمة السر'); }
   };
 
   // State Management for Operational Entities

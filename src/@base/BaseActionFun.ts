@@ -33,13 +33,14 @@ export const authStorage = new AsyncLocalStorage<any>()
 // ===== JWT 配置 =====
 
 const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'your-secret-key-64-chars-recommended'
+  process.env.JWT_SECRET || ''
 )
 
 // ===== 死方法：绝对不变 =====
 
 export async function parseTokenBase(token: string): Promise<{ userId: string; role: string } | null> {
   try {
+    if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) return null;
     const { payload } = await jwtVerify(token, JWT_SECRET)
     return {
       userId: payload.userId as string,
@@ -62,6 +63,7 @@ export async function signToken(
   role: string,
   expiresIn: string = '7d'
 ): Promise<string> {
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) throw new Error('إعدادات تسجيل الدخول غير مكتملة');
   return new SignJWT({ userId, role })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()

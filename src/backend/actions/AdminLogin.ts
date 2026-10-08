@@ -6,7 +6,8 @@ import {
   signToken,
   hashPassword,
   withResult,
-} from '@/backend/action_utils';
+  getAuthContext,
+} from '../action_utils';
 import { LoginAdminInput, LoginAdminOutput, UserRole } from '@/backend/types/AdminLogin';
 
 /**
@@ -62,4 +63,13 @@ export async function loginAdmin(input: LoginAdminInput): Promise<LoginAdminOutp
       },
     };
   })();
+}
+
+export async function changeAdminPassword(input: {currentPassword: string; newPassword: string}): Promise<void> {
+  const auth = getAuthContext();
+  if (auth.role !== 'ADMIN') throw new UnauthorizedError();
+  const user = await prisma.accountUser.findUnique({where:{id:auth.userId}});
+  if (!user || user.passwordHash !== hashPassword(input.currentPassword)) throw new Error('كلمة السر الحالية غير مطابقة');
+  if (!input.newPassword || input.newPassword.length < 8) throw new Error('كلمة السر الجديدة يجب ألا تقل عن 8 أحرف');
+  await prisma.accountUser.update({where:{id:user.id},data:{passwordHash:hashPassword(input.newPassword)}});
 }

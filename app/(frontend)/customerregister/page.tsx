@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import PortalHeader from "@/frontend/components/CustomerRegister/PortalHeader";
@@ -24,6 +24,7 @@ export default function CustomerRegisterPage() {
     acceptTerms: true
   });
   const [errors, setErrors] = useState<FormValidationErrors>({});
+  const submitting = useRef(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleInputChange = (field: keyof CustomerRegisterFormData, value: string | boolean) => {
     setFormData(prev => ({
@@ -88,10 +89,12 @@ export default function CustomerRegisterPage() {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting.current) return;
     if (!validateForm()) {
       toast.error("يرجى تصحيح أخطاء النموذج المدخلة للمتابعة");
       return;
     }
+    submitting.current = true;
     setIsSubmitting(true);
     try {
       await registerCustomer({
@@ -113,6 +116,7 @@ export default function CustomerRegisterPage() {
       }));
       toast.error(errorMessage);
     } finally {
+      submitting.current = false;
       setIsSubmitting(false);
     }
   };

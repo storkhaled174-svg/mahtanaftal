@@ -13,7 +13,7 @@ import { useAdminSession } from './BackendSession';
 // 动态获取 PROJECT_ID 和 API_URL
 // 优先从 window.__dynamic_base__ 获取（生产环境），否则用环境变量
 const getApiUrl = () => {
-  return `http://localhost:3100/rpc/PROJ_926079ba_snap_20261005_100226_814`;
+  return `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/api/rpc/`;
 };
 
 // 请求去重：相同 actionName+args 的并发请求共享同一个 Promise
@@ -191,7 +191,7 @@ export async function rpcCall<T>(actionName: string, ...args: any[]): Promise<T>
         toast.error('Please login first', { id: 'auth-401' });
         // 不 throw，返回一个永远不 resolve 的 Promise
         // 这样上层 catch 不会触发，避免重复 toast
-        return new Promise<T>(() => {});
+        throw new Error('يرجى تسجيل الدخول مجدداً');
       }
 
       // 403 权限不足

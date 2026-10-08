@@ -92,6 +92,7 @@ export interface OrderFormData {
 }
 
 export interface CreateOrderInput {
+  submissionKey: string;
   customerName: string;
   phoneNumber: string;
   secondaryPhone: string;

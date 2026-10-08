@@ -25,15 +25,12 @@
         "./src/app/actions/*"
       ],
       "@/frontend/action_utils": [
-        "./lib/rpc-generated/src/frontend/action_utils",
         "./src/frontend/action_utils"
       ],
       "@/backend/action_utils": [
-        "./lib/rpc-generated/src/backend/action_utils",
         "./src/backend/action_utils"
       ],
       "@/app/action_utils": [
-        "./lib/rpc-generated/src/app/action_utils",
         "./src/app/action_utils"
       ],
       "@/*": [
