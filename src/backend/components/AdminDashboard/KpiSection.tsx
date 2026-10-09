@@ -93,7 +93,7 @@ export default function KpiSection({
     activeBg: lowStockAlertCount > 0 ? "border-destructive shadow-sm" : "border-primary shadow-sm"
   }];
   return <section className="w-full min-w-0" data-controller-name="مؤشرات الأداء التشغيلية الإجمالية" data-api-unique-id='kpisection-ra1bdea601ec9a195-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection'>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-7 gap-3" data-api-unique-id='kpisection-r6b9ea95b37cf1099-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection'>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3" data-api-unique-id='kpisection-r6b9ea95b37cf1099-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection'>
         {kpiCards.map((kpi, index) => {
         const Icon = kpi.icon;
         const isSelected = selectedStatusFilter === kpi.id;
@@ -105,7 +105,7 @@ export default function KpiSection({
               {/* Card Header: Title + Icon */}
               <div className="flex items-start justify-between gap-2 min-w-0 w-full" data-api-unique-id='kpisection-rb2c1c9393935e001-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1'>
                 <div className="min-w-0 flex-1" data-api-unique-id='kpisection-r7df4e42c10230da9-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1'>
-                  <span className="text-xs font-medium text-muted-foreground block truncate" data-api-unique-id='kpisection-raf3c0ce572b35743-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1' data-api-bind-info={`kpiCards-${index}-title`} data-api-map-var-name='kpi'>
+                  <span className="text-sm font-bold text-foreground block" data-api-unique-id='kpisection-raf3c0ce572b35743-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1' data-api-bind-info={`kpiCards-${index}-title`} data-api-map-var-name='kpi'>
                     {kpi.title}
                   </span>
                   <div className="mt-1 flex items-baseline gap-1" data-api-unique-id='kpisection-r540bb02b80bbf249-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1'>
@@ -121,8 +121,8 @@ export default function KpiSection({
               </div>
 
               {/* Card Footer: Status Badge + Subtext */}
-              <div className="mt-3 flex items-center justify-between gap-2 border-t border-border/60 pt-2 w-full min-w-0" data-api-unique-id='kpisection-r0fdbcd89b4648d95-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1'>
-                <span className="text-[11px] text-muted-foreground truncate" data-api-unique-id='kpisection-r29977521dfadcf08-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1' data-api-bind-info={`kpiCards-${index}-subtext`} data-api-map-var-name='kpi'>
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border/60 pt-2 w-full min-w-0" data-api-unique-id='kpisection-r0fdbcd89b4648d95-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1'>
+                <span className="text-sm font-medium text-muted-foreground" data-api-unique-id='kpisection-r29977521dfadcf08-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1' data-api-bind-info={`kpiCards-${index}-subtext`} data-api-map-var-name='kpi'>
                   {kpi.subtext}
                 </span>
                 <span className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-[10px] font-medium whitespace-nowrap ${kpi.badgeColor}`} data-api-unique-id='kpisection-r3f8637015acfc047-s1902068195' data-api-unique-page-name='src/backend/components/AdminDashboard/KpiSection' data-api-in-loop='1' data-api-bind-info={`kpiCards-${index}-badge`} data-api-map-var-name='kpi'>

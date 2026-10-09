@@ -126,3 +126,34 @@ input:autofill {
   caret-color: var(--color-foreground);
 }
 /* theme autofill contract:end */
+
+/* Readable Arabic typography, scoped to the administration area. */
+.admin-readable {
+  font-size: 16px;
+  line-height: 1.8;
+  font-weight: 500;
+  --color-muted-foreground: #dbe4f0;
+}
+.admin-readable :is(h1, h2, h3, h4, th, label) {
+  font-weight: 700;
+  line-height: 1.6;
+}
+.admin-readable :is(.text-xs, .text-sm, [class*="text-[10px]"], [class*="text-[11px]"], [class*="text-[12px]"]) {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+.admin-readable :is(button, input, select, textarea) {
+  font-weight: 600;
+}
+.admin-readable input::placeholder,
+.admin-readable textarea::placeholder {
+  color: #cbd5e1;
+  opacity: 1;
+}
+.admin-readable :is(td, th) {
+  padding-block: 0.875rem;
+}
+.admin-readable :is(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 3px;
+}
