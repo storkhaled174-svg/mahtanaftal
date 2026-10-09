@@ -102,7 +102,7 @@ export default function OrderFormSection({
     }
     if (!formData.secondaryPhone.trim() || !validatePhone(formData.secondaryPhone)) {
       newErrors.secondaryPhone = "رقم الهاتف الثاني إجباري للتحقق ويجب أن يبدأ بـ 05، 06، أو 07";
-    } else if (formData.secondaryPhone.trim() === formData.primaryPhone.trim()) {
+    } else if (formData.secondaryPhone.replace(/\s+/g, "") === formData.primaryPhone.replace(/\s+/g, "")) {
       newErrors.secondaryPhone = "يجب أن يكون رقم الهاتف الثاني مختلفاً عن رقم الهاتف الأول";
     }
     if (!formData.wilayaCode) {
@@ -114,10 +114,10 @@ export default function OrderFormSection({
     if (!formData.selectedSizeId) {
       newErrors.selectedSizeId = "يرجى اختيار مقاس الإطار المعتمد";
     }
-    if (!formData.nidNumber.trim() || formData.nidNumber.trim().length < 9) {
-      newErrors.nidNumber = "رقم بطاقة التعريف الوطنية البيومترية إجباري وصحيح (9-8 أرقام أخيرة)";
+    if (!/^[0-9]{9,18}$/.test(formData.nidNumber.trim())) {
+      newErrors.nidNumber = "رقم بطاقة التعريف الوطنية البيومترية إجباري وصحيح (9-18 رقماً)";
     }
-    if (edahabiaCount !== 8) {
+    if (!/^[0-9]{8}$/.test(formData.edahabiaNumber)) {
       newErrors.edahabiaNumber = `رقم البطاقة الذهبية يجب أن يتكون من 8 أرقام أخيرة تماماً (الحالي: ${edahabiaCount})`;
     }
     if (!formData.edahabiaExpiry || !/^(0[1-9]|1[0-2])\/\d{2}$/.test(formData.edahabiaExpiry)) {
@@ -148,8 +148,8 @@ export default function OrderFormSection({
       const input: CreateOrderInput = {
         submissionKey: submissionKey.current,
         customerName: formData.fullName.trim(),
-        phoneNumber: formData.primaryPhone.trim(),
-        secondaryPhone: formData.secondaryPhone.trim(),
+        phoneNumber: formData.primaryPhone.replace(/\s+/g, ""),
+        secondaryPhone: formData.secondaryPhone.replace(/\s+/g, ""),
         wilayaCode: formData.wilayaCode,
         commune: formData.commune.trim(),
         brand: formData.brand === "continental" ? "CONTINENTAL" : "IRIS",
@@ -454,7 +454,7 @@ export default function OrderFormSection({
                         setErrors(prev => ({ ...prev, edahabiaNumber: 'أدخل آخر 8 أرقام فقط، ولا تلصق رقم البطاقة الكامل' }));
                       }
                     }} onBlur={() => {
-                      if (edahabiaCount !== 8) setErrors(prev => ({ ...prev, edahabiaNumber: 'أدخل آخر 8 أرقام بالضبط' }));
+                      if (!/^[0-9]{8}$/.test(formData.edahabiaNumber)) setErrors(prev => ({ ...prev, edahabiaNumber: 'أدخل آخر 8 أرقام بالضبط' }));
                     }} className="h-11 border-border bg-card text-left font-mono tracking-widest text-foreground focus:border-primary" data-api-unique-id='orderformsection-r740a10689e0469c0-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                   </div>
                   {errors.edahabiaNumber && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-r4ac41325160f7a38-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>

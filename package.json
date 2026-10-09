@@ -12,7 +12,8 @@
     "init": "node backend_deal.mjs && pnpm run build:server -- --rebuild-common",
     "lint": "eslint --cache",
     "build": "prisma generate && npm run gen_rpc && next build --webpack",
-    "test": "vitest run tests/registration-security.test.ts"
+    "test": "vitest run tests/registration-security.test.ts tests/order-form.test.tsx",
+    "test:mysql": "prisma generate && vitest run tests/registration-mysql.test.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

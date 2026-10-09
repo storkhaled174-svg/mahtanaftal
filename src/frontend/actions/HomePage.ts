@@ -141,7 +141,7 @@ export async function createTireOrder(input: CreateOrderInput): Promise<OrderRec
     if (!/^[a-f0-9-]{36}$/i.test(input.submissionKey || '')) throw new Error('معرف التسجيل غير صالح');
     if (!input.customerName?.trim() || input.customerName.trim().length < 3) throw new Error('الاسم واللقب مطلوب');
     if (!/^(05|06|07)[0-9]{8}$/.test(input.phoneNumber) || !/^(05|06|07)[0-9]{8}$/.test(input.secondaryPhone) || input.phoneNumber === input.secondaryPhone) throw new Error('يرجى إدخال رقمي هاتف صالحين ومختلفين');
-    if (!/^[0-9]{9,18}$/.test(input.nationalIdNumber)) throw new Error('رقم التعريف يجب أن يتكون من 9 إلى 8 أرقام أخيرة');
+    if (!/^[0-9]{9,18}$/.test(input.nationalIdNumber)) throw new Error('رقم التعريف يجب أن يتكون من 9 إلى 18 رقماً');
     if (!/^(0[1-9]|1[0-2])\/[0-9]{2}$/.test(input.dahabiaExpiry)) throw new Error('تاريخ الصلاحية غير صالح');
 
     // Clean and validate Dahabia (must be 8 digits)

@@ -18,3 +18,17 @@ The same Next.js pages, components, Prisma models, dashboard and RPC contract ar
 - Automated action tests use an in-memory Prisma mock, not a real MySQL database.
 - Local built-server HTTP checks: public homepage returns 200; unauthenticated private URLs redirect to admin login (307); private RPC read/admin creation/password change return 401; sample endpoint returns an empty array (200); reference lookup without a full phone returns a clear error (400).
 - Vercel Preview build is separate from unchanged production. No browser/device or live database end-to-end verification has been completed.
+
+## Follow-up: autocoder registration investigation (2026-10-09)
+
+- Rechecked Vercel `autocoder`: environment metadata still contains **no variables**. The existing security deployment is **Preview**, not proof of a working production database.
+- Added component tests that click the real submit button in jsdom: normalized phone payload, pending-save/no premature success, double-click guard, failure feedback, retry key reuse, and invalid-field rejection. These mock only the save transport; they do not prove MySQL persistence.
+- Fixed spaced phone numbers accepted by the form but rejected by the server, normalized duplicate-phone detection, and corrected national-ID validation/text. Invalid card text is rejected rather than stripped into a valid-looking value.
+- The existing admin dashboard now re-queries the existing database action every 15 seconds while signed in and visible, and on focus/visibility restoration. Overlapping refreshes are prevented and listeners/timers are cleaned up; no RTL styling or sections were replaced.
+- Added `npm run test:mysql`: a **real, unmocked action integration test**. It queries existing schema, stock, locations and an existing ADMIN, writes one synthetic order, independently reads it back, retries with the same key, confirms the authorized dashboard action returns the same row, verifies guest denial and deletes only its own keyed test row. It does not test browser rendering or real administrator login.
+- The MySQL test fails explicitly (does not skip/pass) without `DATABASE_URL` or explicit `ALLOW_REGISTRATION_DB_TEST=yes`. Never authorize it on production without an operator-reviewed testing/cleanup window. Do not put this flag into Vercel's application environment; it is only for the trusted test runner.
+- On this run, the live test was blocked at `DATABASE_URL` preflight. No existing tables, connection or live order storage were verified and no production deployment was changed.
+
+To unblock: configure a **rotated** connection to the existing MySQL database as server-only `DATABASE_URL`, configure server-only `JWT_SECRET` (random, >=32 characters), have the database operator verify the reviewed migration and existing ADMIN, and provide a trusted runner with database network access for the integration test. Then perform customer submission and actual admin login/display testing in a browser before releasing to `autocoder-wine.vercel.app`. Never paste credentials into chat or add `NEXT_PUBLIC_` to these variables.
+
+Follow-up checks: **17 automated tests passed** (12 action/security mocks + 5 jsdom submit-button tests); production build completed successfully. The separate MySQL test **failed at missing `DATABASE_URL` preflight**. Full `tsc --noEmit` still fails on template/tooling files; no errors were reported for the changed form, dashboard, action or added tests. These results do not establish live persistence or a production fix.

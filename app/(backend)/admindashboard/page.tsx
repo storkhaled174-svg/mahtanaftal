@@ -129,12 +129,15 @@ export default function AdminDashboardPage() {
     brand: "ALL"
   });
 
-  // Initial Data Fetching from Server Action
+  // Refresh from the same database while the administrator is signed in.
   useEffect(() => {
+    if (!authChecked || !isAuthenticated) return;
     let isMounted = true;
+    let inFlight = false;
     async function loadDashboardData() {
+      if (inFlight || document.visibilityState === 'hidden') return;
+      inFlight = true;
       try {
-        setIsLoading(true);
         const data = await getAdminDashboardData();
         if (isMounted && data) {
           setOrders(data.orders.map(mapOrderToUi));
@@ -149,16 +152,24 @@ export default function AdminDashboardPage() {
         console.error("Failed to load admin dashboard data:", err);
         toast.error("فشل في استرجاع بيانات لوحة الإدارة");
       } finally {
+        inFlight = false;
         if (isMounted) {
           setIsLoading(false);
         }
       }
     }
-    loadDashboardData();
+    void loadDashboardData();
+    const timer = window.setInterval(() => void loadDashboardData(), 15000);
+    const refreshWhenVisible = () => { void loadDashboardData(); };
+    document.addEventListener('visibilitychange', refreshWhenVisible);
+    window.addEventListener('focus', refreshWhenVisible);
     return () => {
       isMounted = false;
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', refreshWhenVisible);
+      window.removeEventListener('focus', refreshWhenVisible);
     };
-  }, []);
+  }, [authChecked, isAuthenticated]);
 
   // KPI Computations
   const kpiSummary: KpiSummary = useMemo(() => {
