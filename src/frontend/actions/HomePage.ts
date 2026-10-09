@@ -1,7 +1,8 @@
 'use server';
 
 import prisma from '@/tools/prisma';
-import { withResult, tryGetAuthContext } from '@/frontend/action_utils';
+import { randomUUID } from 'node:crypto';
+import { withResult, tryGetAuthContext } from '../action_utils';
 import {
   HomePageInitialData,
   TireStockItem,
@@ -125,7 +126,7 @@ export async function getHomePageData(): Promise<HomePageInitialData> {
  * Domain rules:
  * - Brand must be CONTINENTAL or IRIS
  * - Quantity must be 1, 2, 3, or 4
- * - Validate exact 18 digits for Edahabia card
+ * - Do not collect or persist payment-card information
  * - Validate Algerian phone format (05, 06, 07)
  * - Look up tire stock by brand & size to fetch authentic unit price
  * - Calculate total price = unitPrice * quantity
@@ -134,14 +135,16 @@ export async function getHomePageData(): Promise<HomePageInitialData> {
  */
 export async function createTireOrder(input: CreateOrderInput): Promise<OrderReceipt> {
   return withResult(async () => {
+    if (!input || typeof input !== 'object') throw new Error('بيانات الطلب غير صالحة');
     // Validate quantity constraint (1-4 only)
-    const qty = Math.max(1, Math.min(4, Math.floor(input.quantity)));
-
-    // Clean and validate Dahabia (must be 18 digits)
-    const edahabiaClean = input.dahabiaCardNumber.replace(/\D/g, '');
-    if (edahabiaClean.length !== 18) {
-      throw new Error('رقم البطاقة الذهبية يجب أن يتكون من 18 رقماً تماماً');
-    }
+    const qty = input.quantity;
+    if (!Number.isInteger(qty) || qty < 1 || qty > 4) throw new Error('الكمية يجب أن تكون بين 1 و4');
+    if (!/^[a-f0-9-]{36}$/i.test(input.submissionKey || '')) throw new Error('معرف التسجيل غير صالح');
+    if (!input.customerName?.trim() || input.customerName.trim().length < 3) throw new Error('الاسم واللقب مطلوب');
+    if (!/^(05|06|07)[0-9]{8}$/.test(input.phoneNumber) || (input.secondaryPhone && (!/^(05|06|07)[0-9]{8}$/.test(input.secondaryPhone) || input.phoneNumber === input.secondaryPhone))) throw new Error('يرجى إدخال رقمي هاتف صالحين ومختلفين');
+    if (!/^[0-9]{9,18}$/.test(input.nationalIdNumber)) throw new Error('رقم التعريف يجب أن يتكون من 9 إلى 18 رقماً');
+    const registrationDate = input.registrationDate;
+    if (!(registrationDate instanceof Date) || !Number.isFinite(registrationDate.getTime())) throw new Error('تاريخ التسجيل غير صالح');
 
     // Find tire stock by brand and size
     const tireStock = await prisma.tireStock.findFirst({
@@ -162,23 +165,27 @@ export async function createTireOrder(input: CreateOrderInput): Promise<OrderRec
     const wilayaRecord = await prisma.algerianWilaya.findUnique({
       where: { code: input.wilayaCode },
     });
+    if (!wilayaRecord || !Array.isArray(wilayaRecord.communes) || !wilayaRecord.communes.includes(input.commune)) throw new Error('يرجى اختيار ولاية وبلدية صحيحتين');
     const wilayaDisplayName = wilayaRecord ? `${wilayaRecord.code} - ${wilayaRecord.nameAr}` : input.wilayaCode;
 
     // Generate unique sovereign order code
-    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
-    const orderNumber = `NM-2026-${randomSuffix}`;
+    const randomSuffix = randomUUID().replace(/-/g, '').toUpperCase();
+    const orderNumber = `NM-${new Date().getFullYear()}-${randomSuffix}`;
 
     // Associate logged-in customer if available
     const auth = tryGetAuthContext();
     const customerId = auth?.userId || null;
 
     // Create tire order record in database
-    const order = await prisma.tireOrder.create({
-      data: {
+    const order = await prisma.tireOrder.upsert({
+      where: { submissionKey: input.submissionKey },
+      update: {},
+      create: {
+        submissionKey: input.submissionKey,
         orderNumber,
         customerName: input.customerName.trim(),
         phoneNumber: input.phoneNumber.trim(),
-        secondaryPhone: input.secondaryPhone.trim(),
+        secondaryPhone: input.secondaryPhone?.trim() || '',
         wilaya: wilayaDisplayName,
         commune: input.commune.trim(),
         brand: input.brand,
@@ -187,8 +194,7 @@ export async function createTireOrder(input: CreateOrderInput): Promise<OrderRec
         unitPriceDzd: tireStock.priceDzd,
         totalPriceDzd: totalPrice,
         nationalIdNumber: input.nationalIdNumber.trim(),
-        dahabiaCardNumber: edahabiaClean,
-        dahabiaExpiry: input.dahabiaExpiry.trim(),
+        registrationDate,
         status: 'NEW' as OrderStatus,
         customerId: customerId,
       },
@@ -197,10 +203,9 @@ export async function createTireOrder(input: CreateOrderInput): Promise<OrderRec
     // Mask sensitive credentials
     const nidRaw = order.nationalIdNumber;
     const nidMasked = nidRaw.length > 6 ? `${nidRaw.slice(0, 3)}••••••${nidRaw.slice(-3)}` : '••••••••';
-    const edahabiaMasked = edahabiaClean.length === 18 ? `${edahabiaClean.slice(0, 4)} •••• •••• •••• ${edahabiaClean.slice(-2)}` : '••••••••••••••••••';
 
     // Format registration date
-    const dateFormatted = order.createdAt.toISOString().split('T')[0];
+    const dateFormatted = (order.registrationDate || order.createdAt).toISOString().split('T')[0];
 
     const brandMapped: BrandType = order.brand === 'CONTINENTAL' ? 'continental' : 'iris';
 
@@ -219,7 +224,6 @@ export async function createTireOrder(input: CreateOrderInput): Promise<OrderRec
       unitPriceDzd: order.unitPriceDzd.toNumber(), // data-from: TireOrder-unitPriceDzd
       totalPriceDzd: order.totalPriceDzd.toNumber(), // data-from: TireOrder-totalPriceDzd
       nidMasked: nidMasked,
-      edahabiaMasked: edahabiaMasked,
       status: order.status as OrderStatus, // data-from: TireOrder-status
     };
   })();

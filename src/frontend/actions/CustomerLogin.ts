@@ -6,7 +6,7 @@ import {
   hashPassword,
   signToken,
   withResult,
-} from '@/frontend/action_utils';
+} from '../action_utils';
 import { LoginInput, LoginResult, UserRole } from '@/frontend/types/CustomerLogin';
 
 /**

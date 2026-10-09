@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { TireSizeOption, OrderFormData, WilayaItem, OrderReceipt, CreateOrderInput } from "@/frontend/types/HomePage";
 import { createTireOrder } from "@/frontend/actions/HomePage";
 import { CreditCard, Phone, User, MapPin, AlertCircle, FileCheck, Calendar } from "lucide-react";
@@ -22,6 +22,9 @@ export default function OrderFormSection({
   wilayas,
   onSubmitSuccess
 }: OrderFormSectionProps) {
+  const submitting = useRef(false);
+  const submissionKey = useRef('');
+  const [submissionMessage, setSubmissionMessage] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -43,9 +46,6 @@ export default function OrderFormSection({
     return /^(05|06|07)[0-9]{8}$/.test(clean);
   };
 
-  // Edahabia validation (exactly 18 digits)
-  const edahabiaClean = formData.edahabiaNumber.replace(/\D/g, "");
-  const edahabiaCount = edahabiaClean.length;
   const handlePhoneChange = (field: "primaryPhone" | "secondaryPhone", val: string) => {
     const clean = val.replace(/[^\d\s]/g, "");
     onFormChange({
@@ -58,33 +58,6 @@ export default function OrderFormSection({
       }));
     }
   };
-  const handleEdahabiaChange = (val: string) => {
-    const clean = val.replace(/\D/g, "").slice(0, 18);
-    onFormChange({
-      edahabiaNumber: clean
-    });
-    if (errors.edahabiaNumber) {
-      setErrors(prev => ({
-        ...prev,
-        edahabiaNumber: ""
-      }));
-    }
-  };
-  const handleExpiryChange = (val: string) => {
-    let clean = val.replace(/\D/g, "").slice(0, 4);
-    if (clean.length >= 3) {
-      clean = clean.slice(0, 2) + "/" + clean.slice(2, 4);
-    }
-    onFormChange({
-      edahabiaExpiry: clean
-    });
-    if (errors.edahabiaExpiry) {
-      setErrors(prev => ({
-        ...prev,
-        edahabiaExpiry: ""
-      }));
-    }
-  };
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
     if (!formData.fullName.trim() || formData.fullName.trim().length < 3) {
@@ -93,9 +66,9 @@ export default function OrderFormSection({
     if (!formData.primaryPhone.trim() || !validatePhone(formData.primaryPhone)) {
       newErrors.primaryPhone = "رقم الهاتف الأول إجباري ويجب أن يتكون من 10 أرقام ويبدأ بـ 05، 06، أو 07";
     }
-    if (!formData.secondaryPhone.trim() || !validatePhone(formData.secondaryPhone)) {
-      newErrors.secondaryPhone = "رقم الهاتف الثاني إجباري للتحقق ويجب أن يبدأ بـ 05، 06، أو 07";
-    } else if (formData.secondaryPhone.trim() === formData.primaryPhone.trim()) {
+    if (formData.secondaryPhone.trim() && !validatePhone(formData.secondaryPhone)) {
+      newErrors.secondaryPhone = "رقم الهاتف الثاني اختياري، وعند إدخاله يجب أن يبدأ بـ 05، 06، أو 07";
+    } else if (formData.secondaryPhone.replace(/\s+/g, "") === formData.primaryPhone.replace(/\s+/g, "")) {
       newErrors.secondaryPhone = "يجب أن يكون رقم الهاتف الثاني مختلفاً عن رقم الهاتف الأول";
     }
     if (!formData.wilayaCode) {
@@ -107,14 +80,8 @@ export default function OrderFormSection({
     if (!formData.selectedSizeId) {
       newErrors.selectedSizeId = "يرجى اختيار مقاس الإطار المعتمد";
     }
-    if (!formData.nidNumber.trim() || formData.nidNumber.trim().length < 9) {
+    if (!/^[0-9]{9,18}$/.test(formData.nidNumber.trim())) {
       newErrors.nidNumber = "رقم بطاقة التعريف الوطنية البيومترية إجباري وصحيح (9-18 رقماً)";
-    }
-    if (edahabiaCount !== 18) {
-      newErrors.edahabiaNumber = `رقم البطاقة الذهبية يجب أن يتكون من 18 رقماً تماماً (الحالي: ${edahabiaCount})`;
-    }
-    if (!formData.edahabiaExpiry || !/^(0[1-9]|1[0-2])\/\d{2}$/.test(formData.edahabiaExpiry)) {
-      newErrors.edahabiaExpiry = "تاريخ نهاية الصلاحية إجباري بصيغة MM/YY (مثال: 08/28)";
     }
     if (!formData.registrationDate) {
       newErrors.registrationDate = "تاريخ التسجيل إجباري";
@@ -124,6 +91,8 @@ export default function OrderFormSection({
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting.current) return;
+    setSubmissionMessage('');
     if (!validateForm()) {
       toast.error("يرجى تصحيح الأخطاء واستكمال كافة الحقول الإجبارية");
       return;
@@ -132,37 +101,43 @@ export default function OrderFormSection({
       toast.error("يرجى اختيار مقاس العجلة المعتمد");
       return;
     }
+    submitting.current = true;
+    if (!submissionKey.current) submissionKey.current = crypto.randomUUID();
     setIsSubmitting(true);
     try {
       const input: CreateOrderInput = {
+        submissionKey: submissionKey.current,
         customerName: formData.fullName.trim(),
-        phoneNumber: formData.primaryPhone.trim(),
-        secondaryPhone: formData.secondaryPhone.trim(),
+        phoneNumber: formData.primaryPhone.replace(/\s+/g, ""),
+        secondaryPhone: formData.secondaryPhone.replace(/\s+/g, ""),
         wilayaCode: formData.wilayaCode,
         commune: formData.commune.trim(),
         brand: formData.brand === "continental" ? "CONTINENTAL" : "IRIS",
         tireSize: currentTire.dimension,
         quantity: formData.quantity,
         nationalIdNumber: formData.nidNumber.trim(),
-        dahabiaCardNumber: edahabiaClean,
-        dahabiaExpiry: formData.edahabiaExpiry.trim(),
-        registrationDate: formData.registrationDate ? new Date(formData.registrationDate) : undefined
+        registrationDate: new Date(formData.registrationDate)
       };
       const receipt = await createTireOrder(input);
       toast.success("تم تأكيد وتسجيل الطلبية الرسمية بنجاح!");
+      setSubmissionMessage('تم حفظ التسجيل بنجاح');
+      submissionKey.current = '';
       onSubmitSuccess(receipt);
     } catch (err) {
       const message = err instanceof Error ? err.message : "حدث خطأ أثناء معالجة وتثبيت الطلبية";
+      setSubmissionMessage(message);
       toast.error(message);
     } finally {
+      submitting.current = false;
       setIsSubmitting(false);
     }
   };
-  return <section id="order-section" data-controller-name="استمارة تسجيل الطلبية الرسمية" className="w-full border-b border-border bg-card py-16 text-card-foreground sm:py-20" data-api-unique-id='orderformsection-r9d7e1e5ee0d5c3f4-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+  return <section id="order-section" data-controller-name="استمارة تسجيل الطلبية الرسمية" className="w-full border-b border-border bg-card py-8 text-card-foreground sm:py-10" data-api-unique-id='orderformsection-r9d7e1e5ee0d5c3f4-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8" data-api-unique-id='orderformsection-rdd42988a310f3248-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
         
+        <p role="status" aria-live="polite" className="text-center text-sm">{submissionMessage}</p>
         {/* Section Header */}
-        <div className="mx-auto mb-12 max-w-3xl text-center" data-api-unique-id='orderformsection-r39b8dc05ff0fcbe7-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+        <div className="mx-auto mb-6 max-w-3xl text-center" data-api-unique-id='orderformsection-r39b8dc05ff0fcbe7-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-secondary px-4 py-1 text-xs font-bold text-primary" data-api-unique-id='orderformsection-rb94f990953297f14-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
             <FileCheck className="h-4 w-4" data-api-unique-id='orderformsection-rd20780ebeaca99de-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
             <span data-api-unique-id='orderformsection-r9be950d679486312-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>نموذج الطلب السيادي الموحد</span>
@@ -171,13 +146,13 @@ export default function OrderFormSection({
             تسجيل طلبية الإطارات
           </h2>
           <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground sm:text-base" data-api-unique-id='orderformsection-r970bd546971a8c1c-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-            يرجى إدخال كافة البيانات الشخصية والتقنية بدقة متناهية. جميع الحقول إجبارية لضمان تأكيد وتخصيص الحصة الرسمية بدون وسطاء.
+            يرجى إدخال كافة البيانات الشخصية والتقنية بدقة متناهية. الهاتف الثاني اختياري. يرجى استكمال الحقول المطلوبة لضمان تأكيد وتخصيص الحصة الرسمية بدون وسطاء.
           </p>
         </div>
 
         {/* Order Chamber Container */}
-        <div className="mx-auto max-w-3xl rounded-2xl border border-primary/30 bg-background p-6 shadow-lg sm:p-10" data-api-unique-id='orderformsection-rfcf48a946490fa4d-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-          <form onSubmit={handleSubmit} className="space-y-8" data-api-unique-id='orderformsection-r31490812ba1fe536-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+        <div className="mx-auto max-w-5xl rounded-2xl border border-primary/30 bg-background p-4 shadow-lg sm:p-6" data-api-unique-id='orderformsection-rfcf48a946490fa4d-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+          <form onSubmit={handleSubmit} className="space-y-5" data-api-unique-id='orderformsection-r31490812ba1fe536-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
             
             {/* 1. Personal & Contact Information */}
             <div className="space-y-4" data-api-unique-id='orderformsection-r81a2149ed3d07c7f-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
@@ -199,7 +174,7 @@ export default function OrderFormSection({
                   ...prev,
                   fullName: ""
                 }));
-              }} placeholder="مثال: محمد بلقاسم" className="h-12 border-border bg-card text-right text-foreground focus:border-primary" data-api-unique-id='orderformsection-r15c33953d0adc725-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
+              }} placeholder="مثال: محمد بلقاسم" className="h-11 border-border bg-card text-right text-foreground focus:border-primary" data-api-unique-id='orderformsection-r15c33953d0adc725-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                 {errors.fullName && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-r7fb462ce8eedadac-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                     <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-r03018f7fd0e5f3cc-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                     {errors.fullName}
@@ -213,8 +188,8 @@ export default function OrderFormSection({
                     رقم الهاتف الأول (05/06/07) <span className="text-destructive" data-api-unique-id='orderformsection-rfc310f9a74dacd44-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>*</span>
                   </label>
                   <div className="relative" data-api-unique-id='orderformsection-r6a1f414136e95326-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    <Input dir="ltr" value={formData.primaryPhone} onChange={e => handlePhoneChange("primaryPhone", e.target.value)} placeholder="06XXXXXXXX" maxLength={10} className="h-12 border-border bg-card text-left font-mono text-foreground focus:border-primary" data-api-unique-id='orderformsection-r4b7b4c409008b5ff-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                    <Phone className="pointer-events-none absolute right-3 top-3.5 h-5 w-5 text-muted-foreground" data-api-unique-id='orderformsection-rb50c9a0779736181-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
+                    <Input dir="ltr" value={formData.primaryPhone} onChange={e => handlePhoneChange("primaryPhone", e.target.value)} placeholder="06XXXXXXXX" maxLength={10} className="h-11 border-border bg-card text-left font-mono text-foreground focus:border-primary" data-api-unique-id='orderformsection-r4b7b4c409008b5ff-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
+                    <Phone className="pointer-events-none absolute right-3 top-3 h-5 w-5 text-muted-foreground" data-api-unique-id='orderformsection-rb50c9a0779736181-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                   </div>
                   {errors.primaryPhone && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-rb58d7bae5ac02430-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                       <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-r958626198e093364-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
@@ -224,11 +199,11 @@ export default function OrderFormSection({
 
                 <div className="space-y-1.5 text-right" data-api-unique-id='orderformsection-r613bea5285ff6438-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                   <label className="font-header text-sm font-semibold text-foreground" data-api-unique-id='orderformsection-rc7df93bffbbccef3-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    رقم الهاتف الثاني (إجباري 05/06/07) <span className="text-destructive" data-api-unique-id='orderformsection-re57287272808c330-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>*</span>
+                    رقم الهاتف الثاني (اختياري)
                   </label>
                   <div className="relative" data-api-unique-id='orderformsection-r96ce1026e3ec13ef-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    <Input dir="ltr" value={formData.secondaryPhone} onChange={e => handlePhoneChange("secondaryPhone", e.target.value)} placeholder="05XXXXXXXX" maxLength={10} className="h-12 border-border bg-card text-left font-mono text-foreground focus:border-primary" data-api-unique-id='orderformsection-re6ceb9c3d7a169ac-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                    <Phone className="pointer-events-none absolute right-3 top-3.5 h-5 w-5 text-muted-foreground" data-api-unique-id='orderformsection-rd1f2660501866450-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
+                    <Input dir="ltr" value={formData.secondaryPhone} onChange={e => handlePhoneChange("secondaryPhone", e.target.value)} placeholder="05XXXXXXXX" maxLength={10} className="h-11 border-border bg-card text-left font-mono text-foreground focus:border-primary" data-api-unique-id='orderformsection-re6ceb9c3d7a169ac-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
+                    <Phone className="pointer-events-none absolute right-3 top-3 h-5 w-5 text-muted-foreground" data-api-unique-id='orderformsection-rd1f2660501866450-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                   </div>
                   {errors.secondaryPhone && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-r9d355e3adab4967b-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                       <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-r10f0e5d64fa8ff2e-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
@@ -255,7 +230,7 @@ export default function OrderFormSection({
                     wilayaCode: ""
                   }));
                 }} data-api-unique-id='orderformsection-rf8c4c805a7632333-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    <SelectTrigger className="h-12 w-full min-w-0 border-border bg-card text-right text-foreground" data-api-unique-id='orderformsection-r074284010c598bf4-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+                    <SelectTrigger className="h-11 w-full min-w-0 border-border bg-card text-right text-foreground" data-api-unique-id='orderformsection-r074284010c598bf4-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                       <SelectValue placeholder="اختر ولاية الاستلام..." data-api-unique-id='orderformsection-r05461d7c9d0b8303-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                     </SelectTrigger>
                     <SelectContent className="max-h-60 border-border bg-popover text-popover-foreground" data-api-unique-id='orderformsection-r4f97ae919dc44071-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
@@ -283,7 +258,7 @@ export default function OrderFormSection({
                     commune: ""
                   }));
                 }} disabled={!formData.wilayaCode} data-api-unique-id='orderformsection-r73526c98598d7b94-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    <SelectTrigger className="h-12 w-full min-w-0 border-border bg-card text-right text-foreground disabled:opacity-50" data-api-unique-id='orderformsection-rdf7270863f180d10-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+                    <SelectTrigger className="h-11 w-full min-w-0 border-border bg-card text-right text-foreground disabled:opacity-50" data-api-unique-id='orderformsection-rdf7270863f180d10-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                       <SelectValue placeholder="اختر بلدية الإقامة أو التوزيع..." data-api-unique-id='orderformsection-r7a39ee7dc8a91787-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                     </SelectTrigger>
                     <SelectContent className="max-h-60 border-border bg-popover text-popover-foreground" data-api-unique-id='orderformsection-rba74de962c555956-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
@@ -322,7 +297,7 @@ export default function OrderFormSection({
                     if (first) onFormChange({
                       selectedSizeId: first.id
                     });
-                  }} className={`h-12 rounded-lg border font-bold text-sm transition-all ${formData.brand === "continental" ? "border-primary bg-primary text-primary-foreground shadow-sm ring-1 ring-primary" : "border-border bg-card text-card-foreground hover:bg-muted"}`} data-api-unique-id='orderformsection-r1c9c263ff77e8449-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+                  }} className={`h-11 rounded-lg border font-bold text-sm transition-all ${formData.brand === "continental" ? "border-primary bg-primary text-primary-foreground shadow-sm ring-1 ring-primary" : "border-border bg-card text-card-foreground hover:bg-muted"}`} data-api-unique-id='orderformsection-r1c9c263ff77e8449-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                       CONTINENTAL
                     </button>
                     <button type="button" onClick={() => {
@@ -333,7 +308,7 @@ export default function OrderFormSection({
                     if (first) onFormChange({
                       selectedSizeId: first.id
                     });
-                  }} className={`h-12 rounded-lg border font-bold text-sm transition-all ${formData.brand === "iris" ? "border-primary bg-primary text-primary-foreground shadow-sm ring-1 ring-primary" : "border-border bg-card text-card-foreground hover:bg-muted"}`} data-api-unique-id='orderformsection-r5053df657af4e49e-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+                  }} className={`h-11 rounded-lg border font-bold text-sm transition-all ${formData.brand === "iris" ? "border-primary bg-primary text-primary-foreground shadow-sm ring-1 ring-primary" : "border-border bg-card text-card-foreground hover:bg-muted"}`} data-api-unique-id='orderformsection-r5053df657af4e49e-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                       IRIS TYRES
                     </button>
                   </div>
@@ -352,7 +327,7 @@ export default function OrderFormSection({
                     selectedSizeId: ""
                   }));
                 }} data-api-unique-id='orderformsection-r794d4ad564fae9b9-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    <SelectTrigger className="h-12 w-full min-w-0 border-border bg-card text-right text-foreground" data-api-unique-id='orderformsection-rc803ab6ac917d271-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+                    <SelectTrigger className="h-11 w-full min-w-0 border-border bg-card text-right text-foreground" data-api-unique-id='orderformsection-rc803ab6ac917d271-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                       <SelectValue placeholder="اختر المقاس..." data-api-unique-id='orderformsection-ra2b07bbe116413c4-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                     </SelectTrigger>
                     <SelectContent className="max-h-60 border-border bg-popover text-popover-foreground" data-api-unique-id='orderformsection-r392531580916a28f-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
@@ -381,7 +356,7 @@ export default function OrderFormSection({
                 <div className="grid grid-cols-4 gap-3" data-api-unique-id='orderformsection-r3a49b47cea937dc5-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                   {([1, 2, 3, 4] as const).map((q, index) => <button key={q} type="button" onClick={() => onFormChange({
                   quantity: q
-                })} className={`flex h-14 flex-col items-center justify-center rounded-xl border text-base font-bold transition-all ${formData.quantity === q ? "border-primary bg-primary text-primary-foreground shadow-md ring-2 ring-primary" : "border-border bg-card text-card-foreground hover:border-border/80 hover:bg-muted"}`} data-api-unique-id='orderformsection-r755ab0d696628cd5-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' data-api-in-loop='1'>
+                })} className={`flex h-11 flex-col items-center justify-center rounded-xl border text-base font-bold transition-all ${formData.quantity === q ? "border-primary bg-primary text-primary-foreground shadow-md ring-2 ring-primary" : "border-border bg-card text-card-foreground hover:border-border/80 hover:bg-muted"}`} data-api-unique-id='orderformsection-r755ab0d696628cd5-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' data-api-in-loop='1'>
                       <span className="font-mono text-xl" data-api-unique-id='orderformsection-r14d509fcd1fff1e3-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' data-api-in-loop='1' data-api-bind-info={`list-${index}-$item`} data-api-map-var-name='q'>{q}</span>
                       <span className="text-[11px] font-normal opacity-90" data-api-unique-id='orderformsection-r62a5e2e546769c85-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' data-api-in-loop='1'>
                         {q === 1 ? "إطار واحد" : q === 2 ? "إطاران" : `${q} إطارات`}
@@ -395,7 +370,7 @@ export default function OrderFormSection({
             <div className="space-y-4" data-api-unique-id='orderformsection-r2d0c1653bb489dbf-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
               <h3 className="flex items-center gap-2 border-b border-border pb-2 font-header text-lg font-bold text-foreground" data-api-unique-id='orderformsection-rc32b92a3b8534698-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                 <CreditCard className="h-5 w-5 text-primary" data-api-unique-id='orderformsection-r947cd10f52e68ec1-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                <span data-api-unique-id='orderformsection-r53c99019ff5c3bf7-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>3. التحقق الأمني والبطاقة الذهبية (18 رقماً تماماً)</span>
+                <span data-api-unique-id='orderformsection-r53c99019ff5c3bf7-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>3. بطاقة التعريف وتاريخ التسجيل</span>
               </h3>
 
               {/* NID */}
@@ -411,44 +386,11 @@ export default function OrderFormSection({
                   ...prev,
                   nidNumber: ""
                 }));
-              }} placeholder="مثال: 108392019283" className="h-12 border-border bg-card text-left font-mono text-foreground focus:border-primary" data-api-unique-id='orderformsection-r3dcb41e164bfa9cb-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
+              }} placeholder="مثال: 108392019283" className="h-11 border-border bg-card text-left font-mono text-foreground focus:border-primary" data-api-unique-id='orderformsection-r3dcb41e164bfa9cb-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                 {errors.nidNumber && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-ra518603360713f7c-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                     <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-re81b0b9f547bc9d3-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                     {errors.nidNumber}
                   </p>}
-              </div>
-
-              {/* Edahabia Number with Live Counter (0 / 18) */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3" data-api-unique-id='orderformsection-rd6f295e536aa8488-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                <div className="space-y-1.5 text-right sm:col-span-2" data-api-unique-id='orderformsection-rd2cb38475cb408b3-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                  <div className="flex items-center justify-between" data-api-unique-id='orderformsection-rbec214b496caa8b0-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    <label className="font-header text-sm font-semibold text-foreground" data-api-unique-id='orderformsection-r260837cb005c2511-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                      رقم البطاقة الذهبية (18 رقماً تماماً) <span className="text-destructive" data-api-unique-id='orderformsection-r59512b2ca1516a55-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>*</span>
-                    </label>
-                    <span className={`font-mono text-xs font-bold rounded px-2 py-0.5 ${edahabiaCount === 18 ? "bg-success text-success-foreground" : "bg-secondary text-secondary-foreground"}`} data-api-unique-id='orderformsection-r5e6f8d44319eec84-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                      {edahabiaCount} / 18 رقماً
-                    </span>
-                  </div>
-                  <div className="relative" data-api-unique-id='orderformsection-r8464f0c0392994a6-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    <Input dir="ltr" value={formData.edahabiaNumber} onChange={e => handleEdahabiaChange(e.target.value)} placeholder="6280XXXXXXXXXXXXXXXX" maxLength={18} className="h-12 border-border bg-card text-left font-mono tracking-widest text-foreground focus:border-primary" data-api-unique-id='orderformsection-r740a10689e0469c0-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                  </div>
-                  {errors.edahabiaNumber && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-r4ac41325160f7a38-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                      <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-rde1a846cd2190da3-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                      {errors.edahabiaNumber}
-                    </p>}
-                </div>
-
-                {/* Expiry Date */}
-                <div className="space-y-1.5 text-right" data-api-unique-id='orderformsection-r0d6240b2a7cf0181-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                  <label className="font-header text-sm font-semibold text-foreground" data-api-unique-id='orderformsection-r6774a1ab9b5518aa-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    تاريخ الانتهاء (MM/YY) <span className="text-destructive" data-api-unique-id='orderformsection-rde282968ead0d189-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>*</span>
-                  </label>
-                  <Input dir="ltr" value={formData.edahabiaExpiry} onChange={e => handleExpiryChange(e.target.value)} placeholder="08/28" maxLength={5} className="h-12 border-border bg-card text-center font-mono text-foreground focus:border-primary" data-api-unique-id='orderformsection-r14fe36b4a26b4eff-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                  {errors.edahabiaExpiry && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-r3525d33e58ed43d1-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                      <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-r7bafc3960828a144-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                      {errors.edahabiaExpiry}
-                    </p>}
-                </div>
               </div>
 
               {/* Registration Date Field directly under Expiry Date */}
@@ -471,7 +413,7 @@ export default function OrderFormSection({
                   ...prev,
                   registrationDate: ""
                 }));
-              }} className="h-12 border-border bg-card text-center font-mono text-foreground" data-api-unique-id='orderformsection-r0a73eeec1fbc3f29-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
+              }} className="h-11 border-border bg-card text-center font-mono text-foreground" data-api-unique-id='orderformsection-r0a73eeec1fbc3f29-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                 {errors.registrationDate && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-r95952e34fac24c72-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                     <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-r9b06d7b13b91fa9e-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                     {errors.registrationDate}
@@ -494,7 +436,7 @@ export default function OrderFormSection({
                 * التسجيل عبر المنصة يمنحكم حجزا مسبقاً وتخصيصاً رسمياً لحصتكم. الدفع والاستلام يتمان مباشرة عبر محطة نفطال المعينة في الوصل وفق التعريفات الرسمية المعتمدة بالبطاقة الذهبية أو نقداً.
               </p>
 
-              <Button type="submit" disabled={isSubmitting} className="h-14 w-full bg-primary text-base font-bold text-primary-foreground shadow-md transition-all hover:bg-primary/90 active:bg-primary/80 disabled:opacity-50" data-api-unique-id='orderformsection-r4b860ee843368edb-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
+              <Button type="submit" disabled={isSubmitting} className="h-11 w-full bg-primary text-base font-bold text-primary-foreground shadow-md transition-all hover:bg-primary/90 active:bg-primary/80 disabled:opacity-50" data-api-unique-id='orderformsection-r4b860ee843368edb-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                 {isSubmitting ? <span data-api-unique-id='orderformsection-rf92a9a9d6e955ec2-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>جاري معالجة وتثبيت الطلبية...</span> : <span data-api-unique-id='orderformsection-r493df9a2cea2f8ea-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>تأكيد وتسجيل الطلبية الرسمية</span>}
               </Button>
             </div>

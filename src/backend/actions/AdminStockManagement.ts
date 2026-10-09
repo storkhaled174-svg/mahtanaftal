@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/tools/prisma';
-import { withResult, requireAuth, requireRole, UserRole } from '@/backend/action_utils';
+import { withResult, requireAuth, requireRole, UserRole } from '../action_utils';
 import {
   TireStockDto,
   StockManagementDashboardData,

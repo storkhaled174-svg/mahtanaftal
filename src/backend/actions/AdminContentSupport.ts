@@ -2,7 +2,7 @@
 
 import prisma from '@/tools/prisma';
 import { withResult } from '@/@base/BaseActionFun';
-import { requireRole, UserRole } from '@/backend/action_utils';
+import { requireRole, UserRole } from '../action_utils';
 import {
   AdminContentSupportDataOutput,
   PlatformFaq,

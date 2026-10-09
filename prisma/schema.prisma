@@ -10,7 +10,7 @@ generator json {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:pzprod@database-prod-lts.cluster-c7wk8uc6itjv.us-west-2.rds.amazonaws.com:3306/proj_926079ba_snap_20261005_100226_814"
+  url      = env("DATABASE_URL")
 }
 
 enum UserRole {
@@ -102,6 +102,7 @@ model SupportChannel {
 }
 
 model TireOrder {
+  submissionKey String? @unique @db.VarChar(36)
   id                String       @id @default(uuid()) @db.VarChar(72)
   orderNumber       String       @unique @db.VarChar(64)
   customerName      String       @db.VarChar(255)
@@ -115,8 +116,9 @@ model TireOrder {
   unitPriceDzd      Decimal      @db.Decimal(12, 2)
   totalPriceDzd     Decimal      @db.Decimal(12, 2)
   nationalIdNumber  String       @db.VarChar(64)
-  dahabiaCardNumber String       @db.VarChar(64)
-  dahabiaExpiry     String       @db.VarChar(16)
+  dahabiaCardNumber String?      @db.VarChar(64)
+  dahabiaExpiry     String?      @db.VarChar(16)
+  registrationDate DateTime?    @db.Date
   status            OrderStatus  @default(NEW)
   notes             String?      @db.Text
   customerId        String?      @db.VarChar(72) // FK → AccountUser.id

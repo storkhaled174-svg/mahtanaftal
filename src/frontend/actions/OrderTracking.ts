@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/tools/prisma';
-import { withResult } from '@/frontend/action_utils';
+import { withResult, getAuthContext, ForbiddenError } from '../action_utils';
 import { 
   TireOrderOutput, 
   SearchOrderInput, 
@@ -37,11 +37,11 @@ function enrichOrderDetails(order: any): TireOrderOutput {
     quantity: order.quantity, // data-from: TireOrder-quantity
     unitPriceDzd: order.unitPriceDzd ? Number(order.unitPriceDzd) : 0, // data-from: TireOrder-unitPriceDzd
     totalPriceDzd: order.totalPriceDzd ? Number(order.totalPriceDzd) : 0, // data-from: TireOrder-totalPriceDzd
-    nationalIdNumber: order.nationalIdNumber, // data-from: TireOrder-nationalIdNumber
-    dahabiaCardNumber: order.dahabiaCardNumber, // data-from: TireOrder-dahabiaCardNumber
-    dahabiaExpiry: order.dahabiaExpiry, // data-from: TireOrder-dahabiaExpiry
+    nationalIdNumber: '••••••••', // data-from: TireOrder-nationalIdNumber
+    dahabiaCardNumber: '••••••••', // data-from: TireOrder-dahabiaCardNumber
+    dahabiaExpiry: '', // data-from: TireOrder-dahabiaExpiry
     status: order.status as OrderStatus, // data-from: TireOrder-status
-    notes: order.notes, // data-from: TireOrder-notes
+    notes: '', // data-from: TireOrder-notes
     customerId: order.customerId, // data-from: TireOrder-customerId
     createdAt: order.createdAt, // data-from: TireOrder-createdAt
     updatedAt: order.updatedAt, // data-from: TireOrder-updatedAt
@@ -62,6 +62,7 @@ export async function searchTireOrder(input: SearchOrderInput): Promise<SearchOr
     const cleanOrderNumber = (input.orderNumber || "").trim().toUpperCase();
     const cleanPhone = (input.phoneNumber || "").trim().replace(/\s+/g, "");
 
+    if (!/^(05|06|07)[0-9]{8}$/.test(cleanPhone)) throw new Error('رقم الهاتف المسجل كاملاً مطلوب للتحقق');
     if (!cleanOrderNumber) {
       return {
         found: false,
@@ -92,8 +93,7 @@ export async function searchTireOrder(input: SearchOrderInput): Promise<SearchOr
       const primaryClean = orderRecord.phoneNumber.replace(/\s+/g, "");
       const secondaryClean = (orderRecord.secondaryPhone || "").replace(/\s+/g, "");
 
-      const matches = primaryClean === cleanPhone || secondaryClean === cleanPhone ||
-        primaryClean.endsWith(cleanPhone) || cleanPhone.endsWith(primaryClean);
+      const matches = primaryClean === cleanPhone || secondaryClean === cleanPhone;
 
       if (!matches) {
         return {
@@ -120,27 +120,7 @@ export async function searchTireOrder(input: SearchOrderInput): Promise<SearchOr
  */
 export async function getSampleOrders(): Promise<SampleOrderSummary[]> {
   return withResult(async () => {
-    const orders = await prisma.tireOrder.findMany({
-      take: 4,
-      orderBy: {
-        createdAt: 'desc',
-      },
-      select: {
-        orderNumber: true, // data-from: TireOrder-orderNumber
-        phoneNumber: true, // data-from: TireOrder-phoneNumber
-        status: true, // data-from: TireOrder-status
-        customerName: true, // data-from: TireOrder-customerName
-        brand: true, // data-from: TireOrder-brand
-      },
-    });
-
-    return orders.map((o) => ({
-      orderNumber: o.orderNumber, // data-from: TireOrder-orderNumber
-      phoneNumber: o.phoneNumber, // data-from: TireOrder-phoneNumber
-      status: o.status as OrderStatus, // data-from: TireOrder-status
-      customerName: o.customerName, // data-from: TireOrder-customerName
-      brand: o.brand as TireBrand, // data-from: TireOrder-brand
-    }));
+    return [];
   })();
 }
 
@@ -149,6 +129,7 @@ export async function getSampleOrders(): Promise<SampleOrderSummary[]> {
  */
 export async function getOrderByOrderNumber(orderNumber: string): Promise<TireOrderOutput | null> {
   return withResult(async () => {
+    if (String(getAuthContext().role) !== 'ADMIN') throw new ForbiddenError();
     const cleanNumber = (orderNumber || "").trim().toUpperCase();
     if (!cleanNumber) return null;
 

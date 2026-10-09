@@ -1,7 +1,9 @@
 'use server';
 
+import { getAuthContext, ForbiddenError } from '../action_utils';
+
 import prisma from '@/tools/prisma';
-import { hashPassword, signToken, withResult } from '@/backend/action_utils';
+import { hashPassword, signToken, withResult } from '../action_utils';
 import { RegisterAdminInput, RegisterAdminOutput, UserRole } from '@/backend/types/AdminRegister';
 
 /**
@@ -15,6 +17,7 @@ import { RegisterAdminInput, RegisterAdminOutput, UserRole } from '@/backend/typ
  */
 export async function registerAdmin(input: RegisterAdminInput): Promise<RegisterAdminOutput> {
   return withResult(async () => {
+    if (getAuthContext().role !== 'ADMIN') throw new ForbiddenError('هذه الخدمة مخصصة للمشرف فقط');
     const trimmedUsername = input.username.trim().toLowerCase();
     const trimmedFullName = input.fullName.trim();
     const trimmedPhone = input.phoneNumber.trim();

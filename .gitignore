@@ -25,3 +25,10 @@ dist-ssr
 *.sw?
 .history
 .yarn
+.next/
+.vercel/
+prisma-generated/
+.env
+.env.*
+!.env.example
+*.tsbuildinfo

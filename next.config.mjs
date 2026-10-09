@@ -6,22 +6,19 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // monorepo 根：对齐 pnpm-lock.yaml 所在层级
-const monoRoot = path.resolve(__dirname, '../../../../')
+const monoRoot = __dirname
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // 1. 静态导出
-  output: 'export',
+  // Server runtime is required for database-backed RPC and private admin routes.
 
   // 2. 文件追踪相关
   outputFileTracingRoot: monoRoot,
-  outputFileTracingExcludes: {
-    '*': [
-      '**/.next/**',
-      '**/node_modules/**',
-      '**/generated/**',
-      './code/generated/**'
-    ]
+  // Never exclude runtime dependencies: deployed RPC requires Next.js and Prisma.
+  outputFileTracingIncludes: {
+    '/*': ['./node_modules/next/dist/compiled/source-map/**/*'],
+    '/api/rpc': ['./prisma-generated/client/**/*'],
   },
 
   // 3. 开发环境代理
@@ -91,6 +88,9 @@ const nextConfig = {
     config.resolve = config.resolve || {}
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
+      '@/frontend/action_utils$': path.resolve(__dirname, './src/frontend/action_utils.ts'),
+      '@/backend/action_utils$': path.resolve(__dirname, './src/backend/action_utils.ts'),
+      '@/app/action_utils$': path.resolve(__dirname, './src/app/action_utils.ts'),
       '@/frontend/actions': path.resolve(__dirname, './lib/rpc-generated/src/frontend/actions'),
       '@/backend/actions': path.resolve(__dirname, './lib/rpc-generated/src/backend/actions'),
       '@/app/actions': path.resolve(__dirname, './lib/rpc-generated/src/app/actions'),
@@ -114,12 +114,7 @@ const nextConfig = {
         enforce: 'pre',
         use: [{ loader: path.resolve(__dirname, './src/default/source-attributes-loader.js') }]
       },
-      // rpc-loader for actions
-      {
-        test: /[\\/]actions[\\/].+\.ts$|[\\/]app[\\/].+[\\/]actions\.ts$/,
-        exclude: /node_modules/,
-        use: [{ loader: path.resolve(__dirname, 'scripts/rpc-loader.js') }]
-      }
+
     )
     return config
   },

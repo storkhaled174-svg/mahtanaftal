@@ -1,6 +1,11 @@
 import { PrismaClient, Prisma, FaqCategory, OrderStatus, TireBrand, TireCategory, UserRole } from "@prisma/client";
 import { hashPassword } from "../src/@base/BaseActionFun";
 
+function requireSeedPassword(name: string) {
+  const value = process.env[name];
+  if (!value || value.length < 12) throw new Error(`Set ${name} to a unique password of at least 12 characters before seeding`);
+  return value;
+}
 const prisma = new PrismaClient();
 type SeedEntity = Record<string, unknown>;
 type RelationBinding = { target_entity_key: string; local_fields: readonly string[]; target_fields: readonly string[] };
@@ -11,7 +16,7 @@ const accountUserRecords = [
       createdAt: new Date("2026-09-01T08:00:00.000Z"),
       fullName: "أمين بلقاسم",
       nationalIdNumber: "100234567890123456",
-      passwordHash: hashPassword("Admin@Naftal2026"),
+      passwordHash: hashPassword(requireSeedPassword("SEED_ADMIN_PASSWORD")),
       phoneNumber: "0550123456",
       role: UserRole.ADMIN,
       username: "admin_naftal"
@@ -21,7 +26,7 @@ const accountUserRecords = [
       createdAt: new Date("2026-09-10T10:30:00.000Z"),
       fullName: "ياسين بن عيسى",
       nationalIdNumber: "199412345678901234",
-      passwordHash: hashPassword("Customer@2026"),
+      passwordHash: hashPassword(requireSeedPassword("SEED_CUSTOMER_PASSWORD")),
       phoneNumber: "0661234567",
       role: UserRole.CUSTOMER,
       username: "yassine_dz"
@@ -317,7 +322,7 @@ const tireOrderRecords = [
       commune: "الدار البيضاء",
       createdAt: new Date("2026-10-04T09:15:00.000Z"),
       customerName: "سليمان بوزيد",
-      dahabiaCardNumber: "628001234567890123",
+      dahabiaCardNumber: "67890123",
       dahabiaExpiry: "08/28",
       nationalIdNumber: "109827364519283746",
       notes: "طلب استلام في محطة نفطال الدار البيضاء الطريق السريع.",
@@ -337,7 +342,7 @@ const tireOrderRecords = [
       commune: "السانية",
       createdAt: new Date("2026-10-03T14:20:00.000Z"),
       customerName: "عبد القادر بلحاج",
-      dahabiaCardNumber: "628009876543210987",
+      dahabiaCardNumber: "43210987",
       dahabiaExpiry: "11/27",
       nationalIdNumber: "105647382910485729",
       notes: "تم التحقق من الحصة وتخصيص المقاس في المستودع الإقليمي.",
@@ -357,7 +362,7 @@ const tireOrderRecords = [
       commune: "الخروب",
       createdAt: new Date("2026-09-28T16:30:00.000Z"),
       customerName: "فاطمة الزهراء بن عيسى",
-      dahabiaCardNumber: "628001122334455678",
+      dahabiaCardNumber: "34455678",
       dahabiaExpiry: "05/29",
       nationalIdNumber: "112233445566778899",
       notes: "تم التركيب والتسليم بنجاح في مركز خدمات نفطال الخروب.",
@@ -377,7 +382,7 @@ const tireOrderRecords = [
       commune: "زرالدة",
       createdAt: new Date("2026-10-02T10:15:00.000Z"),
       customerName: "سليمان بلقاسم العربي",
-      dahabiaCardNumber: "628044108892314012",
+      dahabiaCardNumber: "92314012",
       dahabiaExpiry: "11/27",
       nationalIdNumber: "109845210394857211",
       notes: "تم تخصيص الحصة من مستودع رغاية المركزي وهي قيد الشحن نحو محطة نفطال زرالدة.",
@@ -397,7 +402,7 @@ const tireOrderRecords = [
       commune: "بئر الجير",
       createdAt: new Date("2026-09-25T11:00:00.000Z"),
       customerName: "فاطمة الزهراء منصوري",
-      dahabiaCardNumber: "628099412284771501",
+      dahabiaCardNumber: "84771501",
       dahabiaExpiry: "05/28",
       nationalIdNumber: "204896320147852399",
       notes: "الحصة متوفرة بالكامل في ورشة المحطة، تم الاستلام والتركيب الفوري.",
@@ -417,7 +422,7 @@ const tireOrderRecords = [
       commune: "العلمة",
       createdAt: new Date("2026-10-04T15:45:00.000Z"),
       customerName: "ياسين قندوز العيد",
-      dahabiaCardNumber: "628033017748996234",
+      dahabiaCardNumber: "48996234",
       dahabiaExpiry: "09/29",
       nationalIdNumber: "119844001928374622",
       notes: "تم تأكيد تسجيل الطلب بنجاح وتجري مراجعة تطابق رقم الهوية مع سجلات البطاقة الذهبية.",
@@ -437,7 +442,7 @@ const tireOrderRecords = [
       commune: "بوفاريك",
       createdAt: new Date("2026-10-01T08:30:00.000Z"),
       customerName: "محمد لمين بن سالم",
-      dahabiaCardNumber: "628055667788990011",
+      dahabiaCardNumber: "88990011",
       dahabiaExpiry: "03/28",
       nationalIdNumber: "103344556677889900",
       notes: "مركبة نفعية لنقل البضائع، تم حجز الإطارات في محطة بوفاريك.",
@@ -457,7 +462,7 @@ const tireOrderRecords = [
       commune: "البوني",
       createdAt: new Date("2026-09-22T09:15:00.000Z"),
       customerName: "نور الدين عماري",
-      dahabiaCardNumber: "628077889900112233",
+      dahabiaCardNumber: "00112233",
       dahabiaExpiry: "12/27",
       nationalIdNumber: "107788990011223344",
       notes: "تم التسليم وتركيب الإطارات بمركز خدمات نفطال عنابة.",
@@ -477,7 +482,7 @@ const tireOrderRecords = [
       commune: "منصورة",
       createdAt: new Date("2026-10-05T07:10:00.000Z"),
       customerName: "حمزة شريفي",
-      dahabiaCardNumber: "628088990011223344",
+      dahabiaCardNumber: "11223344",
       dahabiaExpiry: "07/28",
       nationalIdNumber: "108899001122334455",
       notes: "طلب جديد مسجل عبر البوابة، قيد مراجعة بيانات البطاقة الذهبية.",
@@ -497,7 +502,7 @@ const tireOrderRecords = [
       commune: "عين التوتة",
       createdAt: new Date("2026-09-20T13:00:00.000Z"),
       customerName: "طارق زياني",
-      dahabiaCardNumber: "628099001122334455",
+      dahabiaCardNumber: "22334455",
       dahabiaExpiry: "04/27",
       nationalIdNumber: "109900112233445566",
       notes: "تم إلغاء الطلبية لعدم تطابق الاسم مع صاحب البطاقة الذهبية المسجلة.",

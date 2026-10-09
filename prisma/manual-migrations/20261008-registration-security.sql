@@ -1,0 +1,4 @@
+-- SUPERSEDED: do not run the previous last-eight-card migration.
+-- No automatic schema mutation or deletion is authorized by the build.
+-- See 20261009-order-registration.sql and PRODUCTION-SETUP.md.
+-- The old script truncated existing values; this replacement does not touch rows.

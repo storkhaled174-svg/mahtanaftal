@@ -1,20 +1,6 @@
-import { Inter, Orbitron } from 'next/font/google'
+import localFont from 'next/font/local';
 
-export const display = Orbitron({
-    subsets: ['latin'],
-    variable: '--font-display',
-    display: 'swap',
-})
-
-export const header = Inter({
-    subsets: ['latin'],
-    variable: '--font-header',
-    display: 'swap',
-})
-
-export const body = Orbitron({
-    subsets: ['latin'],
-    variable: '--font-body',
-    display: 'swap',
-})
-
+// Preserve Inter/Orbitron while avoiding network-dependent build-time font downloads.
+export const header = localFont({src:'../node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2',variable:'--font-header',display:'swap'});
+export const body = localFont({src:'../node_modules/@fontsource/orbitron/files/orbitron-latin-400-normal.woff2',variable:'--font-body',display:'swap'});
+export const display = localFont({src:'../node_modules/@fontsource/orbitron/files/orbitron-latin-700-normal.woff2',variable:'--font-display',display:'swap'});
