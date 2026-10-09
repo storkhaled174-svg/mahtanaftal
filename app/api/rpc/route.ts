@@ -53,11 +53,14 @@ export async function POST(request: NextRequest) {
     }
     return response;
   } catch (error: any) {
-    const status = error?.statusCode === 401 || error?.statusCode === 403 ? error.statusCode : 400;
-    // Do not disclose database errors, credentials or submitted personal data.
-    const message = error?.code || /prisma|database|mysql/i.test(error?.message || '')
-      ? 'تعذر حفظ البيانات. يرجى المحاولة لاحقاً أو الاتصال بالدعم'
-      : error?.message || 'تعذر معالجة الطلب';
+    const storageError = /^Prisma/.test(error?.name || '') || /prisma|database|mysql/i.test(error?.message || '');
+    const status = error?.statusCode === 401 || error?.statusCode === 403
+      ? error.statusCode : storageError ? 503 : 400;
+    // Only controlled Arabic validation messages may reach the client.
+    // Never return ORM errors, stack traces, connection details or submitted data.
+    const message = storageError || error?.code || !/[\u0600-\u06ff]/.test(error?.message || '')
+      ? 'تعذر معالجة الطلب. يرجى المحاولة لاحقاً أو الاتصال بالدعم'
+      : error.message;
     return NextResponse.json({error:message}, {status, headers});
   }
 }

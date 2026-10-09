@@ -27,7 +27,7 @@ it('the actual submit button calls save with normalized data and waits for its r
  const {button,onSuccess} = mount();
  fireEvent.click(button);
  expect(mocks.save).toHaveBeenCalledTimes(1);
- expect(mocks.save.mock.calls[0][0]).toMatchObject({customerName:formData.fullName,phoneNumber:'0550000000',secondaryPhone:'0660000000',brand:'IRIS',tireSize:'205/55R16',quantity:2,dahabiaCardNumber:'12345678'});
+ expect(mocks.save.mock.calls[0][0]).toMatchObject({customerName:formData.fullName,phoneNumber:'0550000000',secondaryPhone:'0660000000',brand:'IRIS',tireSize:'205/55R16',quantity:2});
  expect(mocks.success).not.toHaveBeenCalled();
  expect(onSuccess).not.toHaveBeenCalled();
  fireEvent.click(button);
@@ -49,14 +49,21 @@ it('shows storage failure, no success, and reuses the key on retry', async () =>
  await waitFor(() => expect(mocks.save).toHaveBeenCalledTimes(2));
  expect(mocks.save.mock.calls[1][0].submissionKey).toBe(key);
 });
-it.each([{primaryPhone:'0550000000',secondaryPhone:'055 000 0000'},{nidNumber:'12345678x'},{edahabiaNumber:'12345678x'}])('rejects invalid data without saving: %j', async overrides => {
+it.each([{primaryPhone:'0550000000',secondaryPhone:'055 000 0000'},{nidNumber:'12345678x'}])('rejects invalid data without saving: %j', async overrides => {
  const {button} = mount(overrides);
  fireEvent.click(button);
  expect(mocks.save).not.toHaveBeenCalled();
  expect(mocks.success).not.toHaveBeenCalled();
- if ('edahabiaNumber' in overrides) {
-   expect(button.closest('form')?.checkValidity()).toBe(false);
- } else {
-   expect(mocks.error).toHaveBeenCalled();
- }
+ expect(mocks.error).toHaveBeenCalled();
+});
+
+it('accepts an omitted secondary phone and does not collect payment-card data', async () => {
+ mocks.save.mockResolvedValue({orderNumber:'NM-TEST'});
+ const {button,container,onSuccess} = mount({secondaryPhone:'',edahabiaNumber:'',edahabiaExpiry:''});
+ fireEvent.click(button);
+ await waitFor(() => expect(onSuccess).toHaveBeenCalled());
+ expect(mocks.save.mock.calls[0][0].secondaryPhone).toBe('');
+ expect(mocks.save.mock.calls[0][0]).not.toHaveProperty('dahabiaCardNumber');
+ expect(mocks.save.mock.calls[0][0]).not.toHaveProperty('dahabiaExpiry');
+ expect(container.querySelector('input[placeholder="12345678"]')).toBeNull();
 });

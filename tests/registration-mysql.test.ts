@@ -24,13 +24,24 @@ it('persists a synthetic order in MySQL and returns it through the authorized da
       phoneNumber: '0550000000', secondaryPhone: '0660000000',
       wilayaCode: location.code, commune: (location.communes as string[])[0],
       brand: tire.brand, tireSize: tire.size, quantity: 1,
-      nationalIdNumber: '123456789', dahabiaCardNumber: '12345678', dahabiaExpiry: '12/30',
+      nationalIdNumber: '123456789', registrationDate: new Date(),
     };
     const receipt = await runWithAuth(null, () => createTireOrder(input));
     const persisted = await prisma.tireOrder.findUnique({ where: { submissionKey } });
     expect(persisted?.orderNumber).toBe(receipt.orderNumber);
     expect(persisted?.customerName).toBe(input.customerName);
+    expect(persisted?.phoneNumber).toBe(input.phoneNumber);
+    expect(persisted?.secondaryPhone).toBe(input.secondaryPhone);
+    expect(persisted?.wilaya).toBe(`${location.code} - ${location.nameAr}`);
+    expect(persisted?.commune).toBe(input.commune);
+    expect(persisted?.brand).toBe(input.brand);
+    expect(persisted?.tireSize).toBe(input.tireSize);
+    expect(persisted?.nationalIdNumber).toBe(input.nationalIdNumber);
+    expect(persisted?.registrationDate?.toISOString().slice(0,10)).toBe(input.registrationDate.toISOString().slice(0,10));
     expect(persisted?.quantity).toBe(1);
+    expect(persisted?.dahabiaCardNumber).toBeNull();
+    expect(persisted?.dahabiaExpiry).toBeNull();
+    expect(persisted?.registrationDate).not.toBeNull();
     const retry = await runWithAuth(null, () => createTireOrder(input));
     expect(retry.orderNumber).toBe(receipt.orderNumber);
     expect(await prisma.tireOrder.count({ where: { submissionKey } })).toBe(1);

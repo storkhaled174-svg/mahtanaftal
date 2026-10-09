@@ -15,13 +15,10 @@ const nextConfig = {
 
   // 2. 文件追踪相关
   outputFileTracingRoot: monoRoot,
-  outputFileTracingExcludes: {
-    '*': [
-      '**/.next/**',
-      '**/node_modules/**',
-      '**/generated/**',
-      './code/generated/**'
-    ]
+  // Never exclude runtime dependencies: deployed RPC requires Next.js and Prisma.
+  outputFileTracingIncludes: {
+    '/*': ['./node_modules/next/dist/compiled/source-map/**/*'],
+    '/api/rpc': ['./prisma-generated/client/**/*'],
   },
 
   // 3. 开发环境代理

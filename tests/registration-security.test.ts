@@ -12,7 +12,7 @@ import { getAdminDashboardData, updateOrderDetails, updateOrderStatus } from '..
 import { registerAdmin } from '../src/backend/actions/AdminRegister';
 import { searchTireOrder, getSampleOrders, getOrderByOrderNumber } from '../src/frontend/actions/OrderTracking';
 import { runWithAuth } from '../src/@base/BaseActionFun';
-const input = () => ({submissionKey:randomUUID(),customerName:'عميل اختبار',phoneNumber:'0550000000',secondaryPhone:'0660000000',wilayaCode:'16',commune:'الجزائر',brand:'IRIS' as const,tireSize:'205/55R16',quantity:2,nationalIdNumber:'123456789',dahabiaCardNumber:'12345678',dahabiaExpiry:'08/28'});
+const input = () => ({submissionKey:randomUUID(),customerName:'عميل اختبار',phoneNumber:'0550000000',secondaryPhone:'0660000000',wilayaCode:'16',commune:'الجزائر',brand:'IRIS' as const,tireSize:'205/55R16',quantity:2,nationalIdNumber:'123456789',registrationDate:new Date('2026-10-09')});
 const decimal = (n:number) => ({toNumber:()=>n, valueOf:()=>n});
 beforeEach(() => {
  vi.clearAllMocks();
@@ -28,16 +28,25 @@ beforeEach(() => {
  db.tireOrder.findMany.mockImplementation(async ()=>Array.from(rows.values()));
 });
 describe('registration and private management', () => {
- it('saves exactly eight digits and the admin dashboard reads the stored registration', async () => {
+ it('saves registration without payment-card fields and the dashboard reads it', async () => {
   const receipt = await createTireOrder(input());
   expect(receipt.orderNumber).toMatch(/^NM-\d{4}-[A-F0-9]{32}$/);
-  expect(receipt.edahabiaMasked).toBe('•••• 5678');
-  expect(db.tireOrder.upsert.mock.calls[0][0].create.dahabiaCardNumber).toBe('12345678');
+  const saved = db.tireOrder.upsert.mock.calls[0][0].create;
+  expect(saved).not.toHaveProperty('dahabiaCardNumber');
+  expect(saved).not.toHaveProperty('dahabiaExpiry');
+  expect(saved.registrationDate.toISOString()).toBe('2026-10-09T00:00:00.000Z');
   const dashboard = await runWithAuth({userId:'admin',role:'ADMIN'},getAdminDashboardData);
   expect(dashboard.orders[0].orderNumber).toBe(receipt.orderNumber);
  });
- it.each(['1234567','123456789','1234567890123456','1234567x'])('rejects invalid card %s before storage', async card => {
-  await expect(createTireOrder({...input(),dahabiaCardNumber:card})).rejects.toThrow('8');
+ it('accepts no secondary phone and ignores legacy payment-card arguments', async () => {
+  await createTireOrder({...input(),secondaryPhone:undefined,dahabiaCardNumber:'ignored',dahabiaExpiry:'ignored'} as any);
+  const saved = db.tireOrder.upsert.mock.calls[0][0].create;
+  expect(saved.secondaryPhone).toBe('');
+  expect(saved).not.toHaveProperty('dahabiaCardNumber');
+  expect(saved).not.toHaveProperty('dahabiaExpiry');
+ });
+ it('rejects invalid registration date before storage', async () => {
+  await expect(createTireOrder({...input(),registrationDate:new Date('invalid')})).rejects.toThrow('تاريخ');
   expect(db.tireOrder.upsert).not.toHaveBeenCalled();
  });
  it('uses one unique storage key across retries', async () => {

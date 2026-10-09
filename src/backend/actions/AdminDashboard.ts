@@ -49,12 +49,12 @@ export async function getAdminDashboardData(): Promise<AdminDashboardDataOutput>
       unitPriceDzd: o.unitPriceDzd.toNumber(), // data-from: TireOrder-unitPriceDzd
       totalPriceDzd: o.totalPriceDzd.toNumber(), // data-from: TireOrder-totalPriceDzd
       nationalIdNumber: o.nationalIdNumber, // data-from: TireOrder-nationalIdNumber
-      dahabiaCardNumber: o.dahabiaCardNumber.slice(-8), // data-from: TireOrder-dahabiaCardNumber
-      dahabiaExpiry: o.dahabiaExpiry, // data-from: TireOrder-dahabiaExpiry
+      dahabiaCardNumber: '', // data-from: TireOrder-dahabiaCardNumber
+      dahabiaExpiry: '', // data-from: TireOrder-dahabiaExpiry
       status: o.status as OrderStatus, // data-from: TireOrder-status
       notes: o.notes, // data-from: TireOrder-notes
       customerId: o.customerId, // data-from: TireOrder-customerId
-      createdAt: o.createdAt, // data-from: TireOrder-createdAt
+      createdAt: o.registrationDate || o.createdAt, // data-from: TireOrder-createdAt
       updatedAt: o.updatedAt, // data-from: TireOrder-updatedAt
     }));
 
@@ -247,12 +247,12 @@ export async function updateOrderStatus(input: UpdateOrderStatusInput): Promise<
       unitPriceDzd: updatedOrder.unitPriceDzd.toNumber(), // data-from: TireOrder-unitPriceDzd
       totalPriceDzd: updatedOrder.totalPriceDzd.toNumber(), // data-from: TireOrder-totalPriceDzd
       nationalIdNumber: updatedOrder.nationalIdNumber, // data-from: TireOrder-nationalIdNumber
-      dahabiaCardNumber: updatedOrder.dahabiaCardNumber.slice(-8), // data-from: TireOrder-dahabiaCardNumber
-      dahabiaExpiry: updatedOrder.dahabiaExpiry, // data-from: TireOrder-dahabiaExpiry
+      dahabiaCardNumber: '', // data-from: TireOrder-dahabiaCardNumber
+      dahabiaExpiry: '', // data-from: TireOrder-dahabiaExpiry
       status: updatedOrder.status as OrderStatus, // data-from: TireOrder-status
       notes: updatedOrder.notes, // data-from: TireOrder-notes
       customerId: updatedOrder.customerId, // data-from: TireOrder-customerId
-      createdAt: updatedOrder.createdAt, // data-from: TireOrder-createdAt
+      createdAt: updatedOrder.registrationDate || updatedOrder.createdAt, // data-from: TireOrder-createdAt
       updatedAt: updatedOrder.updatedAt, // data-from: TireOrder-updatedAt
     };
   })();
@@ -319,12 +319,12 @@ export async function updateOrderDetails(input: UpdateOrderDetailsInput): Promis
       unitPriceDzd: updated.unitPriceDzd.toNumber(), // data-from: TireOrder-unitPriceDzd
       totalPriceDzd: updated.totalPriceDzd.toNumber(), // data-from: TireOrder-totalPriceDzd
       nationalIdNumber: updated.nationalIdNumber, // data-from: TireOrder-nationalIdNumber
-      dahabiaCardNumber: updated.dahabiaCardNumber.slice(-8), // data-from: TireOrder-dahabiaCardNumber
-      dahabiaExpiry: updated.dahabiaExpiry, // data-from: TireOrder-dahabiaExpiry
+      dahabiaCardNumber: '', // data-from: TireOrder-dahabiaCardNumber
+      dahabiaExpiry: '', // data-from: TireOrder-dahabiaExpiry
       status: updated.status as OrderStatus, // data-from: TireOrder-status
       notes: updated.notes, // data-from: TireOrder-notes
       customerId: updated.customerId, // data-from: TireOrder-customerId
-      createdAt: updated.createdAt, // data-from: TireOrder-createdAt
+      createdAt: updated.registrationDate || updated.createdAt, // data-from: TireOrder-createdAt
       updatedAt: updated.updatedAt, // data-from: TireOrder-updatedAt
     };
   })();

@@ -95,16 +95,14 @@ export interface CreateOrderInput {
   submissionKey: string;
   customerName: string;
   phoneNumber: string;
-  secondaryPhone: string;
+  secondaryPhone?: string;
   wilayaCode: string;
   commune: string;
   brand: TireBrand;
   tireSize: string;
   quantity: number;
   nationalIdNumber: string;
-  dahabiaCardNumber: string;
-  dahabiaExpiry: string;
-  registrationDate?: Date;
+  registrationDate: Date;
 }
 
 export interface OrderReceipt {
@@ -122,7 +120,7 @@ export interface OrderReceipt {
   unitPriceDzd: number; // data-from: TireOrder-unitPriceDzd
   totalPriceDzd: number; // data-from: TireOrder-totalPriceDzd
   nidMasked: string;
-  edahabiaMasked: string;
+
   status: OrderStatus; // data-from: TireOrder-status
 }
 

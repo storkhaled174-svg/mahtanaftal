@@ -116,8 +116,9 @@ model TireOrder {
   unitPriceDzd      Decimal      @db.Decimal(12, 2)
   totalPriceDzd     Decimal      @db.Decimal(12, 2)
   nationalIdNumber  String       @db.VarChar(64)
-  dahabiaCardNumber String       @db.VarChar(8)
-  dahabiaExpiry     String       @db.VarChar(16)
+  dahabiaCardNumber String?      @db.VarChar(64)
+  dahabiaExpiry     String?      @db.VarChar(16)
+  registrationDate DateTime?    @db.Date
   status            OrderStatus  @default(NEW)
   notes             String?      @db.Text
   customerId        String?      @db.VarChar(72) // FK → AccountUser.id

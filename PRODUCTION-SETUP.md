@@ -1,34 +1,40 @@
-# Existing Naftal Mhatati: release checklist
+# autocoder: existing registration repair, 2026-10-09
 
-The same Next.js pages, components, Prisma models, dashboard and RPC contract are retained. The static export is replaced by a Next.js server runtime because private URLs and persistent registration require server execution. No replacement database is created.
+## Observed state, not assumptions
+- Project `autocoder` is the existing project for `autocoder-wine.vercel.app`.
+- Repository main used static export and browser requests to localhost:3100. This security branch supplies a same-origin Next.js RPC server with database-backed Prisma actions.
+- Prisma declares `provider = "mysql"`, with AccountUser, TireOrder, TireStock, AlgerianWilaya and content models. This is code configuration, NOT proof that a live MySQL database currently exists or is accessible.
+- Scoped Vercel reads show no environment variables and no connected storage for autocoder. Team Supabase resources are suspended and linked to other projects; they are not used as substitutes.
+- Runtime logs over 24 hours include POST /api/rpc failures on earlier previews: Cannot find module 'next/dist/compiled/source-map'. The inherited outputFileTracingExcludes removed node_modules/runtime build files. Removed those excludes and explicitly included the generated Prisma runtime. Live deployment regression verification remains necessary.
 
-1. **Rotate the database password previously committed in the schema and generated bundle.** Remove old credentials from Git history as appropriate. Also rotate any publicly seeded administrator credentials. Do not run the legacy `init` script: it resets the database.
-2. In Vercel → autocoder → Settings → Environment Variables, configure `DATABASE_URL` (existing MySQL database, encrypted connection as supported by your provider) and a random `JWT_SECRET` of at least 32 characters. Set separate database credentials/data for Preview; never connect preview tests to production. No such variables were configured when these changes were prepared.
-3. Back up the existing database. Inspect legacy card values; resolve any shorter than eight digits. Apply `prisma/manual-migrations/20261008-registration-security.sql` once. It retains only the final eight digits, narrows storage, adds the unique idempotency key and a numeric check (MySQL 8.0.16+). This script is intentionally not executed automatically during builds.
-4. Ensure at least one trusted ADMIN exists. Public administrator self-registration is now blocked; a signed-in ADMIN may add another administrator. First-admin provisioning must be performed through a trusted database/operator process, not a public bootstrap endpoint. Existing passwords remain compatible.
-5. Deploy the PR to Preview, then verify: submit a synthetic registration; find the single matching row in MySQL; sign in as ADMIN and confirm the same reference appears in the dashboard; test search/edit; ensure guest/customer requests to admin URLs and actions are denied. Retry submission with the same key and confirm one row. Remove synthetic data through an authorized operator.
-6. Check 375px and 390px phone widths (iPhone/Android), 768px tablet and desktop: RTL alignment, selectors, error messages, receipt, keyboard, no overflow. Local tests use a mocked database; they are not evidence of live persistence or physical-device testing.
-7. Merge/deploy to production only after database migration, secret rotation and complete live verification. Existing signed-in administrators should sign in again to receive the new HttpOnly route-access cookie. Logging out clears that cookie. Password changes now update the real administrator account instead of browser-local shared passwords. The build retains the original Inter/Orbitron fonts as local assets.
+## Current behavior
+- Preserve Arabic RTL, colors, existing sections and database records. Remove only payment-card inputs/receipt field as explicitly requested.
+- Store name, primary phone, optional secondary phone (empty string when absent), wilaya, commune, brand, tire size, quantity, national ID and a separate registrationDate column. Preserve database-generated createdAt audit timestamp.
+- Registration date is validated server-side and stored as DATE. Historical NULL registrationDate displays existing createdAt; no historical rows are rewritten.
+- The create action explicitly lists stored fields: legacy card arguments are ignored, and neither card number nor expiry is written. Legacy nullable columns remain only to preserve existing data. Admin responses return no old card values.
+- Success/receipt is emitted only after awaited database save. Storage failures propagate without a success callback; error logging includes class/code only, not Prisma error bodies or submitted personal data.
+- Authorized admin actions read the same Prisma TireOrder model. Dashboard refreshes every 15 seconds while visible/signed in and on focus, with overlap guards. Private routes/actions require verified sessions and database roles.
 
-`npm run test` tests registration persistence contract, idempotency, last-eight validation, admin authorization and tracking privacy. `npm run build` generates Prisma and RPC clients and builds the existing Next.js application.
+## Required before deployment to production
+1. Confirm the ACTUAL existing database provider and current table schema with its operator. Do not create a database, invent a URL or attach another project's storage. If it is not MySQL, this Prisma provider/schema must be adapted to the verified database before release.
+2. Rotate credentials previously committed in the public main branch and old seeded administrator credentials. Never paste secrets in chat, public logs or NEXT_PUBLIC_ variables.
+3. Configure server-only DATABASE_URL for the verified existing database and JWT_SECRET (random >=32 characters) in Vercel → autocoder → Settings → Environment Variables. Confirm environments before testing. No provider-managed credentials are modified by this code change.
+4. Back up and inspect the existing schema. The former 20261008 card-truncation script is superseded and MUST NOT run. Review prisma/manual-migrations/20261009-order-registration.sql: only required additive columns/index and nullable legacy payment columns; no row updates/deletions or column removal. No migration runs during builds; do not use legacy init/reset/seed scripts.
+5. Confirm an existing trusted ADMIN, available stock and valid wilaya/commune data. Initial admin setup must be performed through a trusted operator, not a public bootstrap endpoint.
+6. Run npm run test:mysql from a trusted runner that can reach this verified database. It requires DATABASE_URL and explicit ALLOW_REGISTRATION_DB_TEST=yes; it creates one synthetic keyed order, independently reads it, verifies all relevant storage behavior, retries with the same key, verifies guest denial and dashboard action visibility, then removes ONLY its own newly-created test row. Do not put that authorization flag in the application's Vercel environment. If no test-row cleanup is permitted, coordinate an operator-reviewed alternative before running.
+7. Then test the deployed form, authenticated admin login/display and page reload in a browser. The sandbox cannot request deployment URLs or arbitrary external database hosts. Local HTTP/action tests are not proof of deployment/database end-to-end success.
+8. Release to existing autocoder production only after real persistence and admin-browser checks succeed. No new project/database is needed.
 
-## Verification recorded during implementation
+## Tests and limitations
+- npm test: action tests with mocked Prisma and actual submit-button component tests in jsdom with mocked transport. Cover optional secondary phone, no collected/stored payment fields, date validation, phone normalization, no premature success, double-click guard, failures/retry keys and admin authorization.
+- npm run test:mysql: deliberately FAILS, not skips/passes, when live database configuration or authorization is missing. On this investigation DATABASE_URL is missing; live storage, actual tables and browser admin visibility remain unverified.
+- npm run build: builds real server RPC and traces dependencies. Inherited ignoreBuildErrors remains; full tsc has pre-existing template/tooling errors.
+- No production deployment, data deletion or database migration has been performed by this investigation.
 
-- Production build completed locally (existing Next.js type checking remains disabled; a full `tsc` check reports pre-existing errors in template/development tooling).
-- Automated action tests use an in-memory Prisma mock, not a real MySQL database.
-- Local built-server HTTP checks: public homepage returns 200; unauthenticated private URLs redirect to admin login (307); private RPC read/admin creation/password change return 401; sample endpoint returns an empty array (200); reference lookup without a full phone returns a clear error (400).
-- Vercel Preview build is separate from unchanged production. No browser/device or live database end-to-end verification has been completed.
-
-## Follow-up: autocoder registration investigation (2026-10-09)
-
-- Rechecked Vercel `autocoder`: environment metadata still contains **no variables**. The existing security deployment is **Preview**, not proof of a working production database.
-- Added component tests that click the real submit button in jsdom: normalized phone payload, pending-save/no premature success, double-click guard, failure feedback, retry key reuse, and invalid-field rejection. These mock only the save transport; they do not prove MySQL persistence.
-- Fixed spaced phone numbers accepted by the form but rejected by the server, normalized duplicate-phone detection, and corrected national-ID validation/text. Invalid card text is rejected rather than stripped into a valid-looking value.
-- The existing admin dashboard now re-queries the existing database action every 15 seconds while signed in and visible, and on focus/visibility restoration. Overlapping refreshes are prevented and listeners/timers are cleaned up; no RTL styling or sections were replaced.
-- Added `npm run test:mysql`: a **real, unmocked action integration test**. It queries existing schema, stock, locations and an existing ADMIN, writes one synthetic order, independently reads it back, retries with the same key, confirms the authorized dashboard action returns the same row, verifies guest denial and deletes only its own keyed test row. It does not test browser rendering or real administrator login.
-- The MySQL test fails explicitly (does not skip/pass) without `DATABASE_URL` or explicit `ALLOW_REGISTRATION_DB_TEST=yes`. Never authorize it on production without an operator-reviewed testing/cleanup window. Do not put this flag into Vercel's application environment; it is only for the trusted test runner.
-- On this run, the live test was blocked at `DATABASE_URL` preflight. No existing tables, connection or live order storage were verified and no production deployment was changed.
-
-To unblock: configure a **rotated** connection to the existing MySQL database as server-only `DATABASE_URL`, configure server-only `JWT_SECRET` (random, >=32 characters), have the database operator verify the reviewed migration and existing ADMIN, and provide a trusted runner with database network access for the integration test. Then perform customer submission and actual admin login/display testing in a browser before releasing to `autocoder-wine.vercel.app`. Never paste credentials into chat or add `NEXT_PUBLIC_` to these variables.
-
-Follow-up checks: **17 automated tests passed** (12 action/security mocks + 5 jsdom submit-button tests); production build completed successfully. The separate MySQL test **failed at missing `DATABASE_URL` preflight**. Full `tsc --noEmit` still fails on template/tooling files; no errors were reported for the changed form, dashboard, action or added tests. These results do not establish live persistence or a production fix.
+## Verified results for the latest revision
+- 15 updated automated tests PASS (payment-card requirements were removed/replaced with optional-phone, no-card-storage and registration-date tests).
+- Local production build PASS. RPC file trace contains 3 Next.js source-map files plus the existing generated Prisma query-engine library; each referenced file exists.
+- Built-server HTTP checks PASS: private admin route redirects (307), guest admin RPC is 401, invalid quantity is 400, missing database connection is 503 with a generic Arabic message. Server logs show only error class/code, not ORM error bodies or connection secrets.
+- Real MySQL integration test FAILS explicitly at missing DATABASE_URL preflight. No live order was created; no real database table inspection or authenticated browser display was completed.
+- Full tsc fails on existing template/tooling files; latest check reports no errors in changed registration action/form/receipt, admin action, API route, auth base or tests.
+- Updated the existing draft PR only. Integration-triggered previews are not evidence of production persistence, and no production promotion has been performed.

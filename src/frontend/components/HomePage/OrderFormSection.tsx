@@ -46,9 +46,6 @@ export default function OrderFormSection({
     return /^(05|06|07)[0-9]{8}$/.test(clean);
   };
 
-  // Edahabia validation (exactly 8 digits)
-  const edahabiaClean = formData.edahabiaNumber.replace(/\D/g, "");
-  const edahabiaCount = edahabiaClean.length;
   const handlePhoneChange = (field: "primaryPhone" | "secondaryPhone", val: string) => {
     const clean = val.replace(/[^\d\s]/g, "");
     onFormChange({
@@ -61,37 +58,6 @@ export default function OrderFormSection({
       }));
     }
   };
-  const handleEdahabiaChange = (val: string) => {
-    if (!/^[0-9]{0,8}$/.test(val)) {
-      setErrors(prev => ({ ...prev, edahabiaNumber: 'أدخل آخر 8 أرقام فقط، ولا تدخل رقم البطاقة الكامل' }));
-      return;
-    }
-    const clean = val;
-    onFormChange({
-      edahabiaNumber: clean
-    });
-    if (errors.edahabiaNumber) {
-      setErrors(prev => ({
-        ...prev,
-        edahabiaNumber: ""
-      }));
-    }
-  };
-  const handleExpiryChange = (val: string) => {
-    let clean = val.replace(/\D/g, "").slice(0, 4);
-    if (clean.length >= 3) {
-      clean = clean.slice(0, 2) + "/" + clean.slice(2, 4);
-    }
-    onFormChange({
-      edahabiaExpiry: clean
-    });
-    if (errors.edahabiaExpiry) {
-      setErrors(prev => ({
-        ...prev,
-        edahabiaExpiry: ""
-      }));
-    }
-  };
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
     if (!formData.fullName.trim() || formData.fullName.trim().length < 3) {
@@ -100,8 +66,8 @@ export default function OrderFormSection({
     if (!formData.primaryPhone.trim() || !validatePhone(formData.primaryPhone)) {
       newErrors.primaryPhone = "رقم الهاتف الأول إجباري ويجب أن يتكون من 10 أرقام ويبدأ بـ 05، 06، أو 07";
     }
-    if (!formData.secondaryPhone.trim() || !validatePhone(formData.secondaryPhone)) {
-      newErrors.secondaryPhone = "رقم الهاتف الثاني إجباري للتحقق ويجب أن يبدأ بـ 05، 06، أو 07";
+    if (formData.secondaryPhone.trim() && !validatePhone(formData.secondaryPhone)) {
+      newErrors.secondaryPhone = "رقم الهاتف الثاني اختياري، وعند إدخاله يجب أن يبدأ بـ 05، 06، أو 07";
     } else if (formData.secondaryPhone.replace(/\s+/g, "") === formData.primaryPhone.replace(/\s+/g, "")) {
       newErrors.secondaryPhone = "يجب أن يكون رقم الهاتف الثاني مختلفاً عن رقم الهاتف الأول";
     }
@@ -116,12 +82,6 @@ export default function OrderFormSection({
     }
     if (!/^[0-9]{9,18}$/.test(formData.nidNumber.trim())) {
       newErrors.nidNumber = "رقم بطاقة التعريف الوطنية البيومترية إجباري وصحيح (9-18 رقماً)";
-    }
-    if (!/^[0-9]{8}$/.test(formData.edahabiaNumber)) {
-      newErrors.edahabiaNumber = `رقم البطاقة الذهبية يجب أن يتكون من 8 أرقام أخيرة تماماً (الحالي: ${edahabiaCount})`;
-    }
-    if (!formData.edahabiaExpiry || !/^(0[1-9]|1[0-2])\/\d{2}$/.test(formData.edahabiaExpiry)) {
-      newErrors.edahabiaExpiry = "تاريخ نهاية الصلاحية إجباري بصيغة MM/YY (مثال: 08/28)";
     }
     if (!formData.registrationDate) {
       newErrors.registrationDate = "تاريخ التسجيل إجباري";
@@ -156,9 +116,7 @@ export default function OrderFormSection({
         tireSize: currentTire.dimension,
         quantity: formData.quantity,
         nationalIdNumber: formData.nidNumber.trim(),
-        dahabiaCardNumber: edahabiaClean,
-        dahabiaExpiry: formData.edahabiaExpiry.trim(),
-        registrationDate: formData.registrationDate ? new Date(formData.registrationDate) : undefined
+        registrationDate: new Date(formData.registrationDate)
       };
       const receipt = await createTireOrder(input);
       toast.success("تم تأكيد وتسجيل الطلبية الرسمية بنجاح!");
@@ -188,7 +146,7 @@ export default function OrderFormSection({
             تسجيل طلبية الإطارات
           </h2>
           <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground sm:text-base" data-api-unique-id='orderformsection-r970bd546971a8c1c-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-            يرجى إدخال كافة البيانات الشخصية والتقنية بدقة متناهية. جميع الحقول إجبارية لضمان تأكيد وتخصيص الحصة الرسمية بدون وسطاء.
+            يرجى إدخال كافة البيانات الشخصية والتقنية بدقة متناهية. الهاتف الثاني اختياري. يرجى استكمال الحقول المطلوبة لضمان تأكيد وتخصيص الحصة الرسمية بدون وسطاء.
           </p>
         </div>
 
@@ -241,7 +199,7 @@ export default function OrderFormSection({
 
                 <div className="space-y-1.5 text-right" data-api-unique-id='orderformsection-r613bea5285ff6438-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                   <label className="font-header text-sm font-semibold text-foreground" data-api-unique-id='orderformsection-rc7df93bffbbccef3-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    رقم الهاتف الثاني (إجباري 05/06/07) <span className="text-destructive" data-api-unique-id='orderformsection-re57287272808c330-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>*</span>
+                    رقم الهاتف الثاني (اختياري)
                   </label>
                   <div className="relative" data-api-unique-id='orderformsection-r96ce1026e3ec13ef-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                     <Input dir="ltr" value={formData.secondaryPhone} onChange={e => handlePhoneChange("secondaryPhone", e.target.value)} placeholder="05XXXXXXXX" maxLength={10} className="h-11 border-border bg-card text-left font-mono text-foreground focus:border-primary" data-api-unique-id='orderformsection-re6ceb9c3d7a169ac-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
@@ -412,7 +370,7 @@ export default function OrderFormSection({
             <div className="space-y-4" data-api-unique-id='orderformsection-r2d0c1653bb489dbf-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
               <h3 className="flex items-center gap-2 border-b border-border pb-2 font-header text-lg font-bold text-foreground" data-api-unique-id='orderformsection-rc32b92a3b8534698-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
                 <CreditCard className="h-5 w-5 text-primary" data-api-unique-id='orderformsection-r947cd10f52e68ec1-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                <span data-api-unique-id='orderformsection-r53c99019ff5c3bf7-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>3. التحقق الأمني والبطاقة الذهبية (8 أرقام أخيرة تماماً)</span>
+                <span data-api-unique-id='orderformsection-r53c99019ff5c3bf7-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>3. بطاقة التعريف وتاريخ التسجيل</span>
               </h3>
 
               {/* NID */}
@@ -433,47 +391,6 @@ export default function OrderFormSection({
                     <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-re81b0b9f547bc9d3-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
                     {errors.nidNumber}
                   </p>}
-              </div>
-
-              {/* Edahabia Number with Live Counter (0 / 8) */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3" data-api-unique-id='orderformsection-rd6f295e536aa8488-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                <div className="space-y-1.5 text-right sm:col-span-2" data-api-unique-id='orderformsection-rd2cb38475cb408b3-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                  <div className="flex items-center justify-between" data-api-unique-id='orderformsection-rbec214b496caa8b0-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    <label className="font-header text-sm font-semibold text-foreground" data-api-unique-id='orderformsection-r260837cb005c2511-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                      رقم البطاقة الذهبية (8 أرقام أخيرة تماماً) <span className="text-destructive" data-api-unique-id='orderformsection-r59512b2ca1516a55-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>*</span>
-                    </label>
-                    <span className={`font-mono text-xs font-bold rounded px-2 py-0.5 ${edahabiaCount === 8 ? "bg-success text-success-foreground" : "bg-secondary text-secondary-foreground"}`} data-api-unique-id='orderformsection-r5e6f8d44319eec84-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                      {edahabiaCount} / 8 أرقام أخيرة
-                    </span>
-                  </div>
-                  <div className="relative" data-api-unique-id='orderformsection-r8464f0c0392994a6-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    <Input dir="ltr" value={formData.edahabiaNumber} onChange={e => handleEdahabiaChange(e.target.value)} placeholder="12345678" maxLength={8} inputMode="numeric" pattern="[0-9]{8}" autoComplete="off" onPaste={e => {
-                      const pasted = e.clipboardData.getData('text');
-                      if (!/^[0-9]{1,8}$/.test(pasted)) {
-                        e.preventDefault();
-                        setErrors(prev => ({ ...prev, edahabiaNumber: 'أدخل آخر 8 أرقام فقط، ولا تلصق رقم البطاقة الكامل' }));
-                      }
-                    }} onBlur={() => {
-                      if (!/^[0-9]{8}$/.test(formData.edahabiaNumber)) setErrors(prev => ({ ...prev, edahabiaNumber: 'أدخل آخر 8 أرقام بالضبط' }));
-                    }} className="h-11 border-border bg-card text-left font-mono tracking-widest text-foreground focus:border-primary" data-api-unique-id='orderformsection-r740a10689e0469c0-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                  </div>
-                  {errors.edahabiaNumber && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-r4ac41325160f7a38-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                      <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-rde1a846cd2190da3-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                      {errors.edahabiaNumber}
-                    </p>}
-                </div>
-
-                {/* Expiry Date */}
-                <div className="space-y-1.5 text-right" data-api-unique-id='orderformsection-r0d6240b2a7cf0181-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                  <label className="font-header text-sm font-semibold text-foreground" data-api-unique-id='orderformsection-r6774a1ab9b5518aa-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                    تاريخ الانتهاء (MM/YY) <span className="text-destructive" data-api-unique-id='orderformsection-rde282968ead0d189-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>*</span>
-                  </label>
-                  <Input dir="ltr" value={formData.edahabiaExpiry} onChange={e => handleExpiryChange(e.target.value)} placeholder="08/28" maxLength={5} className="h-11 border-border bg-card text-center font-mono text-foreground focus:border-primary" data-api-unique-id='orderformsection-r14fe36b4a26b4eff-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                  {errors.edahabiaExpiry && <p className="flex items-center gap-1 font-body text-xs text-destructive" data-api-unique-id='orderformsection-r3525d33e58ed43d1-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection'>
-                      <AlertCircle className="h-3.5 w-3.5" data-api-unique-id='orderformsection-r7bafc3960828a144-s942584081' data-api-unique-page-name='src/frontend/components/HomePage/OrderFormSection' />
-                      {errors.edahabiaExpiry}
-                    </p>}
-                </div>
               </div>
 
               {/* Registration Date Field directly under Expiry Date */}

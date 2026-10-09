@@ -96,7 +96,7 @@ export function withResult<TArgs extends any[], TData>(
         throw error
       }
 
-      console.error('[Action Unexpected Error]:', error)
+      console.error('[Action Failed]', { name: error?.name || 'Error', code: typeof error?.code === 'string' ? error.code : undefined })
       throw error
     }
   }) as (...args: TArgs) => Promise<TData>
