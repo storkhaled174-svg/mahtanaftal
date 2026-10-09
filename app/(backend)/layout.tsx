@@ -33,7 +33,7 @@ export default function BackendLayout({ children }: RootLayoutProps) {
   )
 
   return (
-    <div className={`font-sans min-h-screen`}>
+    <div className={`font-sans min-h-screen admin-readable`}>
       <AuthExpiredDialog />
       <BackendAuthGuard>
         {isFullscreen ? (
