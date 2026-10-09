@@ -97,16 +97,6 @@ const nextConfig = {
     }
 
     config.module.rules.push(
-      // declare-function-rewrite: types 中的 declare function → actions re-export
-      {
-        test: /\/src\/(frontend|backend|app)\/types\/\w+\.ts$/,
-        exclude: /node_modules/,
-        enforce: 'pre',
-        use: [{
-          loader: path.resolve(__dirname, './src/default/declare-function-rewrite-loader.cjs'),
-          options: { projectRoot: __dirname }
-        }]
-      },
       // source-attributes-loader
       {
         test: /\.(tsx|jsx)$/,
@@ -114,12 +104,7 @@ const nextConfig = {
         enforce: 'pre',
         use: [{ loader: path.resolve(__dirname, './src/default/source-attributes-loader.js') }]
       },
-      // rpc-loader for actions
-      {
-        test: /[\\/]actions[\\/].+\.ts$|[\\/]app[\\/].+[\\/]actions\.ts$/,
-        exclude: /node_modules/,
-        use: [{ loader: path.resolve(__dirname, 'scripts/rpc-loader.js') }]
-      }
+
     )
     return config
   },

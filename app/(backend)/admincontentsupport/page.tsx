@@ -2,15 +2,15 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { toast } from "sonner";
-import { PlatformFaq, SupportChannel, FaqFilterState, FaqFormData, SupportChannelFormData, ContentSupportStats } from "../types/AdminContentSupport";
-import { getContentSupportWorkbenchData, createPlatformFaq, updatePlatformFaq, togglePlatformFaqStatus, createSupportChannel, updateSupportChannel, toggleSupportChannelStatus } from "../actions/AdminContentSupport";
-import AdminContentSupportHeader from "../components/AdminContentSupport/AdminContentSupportHeader";
-import FaqFiltersToolbar from "../components/AdminContentSupport/FaqFiltersToolbar";
-import FaqDataTable from "../components/AdminContentSupport/FaqDataTable";
-import SupportChannelsGrid from "../components/AdminContentSupport/SupportChannelsGrid";
-import FaqFormModal from "../components/AdminContentSupport/FaqFormModal";
-import SupportChannelModal from "../components/AdminContentSupport/SupportChannelModal";
-import FaqDetailModal from "../components/AdminContentSupport/FaqDetailModal";
+import { PlatformFaq, SupportChannel, FaqFilterState, FaqFormData, SupportChannelFormData, ContentSupportStats } from "@/backend/types/AdminContentSupport";
+import { getContentSupportWorkbenchData, createPlatformFaq, updatePlatformFaq, togglePlatformFaqStatus, createSupportChannel, updateSupportChannel, toggleSupportChannelStatus } from "@/backend/actions/AdminContentSupport";
+import AdminContentSupportHeader from "@/backend/components/AdminContentSupport/AdminContentSupportHeader";
+import FaqFiltersToolbar from "@/backend/components/AdminContentSupport/FaqFiltersToolbar";
+import FaqDataTable from "@/backend/components/AdminContentSupport/FaqDataTable";
+import SupportChannelsGrid from "@/backend/components/AdminContentSupport/SupportChannelsGrid";
+import FaqFormModal from "@/backend/components/AdminContentSupport/FaqFormModal";
+import SupportChannelModal from "@/backend/components/AdminContentSupport/SupportChannelModal";
+import FaqDetailModal from "@/backend/components/AdminContentSupport/FaqDetailModal";
 
 export default function AdminContentSupportPage() {
   // Primary State

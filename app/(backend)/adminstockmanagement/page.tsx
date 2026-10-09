@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { toast } from "sonner";
-import { StockFilterState, StockKpiData, TireStockDto } from "../types/AdminStockManagement";
-import { getStockManagementData, createTireStock, updateTireStock, toggleTireAvailability } from "../actions/AdminStockManagement";
-import HeaderSection from "../components/AdminStockManagement/HeaderSection";
-import KpiMetricCards from "../components/AdminStockManagement/KpiMetricCards";
-import FilterToolbar from "../components/AdminStockManagement/FilterToolbar";
-import StockTable from "../components/AdminStockManagement/StockTable";
-import CreateStockDrawer, { NewTireStockPayload } from "../components/AdminStockManagement/CreateStockDrawer";
-import EditStockModal from "../components/AdminStockManagement/EditStockModal";
+import { StockFilterState, StockKpiData, TireStockDto } from "@/backend/types/AdminStockManagement";
+import { getStockManagementData, createTireStock, updateTireStock, toggleTireAvailability } from "@/backend/actions/AdminStockManagement";
+import HeaderSection from "@/backend/components/AdminStockManagement/HeaderSection";
+import KpiMetricCards from "@/backend/components/AdminStockManagement/KpiMetricCards";
+import FilterToolbar from "@/backend/components/AdminStockManagement/FilterToolbar";
+import StockTable from "@/backend/components/AdminStockManagement/StockTable";
+import CreateStockDrawer, { NewTireStockPayload } from "@/backend/components/AdminStockManagement/CreateStockDrawer";
+import EditStockModal from "@/backend/components/AdminStockManagement/EditStockModal";
 
 const formatSyncTime = (date: Date): string => {
   const hours = date.getHours().toString().padStart(2, "0");
