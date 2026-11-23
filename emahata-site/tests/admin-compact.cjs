@@ -1,0 +1,15 @@
+const fs = require('node:fs');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const html = fs.readFileSync('index.html','utf8');
+const source = html.slice(html.indexOf('function countTodayRegistrations('),html.indexOf('async function renderAdminOrders()'));
+const count = vm.runInNewContext(`(${source.trim()})`);
+const now = new Date('2026-10-16T00:30:00Z');
+assert.equal(count([{date:'2026-10-15T23:00:00Z'},{date:'2026-10-16T22:59:59Z'},{date:'2026-10-15T22:59:59Z'},{date:'2026-10-16T23:00:00Z'},{date:'invalid'},{}],now),2);
+assert.equal(count([],now),0);
+assert.equal((html.match(/id="todayRegistrationsCount"/g)||[]).length,1);
+assert.ok(html.includes('countTodayRegistrations(allOrders)'));
+assert.ok(html.includes('detailsGrid.append(...middle.children, ...secondary.children)'));
+assert.ok(html.includes('grid-template-columns:repeat(2,minmax(0,1fr))'));
+assert.ok(html.includes('@media(min-width:900px){#adminModal .order-details-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}'));
+console.log('Admin grid structure and Algeria day boundaries passed.');

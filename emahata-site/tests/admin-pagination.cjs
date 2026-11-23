@@ -1,0 +1,17 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const html=fs.readFileSync('index.html','utf8');
+const source=html.slice(html.indexOf('function paginateOrders('),html.indexOf('function resetOrderPage('));
+const paginate=vm.runInNewContext(`(${source.trim()})`);
+const rows=Array.from({length:29},(_,i)=>({id:i}));
+let p=paginate(rows,1,10);assert.equal(p.items.length,10);assert.equal(p.pages,3);assert.equal(p.offset,0);
+p=paginate(rows,3,10);assert.equal(p.items.length,9);assert.equal(p.offset,20);
+p=paginate(rows,3,20);assert.equal(p.page,2);assert.equal(p.items.length,9);
+p=paginate(rows.slice(0,10),3,10);assert.equal(p.page,1);
+p=paginate([],4,10);assert.equal(p.page,1);assert.equal(p.total,0);
+const reindex=vm.runInNewContext(`(${html.slice(html.indexOf('function reindexDisplayedOrders('),html.indexOf('function displayOrders(')).trim()})`);
+assert.equal(reindex(rows.slice(10,20),10)[0].displayNumber,'11');
+assert.ok(html.includes('oninput="resetOrderPage()"'));
+assert.ok(html.includes('currentOrderFilter = status;\n            currentOrderPage = 1;'));
+assert.ok(html.includes("currentCustomStatusFilter = label; currentOrderFilter = 'all'; currentOrderPage = 1;"));
+assert.ok(html.includes("ordersPageSize = value === '20' ? 20 : 10;\n            resetOrderPage();"));
+console.log('Pagination sizes, page clamping, filtering resets, empty list and continuous numbering passed.');

@@ -1,0 +1,15 @@
+const fs=require('node:fs'),cp=require('node:child_process'),assert=require('node:assert/strict');
+const {JSDOM}=require('jsdom');
+const original=cp.execFileSync('git',['show','731a9bd5e2fd8e20510e25d8b22116eefe96d50d:emahata-site/index.html'],{encoding:'utf8'});
+const current=fs.readFileSync('index.html','utf8');
+const a=new JSDOM(original),b=new JSDOM(current);
+const form=doc=>doc.window.document.getElementById('naftalForm').outerHTML;
+assert.equal(form(a),form(b),'Entire registration form and every field must be unchanged');
+const scripts=dom=>Array.from(dom.window.document.querySelectorAll('script')).map(el=>el.outerHTML);
+assert.deepEqual(scripts(a),scripts(b),'Script sources and inline behavior must stay identical');
+for(const file of ['form-submission.js','api/orders.js','tire-options.js','location-picker.js','locations.js'])assert.equal(fs.readFileSync(file,'utf8'),cp.execFileSync('git',['show','731a9bd5e2fd8e20510e25d8b22116eefe96d50d:emahata-site/'+file],{encoding:'utf8'}));
+const values=id=>Array.from(b.window.document.getElementById(id).options).map(o=>o.value).filter(Boolean);
+assert.deepEqual(values('quantitySelect'),['1','2','3','4']);
+assert.deepEqual(values('brandSelect'),['Continental','Iris']);
+assert.ok(b.window.document.querySelector('.registration-card-header'));
+a.window.close();b.window.close();console.log('Registration theme PASS: exact form DOM, fields, options, scripts, validators, submission and API unchanged.');

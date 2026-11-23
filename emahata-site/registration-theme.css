@@ -1,0 +1,47 @@
+/* Presentation only. Form controls, submission scripts and validation stay unchanged. */
+body.registration-theme{--naftal-blue:#003b71;--naftal-yellow:#ffdc00;background:#edf3f9;color:#103354;font-family:Cairo,Tahoma,Arial,sans-serif}
+.registration-theme>header{background:var(--naftal-blue);border-bottom:5px solid var(--naftal-yellow)}
+.registration-theme>header .text-slate-400{color:#e0eafa}
+.registration-theme>header button{background:#07518e;border-color:#5484ae}
+#registrationHero{padding-block:32px 20px}
+#registrationHero h1{color:var(--naftal-blue);font-size:clamp(26px,4vw,42px)}
+#registrationHero h1 span{color:var(--naftal-blue);text-decoration:underline;text-decoration-color:var(--naftal-yellow);text-decoration-thickness:5px;text-underline-offset:9px}
+#registrationHero>div:first-child{background:#fff7c7;color:#003b71;border-color:#e5c800}
+#registrationHero>p{color:#355572}
+#registrationHero .card-dark{background:white;border:1px solid #cfdeec;box-shadow:none}
+#registrationHero .card-dark h3{color:#003b71}
+#registrationHero .card-dark p{color:#46617b}
+#registrationHero a[href="#form-section"]{background:var(--naftal-yellow);color:#003b71}
+#registrationHero a[href="#catalog"]{background:var(--naftal-blue);color:white;border-color:var(--naftal-blue)}
+#catalog{padding-block:20px}
+#catalog>div:first-child h2{color:#003b71}
+#catalog>div:first-child p{color:#46617b}
+#catalog>.space-y-6{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#catalog>.space-y-6>.card-dark{margin:0;display:block;background:var(--naftal-blue);border:1px solid #154e80;padding:18px}
+#catalog .card-dark>div:first-child{display:none}
+#catalog .card-dark h3{color:var(--naftal-yellow)}
+#form-section{max-width:800px;scroll-margin-top:100px;padding-top:24px}
+#form-section>div:first-child>span{color:#003b71;background:#fff5b3;border-color:#dbbd00}
+#form-section>div:first-child h2{color:#003b71}
+#form-section .registration-card{background:white;border:1px solid #bfd0e0;border-top:0;box-shadow:0 16px 40px #003b7117;padding:0;overflow:hidden;border-radius:18px}
+.registration-card-header{padding:22px 26px;background:var(--naftal-blue);color:white;border-bottom:7px solid var(--naftal-yellow);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.registration-card-header>div{display:grid;gap:4px}
+.registration-card-header strong{color:var(--naftal-yellow);font-size:30px;letter-spacing:2px;line-height:1.2}
+.registration-card-header span{font-size:13px}
+.registration-card-label{border:1px solid #84a5c6;border-radius:8px;padding:8px 12px}
+#form-section .registration-card>p{margin:22px 26px 0;color:#294d6d;background:#f0f5fa;border-right:4px solid #ffdc00;padding:12px;line-height:1.9}
+#naftalForm{padding:22px 26px 28px}
+#naftalForm h3{color:var(--naftal-blue);border-color:#d5e2ed;border-bottom-width:2px;font-size:15px;padding-bottom:12px}
+#naftalForm label{color:#173b5d;font-size:13px}
+#naftalForm .input-dark,#naftalForm .location-trigger{background:#f8fbfe;color:#103354;border:1px solid #b4c9db;font-size:14px;min-height:48px;border-radius:10px}
+#naftalForm select option{background:#fff;color:#103354}
+#naftalForm .input-dark:focus,#naftalForm .location-trigger:focus-visible{border-color:#003b71;outline:3px solid #ffdc0070;outline-offset:2px}
+#naftalForm p.text-slate-400{color:#49647c}
+#naftalForm .privacy-consent-row{background:#f0f5fa;color:#173b5d;border-color:#ccdae7;padding:14px;border-radius:10px}
+#naftalForm .privacy-consent-row a{color:#003b71;text-decoration:underline}
+#registrationSubmit{background:var(--naftal-yellow);color:#003b71;min-height:54px;border:1px solid #d5b900;border-radius:10px;font-size:16px;box-shadow:0 4px 0 #d2b600}
+#registrationSubmit:hover:not(:disabled){background:#ffe738}
+#registrationSubmit:disabled{opacity:.65}
+.registration-theme>footer{background:var(--naftal-blue);color:#d7e5f2;border-top:5px solid var(--naftal-yellow)}
+.registration-theme>footer .text-slate-400,.registration-theme>footer .text-slate-500{color:#d7e5f2}
+@media(max-width:600px){#catalog>.space-y-6{grid-template-columns:1fr}#registrationHero{padding-top:24px}#form-section{padding-inline:12px}.registration-card-header{padding:20px}.registration-card-header .registration-card-label{width:100%;text-align:center}#form-section .registration-card>p{margin:18px 16px 0}#naftalForm{padding:20px 16px 24px}.registration-theme>header{position:relative}}

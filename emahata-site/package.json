@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "qrcode": "1.5.4"
+  },
+  "devDependencies": {
+    "@fontsource/cairo": "5.3.0",
+    "esbuild": "0.28.2",
+    "jsdom": "26.1.0",
+    "jsqr": "1.4.0",
+    "three": "0.186.1"
+  },
+  "scripts": {
+    "build:wheel": "esbuild scripts/wheel-preview.mjs --bundle --minify --outfile=wheel-preview.js",
+    "build:qr": "esbuild scripts/order-qr.js --bundle --minify --outfile=order-qr.js",
+    "test": "for f in tests/*.cjs; do node \"$f\" || exit; done"
+  }
+}
