@@ -12,7 +12,7 @@ for f in tests/*.cjs; do node "$f" || exit; done
 node scripts/build.mjs
 ```
 
-The build copies only allowlisted static assets into `public/`. Server code and tests are not served as static files. QR generation runs locally using bundled `qrcode` (MIT), not a third-party QR service.
+The build copies only allowlisted static assets into `public/`. Server code and tests are not served as static files. The dedicated card uses bundled Cairo Arabic/Latin fonts (OFL-1.1), without external font requests. QR generation runs locally using bundled `qrcode` (MIT), not a third-party QR service.
 
 ## Runtime configuration (operator action before release)
 

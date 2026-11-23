@@ -15,6 +15,7 @@ async function tick(){await new Promise(r=>setTimeout(r,30));}
  assert.equal(w.document.querySelector('img'),null);assert.equal(qr,1);
  status='مكتمل';w.document.getElementById('retryOrder').click();await tick();assert.equal(w.document.getElementById('orderStatus').textContent,'مكتمل');assert.equal(calls,2);
  w.fetch=async()=>({ok:false,json:async()=>({error:'رابط منتهي'})});w.document.getElementById('retryOrder').click();await tick();assert.equal(w.document.getElementById('orderData').hidden,true);assert.equal(w.document.getElementById('pageQR').textContent,'');assert.equal(w.document.getElementById('orderMessage').textContent,'رابط منتهي');
+ w.location.hash='';await tick();assert.ok(w.document.getElementById('orderMessage').textContent.includes('لا يحتوي'));
  // Bundled encoder mounts controls without network. Mock only the canvas renderer surface.
  w.TextEncoder=TextEncoder;
  w.HTMLCanvasElement.prototype.getContext=()=>({clearRect(){},putImageData(){},createImageData:(width,height)=>({data:new Uint8ClampedArray(width*height*4)})});
