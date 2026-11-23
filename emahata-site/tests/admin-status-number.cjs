@@ -1,0 +1,13 @@
+const fs = require('node:fs');
+const assert = require('node:assert/strict');
+const html = fs.readFileSync('index.html','utf8');
+assert.ok(html.includes("['مهزش','نعودل مبعد','راكح','50%','']"));
+assert.ok(!html.includes('غالطة كارتة'));
+assert.ok(!html.includes('كان ثقيل بريدي'));
+assert.ok(html.includes('const raw = original;'));
+assert.ok(html.includes('summary.append(identity)'));
+const convert = value => String(Number(String(value).replace(/^NFT-/, '')));
+assert.equal(convert('NFT-000001'),'1');
+assert.equal(convert('NFT-000050'),'50');
+assert.equal(convert('NFT-1234567'),'1234567');
+console.log('Quick statuses and simple order number format passed.');

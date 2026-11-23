@@ -1,0 +1,18 @@
+const fs = require('node:fs');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const html = fs.readFileSync('index.html','utf8');
+const source = html.slice(html.indexOf('function reindexDisplayedOrders('),html.indexOf('function displayOrders('));
+const reindex = vm.runInNewContext(`(${source.trim()})`);
+const orders = [{id:'a',displayNumber:'14'}, {id:'b',displayNumber:'18'}, {id:'c',displayNumber:'21'}];
+const numbers = rows => Array.from(reindex(rows),o=>o.displayNumber);
+assert.deepEqual(numbers(orders),['1','2','3']);
+assert.deepEqual(numbers(orders.filter(o=>o.id!=='b')),['1','2']);
+assert.deepEqual(numbers([{id:'new'},...orders]),['1','2','3','4']);
+assert.deepEqual(numbers([orders[2]]),['1']);
+assert.deepEqual(numbers([]),[]);
+assert.equal(orders[0].displayNumber,'14');
+assert.equal(reindex(orders)[1].id,'b');
+assert.ok(html.includes('reindexDisplayedOrders(ordersList, offset).forEach'));
+assert.ok(html.includes('if (adminPassword) { await renderAdminOrders();'));
+console.log('Dynamic re-indexing: deletion, insertion, filtering, empty list and stable storage IDs passed.');

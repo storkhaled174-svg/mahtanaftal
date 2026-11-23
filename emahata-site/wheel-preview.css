@@ -1,0 +1,20 @@
+.wheel-preview-card{grid-column:1/-1;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:20px;text-align:center;color:#fff;margin:0}
+.wheel-preview-card figcaption{color:#f59e0b;font-size:16px;font-weight:700;margin-bottom:15px}
+.wheel-image-wrapper{filter:drop-shadow(0 10px 15px #0009)}
+#wheel-preview-img{display:block;max-width:220px;width:100%;height:auto;margin:0 auto}
+#wheel-size-display{display:block;font-size:22px;font-weight:bold;margin-top:15px;letter-spacing:1px}
+#wheelPreviewNote{color:#94a3b8;font-size:12px;margin-top:5px;line-height:1.8}
+.wheel-preview-card{background:radial-gradient(ellipse at 50% 42%,#1b2637 0,#080d16 65%);border:1px solid #344155;box-shadow:inset 0 1px 0 #ffffff12,0 16px 35px #0005}
+.wheel-image-wrapper{position:relative;perspective:850px;isolation:isolate;max-width:300px;margin:auto;filter:none}
+.wheel-image-wrapper:after{content:"";position:absolute;bottom:0;left:15%;width:70%;height:20px;border-radius:50%;background:#000b;filter:blur(9px);z-index:-1}
+#wheel-preview-img{max-width:237px;mix-blend-mode:screen;transform:rotateX(var(--wheel-x,0deg)) rotateY(var(--wheel-y,0deg)) translateZ(15px);transform-origin:center;transition:transform .22s ease-out;filter:drop-shadow(0 15px 12px #000b);will-change:transform}
+@media(prefers-reduced-motion:reduce){#wheel-preview-img{transform:none;transition:none;will-change:auto}}
+.wheel-image-wrapper{height:290px;overflow:hidden}
+#wheel-preview-img{margin-top:-110px}
+/* Horizontal preview keeps the form compact, including on phones. */
+.wheel-preview-card{display:grid;grid-template-columns:90px minmax(0,1fr);grid-template-rows:auto auto auto;column-gap:12px;align-items:center;width:100%;max-width:360px;box-sizing:border-box;justify-self:center;margin-inline:auto;padding:12px;text-align:start}
+.wheel-image-wrapper{grid-column:1;grid-row:1/4;width:90px;height:110px;max-width:100%;margin:0}
+#wheel-preview-img{width:90px;max-width:90px;margin-top:-42px}
+.wheel-preview-card figcaption{grid-column:2;grid-row:1;font-size:13px;margin:0}
+#wheel-size-display{grid-column:2;grid-row:2;font-size:16px;margin:4px 0;letter-spacing:.5px;text-align:start}
+#wheelPreviewNote{grid-column:2;grid-row:3;font-size:10px;line-height:1.6;margin:0}

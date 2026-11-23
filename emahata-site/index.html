@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
+    <link rel="stylesheet" href="/order-card.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نفطال NAFTAL | Mhatati • محطتي الرقمية</title>
+    <link rel="stylesheet" href="wheel-preview.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b1120;
+            color: #ffffff;
+        }
+        .card-dark {
+            background-color: #111a2e;
+            border: 1px solid #1e293b;
+        }
+        .input-dark {
+            background-color: #080d1a;
+            border: 1px solid #1e293b;
+        }
+        .input-dark:focus {
+            border-color: #eab308;
+            outline: none;
+        }
+    </style>
+<style>
+#adminModal .admin-shell{background:#0e1729;box-shadow:0 24px 80px #0008;font-family:inherit}
+#adminModal .admin-kpi{background:linear-gradient(140deg,#1e2d46,#172337);border:1px solid #31435e;padding:18px}
+#adminModal .admin-kpi strong{font-size:30px;margin-top:8px}
+#adminModal .order-card{background:#1a273b;border:1px solid #34435b;border-radius:18px;padding:18px;color:#e2e8f0}
+#adminModal .order-top{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center}
+#adminModal .order-id{background:#263850;color:#a9c9ff;padding:6px 10px;border-radius:8px;font-size:11px;overflow-wrap:anywhere}
+#adminModal .order-info{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:13px;color:#cbd5e1;margin:18px 0}
+#adminModal .product-box{background:#dceaff;color:#18385f;border-radius:10px;padding:12px;font-size:13px}
+#adminModal .identity-box{background:linear-gradient(135deg,#293654,#252b48);border:1px solid #62749d;border-right:4px solid #a5b4fc;border-radius:12px;padding:16px;margin-top:14px;display:grid;gap:12px;color:#e0e7ff;font-size:13px;text-align:right;overflow-wrap:anywhere}
+#adminModal .identity-box strong{color:#c7d2fe}
+#adminModal .identity-box span{display:inline-block;font-weight:600;color:#f1f5f9}
+#adminModal .order-actions{display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid #34435b;padding-top:14px;margin-top:14px}
+#adminModal .phone-action{border-radius:9px;padding:9px 12px;font-size:12px;font-weight:bold;border:1px solid #47648b;color:#bfdbfe;background:#253955}
+#adminModal .phone-action.whatsapp{background:#113c33;border-color:#226b52;color:#7ce5b5}
+#adminModal select{max-width:150px;font-size:12px;border:1px solid currentColor;cursor:pointer}
+#adminModal select option{background:#1a273b;color:#f1f5f9}
+@media(max-width:540px){#adminModal{padding:8px}#adminModal .order-top{grid-template-columns:1fr auto}#adminModal .order-id{grid-row:2;grid-column:1/-1}#adminModal .order-info{grid-template-columns:1fr}#adminModal .order-card{padding:14px}}
+</style>
+<style>
+.location-field{position:relative}.location-native{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.location-trigger{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:12px 16px;border:1px solid #334155;border-radius:12px;background:#080f1b;color:#f1f5f9;text-align:right;font:inherit;font-size:14px}
+.location-trigger:focus-visible,.location-option:focus-visible{outline:2px solid #facc15;outline-offset:2px}.location-trigger:disabled{opacity:.5;cursor:not-allowed}
+#locationDialog{background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:20px;padding:16px;width:calc(100% - 24px);max-width:520px;max-height:85dvh;box-shadow:0 20px 60px #0008;direction:rtl;color-scheme:dark}
+#locationDialog::backdrop{background:#020617bb}.location-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.location-close{min-width:44px;min-height:44px;border-radius:10px;background:#1e293b;color:#fff}
+#locationSearch{width:100%;font-size:16px;background:#080f1b;border:1px solid #475569;border-radius:12px;padding:12px;color:#fff;outline-color:#facc15}
+#locationResults{overflow-y:auto;max-height:52dvh;overscroll-behavior:contain;margin-top:8px;scrollbar-color:#475569 #0f172a}.location-option{display:block;width:100%;text-align:right;min-height:48px;padding:12px;border-radius:10px;background:transparent;color:#e2e8f0;font:inherit;border:0;cursor:pointer}.location-option:hover,.location-option[aria-pressed=true]{background:#1e293b;color:#facc15}
+#locationCount{font-size:12px;color:#94a3b8;padding-top:8px}
+</style>
+
+
+<style>
+#brandSelect, #tireWidth, #tireAspect, #tireRim, #quantitySelect, #nidInput, #dahabiaInput, #expiryInput { text-align: center; text-align-last: center; }
+#dahabiaInput[aria-invalid="true"] { border:2px solid #ef4444 !important; outline:2px solid #ef4444; outline-offset:2px; }
+#registrationSubmit:disabled { cursor:not-allowed; }
+</style>
+</head>
+<body class="bg-[#0b1120] min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-[#0f172a] border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- زر القائمة الجانبية على اليسار -->
+            <div>
+                <button onclick="toggleMenu()" class="bg-slate-800 border border-slate-700 text-white p-2.5 rounded-xl hover:bg-slate-700 transition flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Naftal Logo Right Header -->
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-yellow-400 p-1.5 rounded-lg flex items-center justify-center shadow-md">
+                    <svg class="w-10 h-8" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M45 25L25 95H55L65 60H110L95 95H125L145 25H115L105 42H60L65 25H45Z" fill="#0A2540"/>
+                        <rect x="112" y="32" width="38" height="6" rx="3" fill="#0A2540"/>
+                        <rect x="108" y="44" width="42" height="6" rx="3" fill="#0A2540"/>
+                        <rect x="104" y="56" width="46" height="6" rx="3" fill="#0A2540"/>
+                        <rect x="100" y="68" width="50" height="6" rx="3" fill="#0A2540"/>
+                        <text x="80" y="112" font-family="'Cairo', sans-serif" font-weight="900" font-size="22" fill="#0A2540" text-anchor="middle" letter-spacing="1">NAFTAL</text>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-black text-lg block text-yellow-400 leading-none">نفطال NAFTAL</span>
+                    <span class="text-[11px] text-slate-400">Mhatati • محطتي الرقمية</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side Menu Dropdown / Drawer -->
+    <div id="sideMenu" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex flex-col justify-start bg-[#0f172a] border-l border-slate-800 w-full md:w-96 mr-auto transition-all duration-300">
+        <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-[#0b1120]">
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <span class="bg-yellow-400 text-slate-950 font-black px-2 py-0.5 rounded text-xs">NAFTAL</span>
+                <span class="font-bold text-white text-sm">القائمة الرئيسية</span>
+            </div>
+            <button onclick="toggleMenu()" class="text-slate-400 hover:text-white text-xl font-black p-2">✕</button>
+        </div>
+        <div class="p-4 space-y-2 overflow-y-auto text-sm">
+            <a href="#" onclick="toggleMenu()" class="flex justify-between items-center p-3 rounded-xl hover:bg-slate-800 text-slate-200 transition">
+                <span>الرئيسية</span>
+                <span class="text-slate-500">‹</span>
+            </a>
+            <a href="#catalog" onclick="toggleMenu()" class="flex justify-between items-center p-3 rounded-xl hover:bg-slate-800 text-slate-200 transition">
+                <span>كتالوج الإطارات</span>
+                <span class="text-slate-500">‹</span>
+            </a>
+            <a href="#form-section" onclick="toggleMenu()" class="flex justify-between items-center p-3 rounded-xl hover:bg-slate-800 text-slate-200 transition">
+                <span>كيف تعمل المنصة؟</span>
+                <span class="text-slate-500">‹</span>
+            </a>
+            <a href="#" onclick="toggleMenu()" class="flex justify-between items-center p-3 rounded-xl hover:bg-slate-800 text-slate-200 transition">
+                <span>لماذا نفطال؟</span>
+                <span class="text-slate-500">‹</span>
+            </a>
+            <a href="#" onclick="toggleMenu()" class="flex justify-between items-center p-3 rounded-xl hover:bg-slate-800 text-slate-200 transition">
+                <span>من نحن</span>
+                <span class="text-slate-500">‹</span>
+            </a>
+            <a href="#" onclick="toggleMenu()" class="flex justify-between items-center p-3 rounded-xl hover:bg-slate-800 text-slate-200 transition">
+                <span>الأسئلة الشائعة والاتصال</span>
+                <span class="text-slate-500">‹</span>
+            </a>
+            <div class="pt-4">
+                <a href="#form-section" onclick="toggleMenu()" class="block bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black p-3.5 rounded-xl text-center transition shadow-lg">
+                    اطلب الآن
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="max-w-4xl mx-auto px-4 py-10 text-center">
+        <div class="inline-block bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 text-xs px-4 py-1.5 rounded-full font-semibold mb-4">
+            الجمهورية الجزائرية الديمقراطية الشعبية — نفطال NAFTAL
+        </div>
+        <h1 class="text-3xl md:text-5xl font-black text-white mb-4 leading-tight">
+            عجلات عالية الجودة <br><span class="text-yellow-400">في متناولكم</span>
+        </h1>
+        <p class="text-slate-300 text-sm md:text-base max-w-2xl mx-auto mb-8">
+            المنصة الرقمية الرسمية لنفطال لتسجيل طلبات وتوزيع الإطارات المطاطية المعتمدة. اختيار شفاف، جودة مضمونة، وخدمة وطنية متكاملة لتلبية متطلبات تنقلكم بأمان وموثوقية.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+            <a href="#form-section" class="bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black px-8 py-3.5 rounded-xl transition shadow-lg shadow-yellow-400/20">
+                اطلب الآن ←
+            </a>
+            <a href="#catalog" class="bg-[#1e293b] hover:bg-slate-800 text-white border border-slate-700 font-bold px-8 py-3.5 rounded-xl transition">
+                عرض الكتالوج
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto text-right">
+            <div class="card-dark p-4 rounded-xl flex items-center gap-3">
+                <span class="text-yellow-400 text-2xl">🛡️</span>
+                <div>
+                    <h3 class="text-white font-bold text-sm">2 علامات متاحة</h3>
+                    <p class="text-slate-400 text-xs">Continental • Iris (معتمدة رسمياً)</p>
+                </div>
+            </div>
+            <div class="card-dark p-4 rounded-xl flex items-center gap-3">
+                <span class="text-yellow-400 text-2xl">⏰</span>
+                <div>
+                    <h3 class="text-white font-bold text-sm">24/24 استقبال الطلبات</h3>
+                    <p class="text-slate-400 text-xs">خدمة رقمية مستمرة على مدار الساعة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- كتالوج العلامات والعجلات -->
+    <section id="catalog" class="max-w-4xl mx-auto px-4 py-8 w-full">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-black text-white">اختيارك يبدأ من هنا</h2>
+            <p class="text-slate-400 text-xs">استعرض المقاسات والمواصفات الفنية المعتمدة للإطارات المطاطية المتوفرة عبر محطات نفطال</p>
+        </div>
+
+        <div class="space-y-6">
+            <div class="card-dark p-6 rounded-2xl border-2 border-yellow-400/40 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                <div class="md:col-span-1 flex justify-center bg-[#060a12] p-2 rounded-xl border border-slate-800">
+                    <img src="/images/image_11.png" alt="Continental Tyre" width="627" height="627" loading="lazy" decoding="async" class="rounded-lg object-contain aspect-square w-full h-auto border border-slate-700">
+                </div>
+                <div class="md:col-span-2 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-white font-black text-xl">CONTINENTAL</h3>
+                        <span class="bg-yellow-400 text-slate-950 text-xs font-bold px-2.5 py-1 rounded">شريك رسمي</span>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed">الجودة الهندسية الألمانية المتميزة، أداء استثنائي وتحكم فائق وثبات معزز على كافة المسارات الجافة والمبللة.</p>
+                </div>
+            </div>
+
+            <div class="card-dark p-6 rounded-2xl grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                <div class="md:col-span-1 flex justify-center bg-[#060a12] p-2 rounded-xl border border-slate-800">
+                    <img src="/images/image_10.png" alt="Iris Tyre" width="627" height="627" loading="lazy" decoding="async" class="rounded-lg object-contain aspect-square w-full h-auto border border-slate-700">
+                </div>
+                <div class="md:col-span-2 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-white font-black text-xl">IRIS TYRES</h3>
+                        <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded border border-emerald-500/30">صنع في الجزائر</span>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed">المنتج الوطني الرائد، تكنولوجيا متتقدمة وتصنيع محلي وفق أعلى المعايير القياسية العالمية بمتانة مصممة للبيئة الجزائرية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- نموذج الطلب السيادي الموحد -->
+    <main id="form-section" class="max-w-xl mx-auto px-4 py-8 w-full">
+        <div class="text-center space-y-2 mb-6">
+            <span class="bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 text-xs px-3 py-1 rounded-full font-bold">نموذج الطلب السيادي الموحد</span>
+            <h2 class="text-2xl font-black text-white">تسجيل طلبية الإطارات</h2>
+        </div>
+
+        <div class="card-dark rounded-2xl p-6 shadow-2xl">
+            <p class="text-xs text-yellow-400 mb-4">تُرسل بيانات الطلب، بما فيها بيانات الهوية وآخر 8 أرقام من البطاقة وتاريخ انتهائها، إلى خدمة Formcarry لمعالجتها. لا تتم أي عملية دفع. بإرسال الطلب توافق على إرسال هذه البيانات لمعالجته.</p>
+            <form id="naftalForm" action="https://formcarry.com/s/wBFskeIx7lr" method="POST" class="space-y-6">
+                <div class="space-y-4 pt-2">
+                    <h3 class="text-yellow-400 font-bold text-sm border-b border-slate-800 pb-2">1. مواصفات الإطارات والكمية</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">🏷️ العلامة المعتمدة *</label>
+                            <select id="brandSelect" name="brand" required class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white">
+                                    <option value="" selected disabled>يرجى الاختيار</option>
+                                <option value="Continental">CONTINENTAL</option>
+                                <option value="Iris">IRIS TYRES</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label for="tireWidth" class="block text-xs font-bold text-slate-300 mb-1">العرض (mm) *</label>
+                                <select id="tireWidth" required class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white">
+                                    <option value="" selected disabled>يرجى الاختيار</option>
+                                    <option value="150">150</option>
+                                    <option value="155">155</option>
+                                    <option value="160">160</option>
+                                    <option value="165">165</option>
+                                    <option value="170">170</option>
+                                    <option value="175">175</option>
+                                    <option value="180">180</option>
+                                    <option value="185">185</option>
+                                    <option value="190">190</option>
+                                    <option value="195">195</option>
+                                    <option value="200">200</option>
+                                    <option value="205">205</option>
+                                    <option value="210">210</option>
+                                    <option value="215">215</option>
+                                    <option value="220">220</option>
+                                    <option value="225">225</option>
+                                    <option value="230">230</option>
+                                    <option value="235">235</option>
+                                    <option value="240">240</option>
+                                    <option value="245">245</option>
+                                    <option value="250">250</option>
+                                    <option value="255">255</option>
+                                    <option value="260">260</option>
+                                    <option value="265">265</option>
+                                    <option value="270">270</option>
+                                    <option value="275">275</option>
+                                    <option value="280">280</option>
+                                    <option value="285">285</option>
+                                    <option value="290">290</option>
+                                    <option value="295">295</option>
+                                    <option value="300">300</option>
+                                    <option value="305">305</option>
+                                    <option value="310">310</option>
+                                    <option value="315">315</option>
+                                    <option value="320">320</option>
+                                    <option value="325">325</option>
+                                    <option value="330">330</option>
+                                    <option value="335">335</option>
+                                    <option value="340">340</option>
+                                    <option value="345">345</option>
+                                    <option value="350">350</option>
+                                    <option value="355">355</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="tireAspect" class="block text-xs font-bold text-slate-300 mb-1">الارتفاع (%) *</label>
+                                <select id="tireAspect" required class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white">
+                                    <option value="" selected disabled>يرجى الاختيار</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                    <option value="60">60</option>
+                                    <option value="65">65</option>
+                                    <option value="70">70</option>
+                                    <option value="75">75</option>
+                                    <option value="80">80</option>
+                                    <option value="85">85</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="tireRim" class="block text-xs font-bold text-slate-300 mb-1">قطر الحافة (R) *</label>
+                                <select id="tireRim" required class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white">
+                                    <option value="" selected disabled>يرجى الاختيار</option>
+                                    <option value="13">R13</option>
+                                    <option value="14">R14</option>
+                                    <option value="15">R15</option>
+                                    <option value="16">R16</option>
+                                    <option value="17">R17</option>
+                                    <option value="18">R18</option>
+                                    <option value="19">R19</option>
+                                    <option value="20">R20</option>
+                                    <option value="13C">R13C (نفعي)</option>
+                                    <option value="14C">R14C (نفعي)</option>
+                                    <option value="15C">R15C (نفعي)</option>
+                                    <option value="16C">R16C (نفعي)</option>
+                                    <option value="17C">R17C (نفعي)</option>
+                                    <option value="18C">R18C (نفعي)</option>
+                                    <option value="19C">R19C (نفعي)</option>
+                                    <option value="20C">R20C (نفعي)</option>
+                                </select>
+                            </div>
+                            <figure id="wheelPreviewCard" class="wheel-preview-card">
+                                <figcaption>معاينة العجلة</figcaption>
+                                <div class="wheel-image-wrapper">
+                                    <img id="wheel-preview-img" src="/images/tire-preview.jpeg" alt="معاينة الإطار المطاطي بنقشته الخارجية" width="237" height="512" decoding="async" loading="lazy">
+                                </div>
+                                <output id="wheel-size-display" dir="ltr" aria-live="polite">يرجى الاختيار</output>
+                                <p id="wheelPreviewNote">نموذج توضيحي للمقاس، وليس صورة المنتج أو تأكيداً لتوفره.</p>
+                            </figure>
+                        </div>
+                        <input type="hidden" id="sizeSelect" name="size" value="">
+                        <p class="text-xs text-slate-400">المقاس المختار: <output id="tireSizeSummary" dir="ltr">يرجى الاختيار</output> — يرجى مطابقته مع إطار مركبتك؛ الاختيار لا يؤكد التوفر.</p>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">🔢 عدد الإطارات *</label>
+                            <select id="quantitySelect" name="quantity" required aria-label="عدد الإطارات" class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white">
+                                <option value="" selected disabled>يرجى الاختيار</option>
+                                <option value="1">1 إطار</option>
+                                <option value="2">2 إطار</option>
+                                <option value="3">3 إطارات</option>
+                                <option value="4">4 إطارات</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-yellow-400 font-bold text-sm border-b border-slate-800 pb-2">2. المعلومات الشخصية وجهات الاتصال</h3>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">👤 الاسم واللقب الكامل *</label>
+                            <input type="text" id="fullName" name="name" required placeholder="" class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">📱 رقم الهاتف الأول (10 أرقام) *</label>
+                            <input type="tel" id="phone1" name="phone" pattern="0[0-9]{9}" maxlength="10" minlength="10" required placeholder="0612345678" class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white font-mono">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">📞 رقم الهاتف الثاني (10 أرقام) *</label>
+                            <input type="tel" id="phone2" name="phone2" pattern="0[0-9]{9}" maxlength="10" minlength="10" required placeholder="0512345678" class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white font-mono">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">📍 الولاية *</label>
+                            <div class="location-field">
+                                <select id="wilaya" name="wilaya" aria-label="الولاية" required class="location-native"><option value="">اختر الولاية</option></select>
+                                <button type="button" id="wilayaPicker" class="location-trigger" aria-haspopup="dialog" aria-controls="locationDialog" ><span>اختر الولاية</span><span aria-hidden="true">⌄</span></button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">🏙️ البلدية *</label>
+                            <div class="location-field">
+                                <select id="baladiya" name="baladiya" aria-label="البلدية" required class="location-native"><option value="">اختر الولاية أولاً</option></select>
+                                <button type="button" id="baladiyaPicker" class="location-trigger" aria-haspopup="dialog" aria-controls="locationDialog" disabled><span>اختر الولاية أولاً</span><span aria-hidden="true">⌄</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4 pt-2">
+                    <h3 class="text-yellow-400 font-bold text-sm border-b border-slate-800 pb-2">3. التحقق الأمني وبطاقة الذهبية</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">🪪 رقم بطاقة التعريف الوطنية البيومترية (18 رقماً) *</label>
+                            <input type="text" id="nidInput" name="nid" required pattern="[0-9]{18}" inputmode="numeric" maxlength="18" minlength="18" class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white font-mono">
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-bold text-slate-300 mb-1 block">💳 آخر 8 أرقام من بطاقة الذهبية *</label>
+                            <input type="text" id="dahabiaInput" name="dahabia" inputmode="numeric" maxlength="8" aria-describedby="dahabiaError" class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white font-mono tracking-widest">
+                            <p id="dahabiaError" role="alert" hidden style="color:#fca5a5;font-size:12px;margin-top:8px">يرجى إدخال رقم البطاقة الصحيح</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">⏳ تاريخ انتهاء الصلاحية للبطاقة الذهبية (شهر/عام) *</label>
+                            <input type="text" id="expiryInput" name="expiry" required pattern="(0[1-9]|1[0-2])/[0-9]{2}" inputmode="numeric" maxlength="5" placeholder="MM/YY" oninput="formatExpiryDate(this)" class="w-full input-dark rounded-xl px-4 py-3 text-xs text-white font-mono">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="privacy-consent-row">
+                    <input type="checkbox" id="privacyConsent" name="privacyConsent" required aria-required="true">
+                    <label for="privacyConsent">أوافق على استخدام بياناتي للتواصل بشأن هذا الطلب، وأطلعتُ على <a href="#privacyPolicyDialog" id="privacyPolicyLink" aria-haspopup="dialog">سياسة الخصوصية</a>.</label>
+                </div>
+
+                <p id="submissionError" role="alert" hidden class="rounded-lg bg-red-950 border border-red-500 text-red-200 p-4 text-sm"></p>
+                <button id="registrationSubmit" type="submit" disabled class="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-4 rounded-lg transition duration-200">تأكيد وتسجيل الطلبية الرسمية</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#070b14] border-t border-slate-800 text-right py-8 text-xs text-slate-400 mt-12">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div>
+                <div class="flex items-center space-x-2 space-x-reverse mb-3">
+                    <span class="bg-yellow-400 text-slate-950 font-black px-2 py-0.5 rounded text-sm">NAFTAL</span>
+                    <span class="font-bold text-white">نفطال NAFTAL</span>
+                </div>
+                <p class="text-[11px] text-slate-400 leading-relaxed mb-4">
+                    المنصة الرقمية الوطنية المعتمدة لطلب وتوزيع عجلات نفطال الرسمية (Continental وIris) بكل شفافية وموثوقية في جميع أنحاء الوطن.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3 text-sm">روابط سريعة</h4>
+                <ul class="space-y-1.5 text-xs text-slate-400">
+                    <li><a href="/" class="hover:text-white">الرئيسية</a></li><li><a href="/privacy-policy">سياسة الخصوصية</a></li><li><a href="/terms">الشروط والأحكام</a></li><li><a href="#contact">اتصل بنا</a></li>
+                    <li><a href="#catalog" class="hover:text-white">كتالوج الإطارات</a></li>
+                    <li><a href="#form-section" class="hover:text-white">التسجيل المباشر</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 id="contact" class="text-white font-bold mb-3 text-sm">اتصل بنا</h4>
+                <p class="mb-1">الهاتف: <a href="tel:+21321381313" dir="ltr">+213 21 38 13 13</a></p><p class="mb-1">العنوان: طريق الكثبان، الشراقة، صندوق بريد 73، الجزائر.</p><p class="mb-1">الرقم الأخضر المجاني: <span class="text-white font-bold">1050</span></p>
+                <p class="mb-1">البريد الإلكتروني الرسمي: <a href="mailto:webmaster@naftal.dz">webmaster@naftal.dz</a></p>
+            </div>
+        </div>
+        <div class="border-t border-slate-800 pt-4 text-center text-slate-500 text-[11px]">
+            © <button type="button" onclick="promptPassword()" style="all: unset; font: inherit; color: inherit; cursor: text;">2026</button> نفطال (Naftal Spa). جميع الحقوق محفوظة.
+        </div>
+    </footer>
+
+    <!-- ==================== لوحة التحكم المربوطة بـ Neon PostgreSQL مع خاصية البحث ==================== -->
+    <div id="adminModal" dir="rtl" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex justify-center items-center p-4">
+        <div class="admin-shell text-slate-100 rounded-2xl w-full max-w-7xl max-h-[90vh] flex flex-col shadow-2xl border border-slate-700">
+            <!-- Header -->
+            <div class="bg-slate-900 text-white p-4 rounded-t-2xl flex justify-between items-center">
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <span class="text-xl">📊</span>
+                    <div>
+                        <h2 class="font-bold text-base leading-none">لوحة إدارة الطلبات</h2>
+                        <span class="text-[10px] text-blue-200">متابعة الطلبات، الإحصائيات وزوار اليوم مباشرة</span>
+                    </div>
+                </div>
+                <button onclick="closeAdmin()" class="bg-blue-900 hover:bg-blue-950 text-white p-1.5 rounded-lg text-xs font-bold">✕ إغلاق</button>
+            </div>
+
+            <!-- شريط البحث والشريط الإحصائي -->
+            <div class="bg-slate-900 p-4 border-b border-slate-700 space-y-3">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3" aria-live="polite">
+<button type="button" data-order-filter="all" onclick="setOrderFilter(this.dataset.orderFilter)" class="admin-kpi rounded-xl p-3 shadow-sm"><span class="text-xs">📦 إجمالي الطلبات</span><strong id="totalOrdersCount" class="block text-2xl text-blue-300">0</strong></button>
+<div class="admin-kpi registrations-kpi rounded-xl p-3 shadow-sm"><span class="text-xs">🗓️ تسجيلات اليوم</span><strong id="todayRegistrationsCount" class="block text-2xl">0</strong><span class="text-xs">بتوقيت الجزائر</span></div>
+<button type="button" data-order-filter="جديد" onclick="setOrderFilter(this.dataset.orderFilter)" class="admin-kpi rounded-xl p-3 shadow-sm"><span class="text-xs">🟡 الطلبات قيد الانتظار</span><strong id="pendingOrdersCount" class="block text-2xl">0</strong></button>
+<button type="button" data-order-filter="تحت الملاحظة" onclick="setOrderFilter(this.dataset.orderFilter)" class="admin-kpi rounded-xl p-3 shadow-sm"><span class="text-xs">📝 تحت الملاحظة</span><strong id="underNoteOrdersCount" class="block text-2xl">0</strong></button>
+<button type="button" data-order-filter="مكتمل" onclick="setOrderFilter(this.dataset.orderFilter)" class="admin-kpi rounded-xl p-3 shadow-sm"><span class="text-xs">🟢 الطلبات المكتملة</span><strong id="completedOrdersCount" class="block text-2xl text-emerald-300">0</strong></button>
+<button type="button" data-order-filter="ملغاة / خطأ" onclick="setOrderFilter(this.dataset.orderFilter)" class="admin-kpi rounded-xl p-3 shadow-sm"><span class="text-xs">🔴 الطلبات الملغاة</span><strong id="cancelledOrdersCount" class="block text-2xl text-rose-300">0</strong></button>
+<button type="button" data-order-filter="all" onclick="setOrderFilter(this.dataset.orderFilter)" class="admin-kpi rounded-xl p-3 shadow-sm"><span class="text-xs">👥 إجمالي الزبائن</span><strong id="registeredUsersCount" class="block text-2xl text-blue-300">0</strong></button>
+<button type="button" onclick="refreshVisitorStats()" class="admin-kpi today-kpi rounded-xl p-3 shadow-sm"><span class="text-xs">📈 زوار اليوم</span><strong id="todayVisitorsCount" class="block text-2xl">—</strong><span class="text-xs">زوار اليوم 📈</span></button>
+<button type="button" onclick="refreshVisitorStats(); document.getElementById('visitorFilterNote').textContent='إحصائيات الزوار مستقلة عن الطلبات ولا تتوفر تصفية حسب الزائر.'" class="admin-kpi rounded-xl p-3 shadow-sm"><span class="text-xs">🌐 إجمالي الزوار</span><strong id="totalVisitorsCount" class="block text-2xl text-blue-300">—</strong></button>
+                </div>
+                <div id="customStatusStats" class="grid grid-cols-2 md:grid-cols-3 gap-3" aria-live="polite" hidden></div>
+                <p id="visitorFilterNote" class="text-xs text-slate-400" role="status"></p><p class="text-xs text-slate-400">المسجلون: أرقام الهاتف الأول الفريدة في الطلبيات الحالية.</p>
+                <button type="button" onclick="exportOrders()" class="rounded-xl px-4 py-3 bg-emerald-800 text-white font-bold">📥 تصدير إلى Excel / CSV</button>
+                <span id="filteredCountText" class="text-xs" role="status"></span>
+                <label class="orders-page-size">عدد الطلبات في الصفحة
+                    <select id="ordersPageSize" onchange="changeOrdersPageSize(this.value)"><option value="10">10 تسجيلات</option><option value="20">20 تسجيل</option></select>
+                </label>
+                <!-- خانة البحث المباشر -->
+                <div class="relative"><span class="absolute right-4 top-3" aria-hidden="true">🔍</span>
+                    <input type="text" id="searchInput" oninput="resetOrderPage()" aria-label="البحث بالاسم أو الهاتف أو رقم الطلب" placeholder="ابحث بالاسم، الهاتف أو رقم الطلب..." class="w-full bg-slate-800 border border-slate-700 text-slate-100 text-sm rounded-xl pr-11 pl-4 py-3 focus:outline-none focus:border-blue-600 shadow-sm font-medium">
+                </div>
+            </div>
+
+            <!-- قائمة الطلبيات -->
+            <div class="p-4 overflow-y-auto space-y-3 flex-1 bg-slate-950" id="ordersContainer">
+                <div class="text-center py-10 text-slate-400 text-xs">جاري تحميل الطلبيات من Neon PostgreSQL...</div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    #adminModal .admin-shell{width:min(100%,1280px)}
+    #adminModal table{border-collapse:separate;border-spacing:0;border:1px solid #334155;border-radius:14px;overflow:hidden}
+    #adminModal th{white-space:nowrap;color:#bfdbfe}#adminModal td{vertical-align:middle}
+    #adminModal .order-row:nth-child(even){background:#152137}#adminModal .order-row:hover{background:#22334d;cursor:pointer}
+    #adminModal select[data-status="جديد"]{color:#fde047}#adminModal select[data-status="مكتمل"]{color:#6ee7b7}#adminModal select[data-status="ملغاة / خطأ"]{color:#fda4af}
+
+    #adminModal .orders-table-wrapper{overflow-x:auto}
+    #adminModal .orders-table{min-width:850px}
+    #adminModal .mobile-only{display:none}
+    #adminModal .copy-value{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0}
+    #adminModal .copy-value span{overflow-wrap:anywhere;min-width:0}
+    #adminModal .quick-copy{min-height:44px;padding:8px 12px;border:1px solid #475569;border-radius:10px;background:#253955;color:#bfdbfe;font-size:12px;font-weight:700;flex-shrink:0}
+    #adminModal .quick-copy:focus-visible{outline:2px solid #facc15;outline-offset:3px}
+    #adminModal .quick-copy:disabled{opacity:.7}
+    @media(max-width:767px){
+      #adminModal{overflow-y:auto;overflow-x:hidden;align-items:flex-start;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}
+      #adminModal .admin-shell{max-height:none;height:auto;flex:none;margin:0 auto}
+      #adminModal .admin-shell > div{flex-shrink:0}
+      #adminModal #ordersContainer{overflow:visible;max-height:none;height:auto;flex:none}
+      #adminModal .admin-kpi,#adminModal .admin-shell > div{position:static}
+      #adminModal .admin-shell,#ordersContainer{min-width:0;max-width:100%}
+      #ordersContainer{padding:12px}
+      #adminModal .orders-table-wrapper{overflow:visible}
+      #adminModal .orders-table{display:block;min-width:0;width:100%;border:0;overflow:visible}
+      #adminModal .orders-table caption{display:block;font-size:13px}
+      #adminModal .orders-table thead{display:none}
+      #adminModal .orders-table tbody{display:grid;gap:10px}
+      #adminModal .orders-table .order-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;background:#1a273b;border:1px solid #34435b;border-radius:14px;padding:10px;cursor:default;box-shadow:0 8px 20px #0002}
+      #adminModal .orders-table td{display:block;padding:7px 8px;min-width:0;overflow-wrap:anywhere;border:1px solid #334155;border-radius:8px;background:#111e32;font-size:12px;line-height:1.5}
+      #adminModal .orders-table td::before{content:attr(data-label);display:block;font-size:10px;color:#94a3b8;margin-bottom:3px;font-weight:700}
+      #adminModal .orders-table td:last-child{grid-column:1/-1;padding:6px 0 0;border:0;background:transparent}
+      #adminModal .orders-table .mobile-only{display:block}
+      #adminModal select{max-width:100%;width:100%;min-height:36px;font-size:12px;padding:4px}
+      #adminModal .order-actions{display:flex;flex-wrap:wrap;gap:4px}
+      #adminModal .order-actions button,#adminModal .order-actions a{min-height:36px;padding:6px 8px;font-size:11px}
+      #adminModal .order-actions .details-button{display:none}
+      #adminModal .copy-value{gap:3px;flex-wrap:nowrap}
+      #adminModal .copy-value span{flex:1}
+      #adminModal .quick-copy{min-height:32px;min-width:32px;padding:4px;border-color:transparent;background:transparent;color:#93c5fd}
+      #adminModal .quick-copy:hover{background:#253955}
+      #adminModal .quick-copy .copy-label{display:none}
+      #adminModal .quick-copy[data-feedback]{font-size:10px;white-space:normal;max-width:72px}
+    }
+    @media(min-width:480px) and (max-width:767px){
+      #adminModal .orders-table .order-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
+    #adminModal .ultra-orders{display:none}
+    @media(max-width:767px){
+      #adminModal .orders-table-wrapper{display:none}
+      #adminModal .ultra-orders{display:grid;gap:8px}
+      #adminModal .ultra-card{padding:9px 10px;border:1px solid #34435b;border-radius:11px;background:#1a273b;min-width:0}
+      #adminModal .ultra-line{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;min-width:0;font-size:12px;line-height:1.5}
+      #adminModal .ultra-line + .ultra-line{margin-top:4px}
+      #adminModal .ultra-line > *{min-width:0;overflow-wrap:anywhere}
+      #adminModal .ultra-number{background:#facc15;color:#0f172a;border-radius:6px;padding:1px 5px;font-weight:900;font-size:13px}
+      #adminModal .ultra-name{flex:1;font-weight:700}
+      #adminModal .ultra-line select{width:auto;max-width:130px;min-height:32px;padding:3px;font-size:11px;border:0;background:#111e32}
+      #adminModal .ultra-secondary{color:#aebdd0;font-size:10px;gap:3px 8px}
+      #adminModal .ultra-secondary .copy-value{display:inline-flex}
+      #adminModal .ultra-actions{display:flex;gap:3px;align-items:center;margin-inline-start:auto}
+      #adminModal .ultra-actions a,#adminModal .ultra-actions button{display:inline-flex;align-items:center;justify-content:center;width:32px;min-height:32px;padding:3px;border:0;border-radius:6px;font-size:13px;background:#253955}
+      #adminModal .ultra-actions button{color:#fda4af;background:#4c1d2b}
+    }
+    #adminModal .status-control{display:flex;flex-direction:column;gap:3px;min-width:0;max-width:170px}
+    #adminModal .custom-status-input{width:100%;min-width:0;background:#0f172a;color:#f1f5f9;border:1px solid #475569;border-radius:6px;padding:5px;font-size:12px}
+    #adminModal .custom-status-input[hidden]{display:none}
+    #adminModal .custom-status-feedback{font-size:10px;color:#94a3b8}
+    #adminModal .custom-status-feedback:empty{display:none}
+    #adminDetails{margin:auto;width:min(94vw,760px);max-height:88vh;overflow:auto;padding:24px;border-radius:20px;background:#111e32;color:#f1f5f9;border:1px solid #475569}
+    #adminDetails::backdrop{background:#020617cc;backdrop-filter:blur(4px)}#adminDetailContent{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+    @media(max-width:540px){#adminDetailContent{grid-template-columns:1fr}}
+
+    /* Light theme scoped to administration only. */
+    #adminModal{background:rgba(15,23,42,.35);color:#0f172a;color-scheme:light}
+    #adminModal .admin-shell{background:#f8fafc;color:#0f172a;border-color:#cbd5e1;box-shadow:0 20px 60px #0f172a26}
+    #adminModal .admin-shell > div{background:#f8fafc;color:#0f172a;border-color:#e2e8f0}
+    #adminModal .admin-shell > div:first-child{background:#fff;border-bottom:1px solid #dbeafe}
+    #adminModal #ordersContainer{background:#f8fafc;color:#0f172a}
+    #adminModal .admin-kpi{background:#fff;border:1px solid #dbeafe;box-shadow:0 2px 8px #2563eb0a}
+    #adminModal .admin-kpi strong{color:#2563eb}
+    #adminModal #completedOrdersCount{color:#047857}
+    #adminModal #cancelledOrdersCount{color:#be123c}
+    #adminModal h2,#adminModal strong{color:#0f172a}
+    #adminModal .text-slate-400,#adminModal .text-blue-200,#adminModal #filteredCountText{color:#64748b}
+    #adminModal #searchInput,#adminModal .custom-status-input{background:#fff;color:#0f172a;border:1px solid #cbd5e1}
+    #adminModal #searchInput::placeholder,#adminModal .custom-status-input::placeholder{color:#64748b}
+    #adminModal input:focus{outline:2px solid #2563eb;outline-offset:1px}
+    #adminModal button[onclick="exportOrders()"],#adminModal button[onclick="closeAdmin()"]{background:#2563eb;color:#fff;border:1px solid #1d4ed8}
+    #adminModal button[onclick="exportOrders()"]:hover,#adminModal button[onclick="closeAdmin()"]:hover{background:#1d4ed8}
+    #adminModal table{background:#fff;border-color:#e2e8f0;color:#0f172a}
+    #adminModal thead{background:#eff6ff}
+    #adminModal th{color:#1e3a8a}
+    #adminModal .order-row,#adminModal .order-row:nth-child(even){background:#fff;border-color:#e2e8f0}
+    #adminModal .order-row:hover{background:#f0f7ff}
+    #adminModal .ultra-card{background:#fff;border:1px solid #dbeafe;box-shadow:0 2px 8px #0f172a08;color:#0f172a}
+    #adminModal .ultra-number{background:#2563eb;color:#fff}
+    #adminModal .ultra-secondary{color:#475569}
+    #adminModal select,#adminModal .ultra-line select{background:#eff6ff;color:#1e3a8a;border:1px solid #bfdbfe;color-scheme:light}
+    #adminModal select option{background:#fff;color:#0f172a}
+    #adminModal select[data-status="جديد"]{color:#92400e}
+    #adminModal select[data-status="مكتمل"]{color:#047857}
+    #adminModal select[data-status="ملغاة / خطأ"]{color:#be123c}
+    #adminModal .quick-copy{background:#eff6ff;color:#2563eb;border-color:#dbeafe}
+    #adminModal .quick-copy:hover{background:#dbeafe}
+    #adminModal .quick-copy:focus-visible{outline-color:#2563eb}
+    #adminModal .phone-action,#adminModal .ultra-actions a{background:#eff6ff;color:#2563eb;border-color:#bfdbfe}
+    #adminModal .phone-action.whatsapp{background:#ecfdf5;color:#047857;border-color:#a7f3d0}
+    #adminModal .ultra-actions button,#adminModal button.bg-rose-900{background:#fff1f2;color:#be123c;border-color:#fecdd3}
+    #adminModal .custom-status-feedback{color:#475569}
+    #adminDetails{background:#fff;color:#0f172a;border-color:#cbd5e1;color-scheme:light;box-shadow:0 20px 60px #0f172a26}
+    #adminDetails .order-detail{padding:10px;border-bottom:1px solid #e2e8f0;overflow-wrap:anywhere}
+    #adminDetails dt{color:#64748b;font-size:12px}
+    #adminDetails dd{color:#0f172a;font-weight:600}
+    #adminDetails .phone-action{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;border-radius:8px;padding:8px 12px}
+
+    #adminModal .custom-status-badge{display:flex;align-items:center;gap:4px;padding:4px 7px;border-radius:7px;background:#2563eb;color:#fff;box-shadow:0 2px 5px #2563eb26;font-size:12px;font-weight:700;min-width:0}
+    #adminModal .custom-status-badge[hidden]{display:none}
+    #adminModal .custom-status-badge span{flex:1;min-width:0;overflow-wrap:anywhere}
+    #adminModal .custom-status-badge button{background:transparent;color:#fff;border:0;border-radius:4px;min-width:28px;min-height:28px;padding:2px;cursor:pointer;font-size:16px}
+    #adminModal .custom-status-badge button:hover{background:#ffffff26}
+    #adminModal .custom-status-badge button:focus-visible{outline:2px solid #fff;outline-offset:1px}
+
+    @media(max-width:767px){
+      #adminModal .card-heading{flex-wrap:nowrap;gap:7px}
+      #adminModal .card-heading .copy-value{flex:1;justify-content:flex-start}
+      #adminModal .card-heading .copy-value span{flex:0 1 auto}
+      #adminModal .card-name-line{width:100%;min-width:0;margin:5px 0}
+      #adminModal .card-name-line .ultra-name{display:block;white-space:nowrap;word-break:normal;overflow-wrap:normal;font-size:14px;line-height:1.8;overflow-x:auto;max-width:100%;font-weight:800}
+      #adminModal .card-phone-list{display:grid;gap:3px;padding:5px 0;border-top:1px solid #eff6ff;border-bottom:1px solid #eff6ff}
+      #adminModal .card-phone-row{display:flex;align-items:center;gap:7px;min-width:0;font-size:12px}
+      #adminModal .card-phone-label{font-size:10px;color:#64748b;flex-shrink:0}
+      #adminModal .card-phone-row .copy-value{flex:1;gap:4px}
+      #adminModal .card-phone-row .copy-value span{flex:0 1 auto;white-space:nowrap;font-weight:700}
+      #adminModal .card-phone-row .ultra-actions{margin-inline-start:0;flex-shrink:0}
+      #adminModal .card-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px;margin-top:6px}
+      #adminModal .card-meta-item{display:flex;align-items:baseline;gap:4px;font-size:11px;line-height:1.6;color:#475569;min-width:0}
+      #adminModal .card-meta-item span:last-child{min-width:0;overflow-wrap:anywhere}
+      #adminModal .card-meta-item:first-child,#adminModal .card-meta-item:nth-child(2){grid-column:1/-1}
+      #adminModal .card-footer{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:6px;padding-top:5px;border-top:1px solid #eff6ff}
+      #adminModal .card-footer .status-control{flex:1;max-width:none;flex-direction:row;flex-wrap:wrap;align-items:center;gap:5px}
+      #adminModal .card-footer select{max-width:145px;min-height:30px;padding:3px;font-size:10px}
+      #adminModal .card-footer .custom-status-badge{padding:2px 5px;font-size:10px;max-width:100%;gap:2px}
+      #adminModal .card-footer .custom-status-badge button{min-width:24px;min-height:24px;font-size:13px}
+      #adminModal .card-footer .custom-status-input{flex-basis:100%}
+    }
+    </style>
+    <dialog id="adminDetails" dir="rtl" aria-labelledby="adminDetailTitle"><div class="flex justify-between items-center"><h2 id="adminDetailTitle" class="font-bold text-xl">👤 تفاصيل الطلب والزبون</h2><button type="button" onclick="document.getElementById('adminDetails').close()" class="phone-action" aria-label="إغلاق التفاصيل">✕ إغلاق</button></div><dl id="adminDetailContent"></dl><div id="adminDetailActions" class="flex flex-wrap gap-2"></div></dialog>
+    <dialog id="locationDialog" aria-labelledby="locationTitle">
+        <div class="location-heading"><h2 id="locationTitle">اختر الولاية</h2><button type="button" class="location-close" id="locationClose" aria-label="إغلاق">✕</button></div>
+        <input id="locationSearch" type="search" placeholder="ابحث بالاسم أو رقم الولاية" aria-label="البحث في القائمة" autocomplete="off">
+        <p id="locationCount" role="status" aria-live="polite"></p>
+        <div id="locationResults" aria-label="نتائج البحث"></div>
+    </dialog>
+    <script src="/locations.js"></script>
+    <script src="/location-picker.js"></script>
+    <dialog id="adminPasswordDialog" dir="rtl" aria-labelledby="adminPasswordTitle" style="color:#fff;background:#111a2e;border:1px solid #475569;border-radius:18px;padding:24px;width:min(420px,90vw)">
+        <form id="adminPasswordForm">
+            <label id="adminPasswordTitle" for="adminPasswordInput" style="display:block;margin-bottom:16px;font-weight:bold">🔐 أدخل كلمة سر الإدارة الجديدة:</label>
+            <div style="display:flex;gap:8px;align-items:center">
+                <input id="adminPasswordInput" type="password" autocomplete="current-password" dir="ltr" autofocus style="min-width:0;flex:1;background:#0b1120;color:white;border:1px solid #64748b;border-radius:8px;padding:12px;font-size:16px">
+                <button id="adminPasswordToggle" type="button" aria-label="إظهار كلمة المرور" aria-pressed="false" aria-controls="adminPasswordInput" style="padding:12px;color:#facc15;background:transparent;border:1px solid #64748b;border-radius:8px;cursor:pointer">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path id="adminPasswordEyeSlash" d="M3 3l18 18" hidden style="display:none"/></svg>
+                </button>
+            </div>
+            <div style="display:flex;gap:16px;justify-content:flex-end;margin-top:20px">
+                <button id="adminPasswordCancel" type="button">إلغاء</button>
+                <button type="submit" style="background:#facc15;color:#0b1120;padding:8px 20px;border-radius:8px">تأكيد</button>
+            </div>
+        </form>
+    </dialog>
+    <style>#adminPasswordDialog::backdrop{background:rgba(0,0,0,.7)}</style>
+    <!-- JavaScript المحدث للربط والبحث السريع -->
+    <script>
+        let allOrders = []; // تخزين كافة الطلبيات المجلوبة للبحث فيها سريعاً
+
+        function toggleMenu() {
+            document.getElementById('sideMenu').classList.toggle('hidden');
+        }
+
+        // إضافة الشرطة المائلة تلقائياً لتاريخ انتهاء الصلاحية
+        function formatExpiryDate(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                input.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            } else {
+                input.value = value;
+            }
+        }
+
+        // حفظ الطلبات في هذا المتصفح فقط
+        let adminPassword = '';
+        let adminRefreshTimer;
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function requestAdminPassword() {
+            const dialog = document.getElementById('adminPasswordDialog');
+            if (dialog.open) return Promise.resolve(null);
+            const input = document.getElementById('adminPasswordInput');
+            const toggle = document.getElementById('adminPasswordToggle');
+            const form = document.getElementById('adminPasswordForm');
+            const cancel = document.getElementById('adminPasswordCancel');
+            const slash = document.getElementById('adminPasswordEyeSlash');
+            function hidePassword() {
+                input.type = 'password';
+                toggle.setAttribute('aria-label', 'إظهار كلمة المرور');
+                toggle.setAttribute('aria-pressed', 'false');
+                slash.style.display = 'none';
+            }
+            input.value = '';
+            hidePassword();
+            return new Promise(resolve => {
+                let password = null;
+                toggle.onclick = () => {
+                    const visible = input.type === 'password';
+                    input.type = visible ? 'text' : 'password';
+                    toggle.setAttribute('aria-label', visible ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور');
+                    toggle.setAttribute('aria-pressed', String(visible));
+                    slash.style.display = visible ? 'block' : 'none';
+                    input.focus();
+                };
+                form.onsubmit = event => {
+                    event.preventDefault();
+                    password = input.value.trim();
+                    dialog.close();
+                };
+                cancel.onclick = () => dialog.close();
+                dialog.addEventListener('close', () => {
+                    input.value = '';
+                    hidePassword();
+                    toggle.onclick = form.onsubmit = cancel.onclick = null;
+                    resolve(password);
+                }, {once: true});
+                dialog.showModal();
+            });
+        }
+
+        // طلب كلمة السر للوحة التحكم
+        async function promptPassword() {
+            const pwd = (await requestAdminPassword())?.trim();
+            if (!pwd) return;
+            adminPassword = pwd;
+            try {
+                if (await renderAdminOrders()) {
+                    try { localStorage.setItem('mhatati_admin_device', '1'); } catch {}
+                    document.getElementById('adminModal').classList.remove('hidden');
+                    clearInterval(adminRefreshTimer);
+                    adminRefreshTimer = setInterval(renderAdminOrders, 5000);
+                } else adminPassword = '';
+            } catch (error) {
+                console.error('[admin] Opening dashboard failed', error);
+                alert('تعذر فتح لوحة التحكم: ' + error.message);
+                adminPassword = '';
+            }
+        }
+        function closeAdmin() {
+            expandedOrders.clear();
+            currentOrderFilter = 'all';
+            expandFilteredOrders = false;
+            clearInterval(adminRefreshTimer);
+            adminPassword = '';
+            allOrders = [];
+            document.getElementById('ordersContainer').textContent = '';
+            document.getElementById('adminDetails').close();
+            document.getElementById('adminDetailContent').replaceChildren();
+            document.getElementById('adminDetailActions').replaceChildren();
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+        function markOrderStatsUnavailable() {
+            for (const id of ['totalOrdersCount','registeredUsersCount','completedOrdersCount','cancelledOrdersCount','pendingOrdersCount','underNoteOrdersCount','todayRegistrationsCount']) {
+                const counter = document.getElementById(id);
+                counter.textContent = '—';
+                counter.setAttribute('aria-label', 'غير متاح: تعذر تحميل البيانات');
+            }
+        }
+        function countTodayRegistrations(orders, now = new Date()) {
+            const day = new Intl.DateTimeFormat('en-CA', {timeZone:'Africa/Algiers', year:'numeric', month:'2-digit', day:'2-digit'});
+            const today = day.format(now);
+            return orders.filter(order => {
+                if (!order.date) return false;
+                const date = new Date(order.date);
+                return !Number.isNaN(date.getTime()) && day.format(date) === today;
+            }).length;
+        }
+        async function renderAdminOrders() {
+            if (document.activeElement && document.activeElement.classList.contains("custom-status-input")) return;
+            try {
+                const response = await fetch('/api/orders?dashboard=1', {headers:{Authorization:'Bearer '+adminPassword}, cache:'no-store'});
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        closeAdmin();
+                        alert('❌ كلمة سر الإدارة غير صحيحة.');
+                    } else {
+                        const failure = await response.json().catch(() => ({}));
+                        markOrderStatsUnavailable();
+                        const reason = failure.code === 'DATABASE_QUOTA_EXCEEDED'
+                            ? 'تعذر تحميل الطلبات والإحصاءات لأن قاعدة Neon تجاوزت حصة الاستخدام. يلزم رفع الحصة أو ترقية خطة قاعدة البيانات. هذا الخطأ لا يعني أن عدد التسجيلات صفر أو أنها حُذفت.'
+                            : 'تعذر تحميل الطلبات والإحصاءات (HTTP ' + response.status + (failure.code ? '، ' + failure.code : '') + '). الأعداد غير متاحة حالياً، وليست صفراً.';
+                        console.error('[admin] Loading orders failed', {status:response.status, code:failure.code});
+                        document.getElementById('filteredCountText').textContent = reason + ' ستتم إعادة المحاولة.';
+                        // Authentication succeeded; a storage failure must not hide the dashboard.
+                        if (failure.authenticated === true) return true;
+                        alert(reason);
+                    }
+                    return false;
+                }
+                const data = await response.json();
+                for (const id of ['totalOrdersCount','registeredUsersCount','completedOrdersCount','cancelledOrdersCount','pendingOrdersCount','underNoteOrdersCount','todayRegistrationsCount']) document.getElementById(id).removeAttribute('aria-label');
+                allOrders = data.orders.map(order => ({...order, displayNumber: String(Number(String(order.displayNumber).replace(/^NFT-/, '')))}));
+                for (const [id, key] of [['totalOrdersCount','total'],['registeredUsersCount','users'],['completedOrdersCount','completed'],['cancelledOrdersCount','cancelled']]) document.getElementById(id).textContent = data.stats[key];
+                document.getElementById('pendingOrdersCount').textContent = allOrders.filter(order => normalizedStatus(order.status) === 'جديد').length;
+                document.getElementById('underNoteOrdersCount').textContent = allOrders.filter(order => normalizedStatus(order.status) === 'تحت الملاحظة').length;
+                document.getElementById('todayRegistrationsCount').textContent = countTodayRegistrations(allOrders);
+                renderCustomStatusStats();
+                filterOrders();
+                refreshVisitorStats();
+                return true;
+            } catch (err) {
+                markOrderStatsUnavailable();
+                console.error('[admin] Loading or rendering dashboard failed', err);
+                const reason = 'تعذر تحميل لوحة التحكم: ' + err.message;
+                if (document.getElementById('adminModal').classList.contains('hidden')) alert(reason);
+                document.getElementById('filteredCountText').textContent = reason;
+                return false;
+            }
+        }
+
+        async function refreshVisitorStats() {
+            try {
+                const response = await fetch('/api/visitors', {headers:{Authorization:'Bearer '+adminPassword}, cache:'no-store'});
+                if (!response.ok) throw new Error('Visitor stats unavailable');
+                const stats = await response.json();
+                if (!adminPassword) return;
+                document.getElementById('totalVisitorsCount').textContent = stats.total;
+                document.getElementById('todayVisitorsCount').textContent = stats.today;
+            } catch {
+                document.getElementById('totalVisitorsCount').textContent = '—';
+                document.getElementById('todayVisitorsCount').textContent = '—';
+            }
+        }
+
+        function refreshVisibleAdmin() {
+            if (adminPassword && document.visibilityState === 'visible') renderAdminOrders();
+        }
+        window.addEventListener('pageshow', refreshVisibleAdmin);
+        window.addEventListener('focus', refreshVisibleAdmin);
+        document.addEventListener('visibilitychange', refreshVisibleAdmin);
+
+        // تصفية نتائج البحث بالاسم أو الهاتف 1 أو الهاتف 2
+        let currentOrderFilter = 'all';
+        let currentCustomStatusFilter = null;
+        let currentOrderPage = 1;
+        let ordersPageSize = 10;
+        function paginateOrders(orders, page, size) {
+            const pages = Math.max(1, Math.ceil(orders.length / size));
+            const current = Math.min(pages, Math.max(1, page));
+            const offset = (current - 1) * size;
+            return {items:orders.slice(offset, offset + size), page:current, pages, offset, total:orders.length};
+        }
+        function resetOrderPage() { currentOrderPage = 1; filterOrders(); }
+        function changeOrdersPageSize(value) {
+            ordersPageSize = value === '20' ? 20 : 10;
+            resetOrderPage();
+        }
+        function renderOrderPagination(result) {
+            const container = document.getElementById('ordersContainer');
+            const nav = document.createElement('nav'); nav.className = 'orders-pagination'; nav.setAttribute('aria-label','صفحات الطلبات');
+            const summary = document.createElement('p'); summary.className = 'pagination-summary'; summary.setAttribute('role','status');
+            summary.textContent = `عرض ${result.total ? result.offset + 1 : 0} - ${result.offset + result.items.length} من إجمالي ${result.total} طلب`;
+            const controls = document.createElement('div'); controls.className = 'pagination-controls';
+            function addButton(label, page, disabled, active = false) {
+                const button = document.createElement('button'); button.type = 'button'; button.textContent = label; button.disabled = disabled;
+                if (active) button.setAttribute('aria-current','page');
+                button.addEventListener('click', () => {
+                    currentOrderPage = page; filterOrders();
+                    document.getElementById('ordersContainer').scrollIntoView({block:'start'});
+                });
+                controls.append(button);
+            }
+            addButton('السابق',result.page - 1,result.page === 1);
+            for (let page = 1; page <= result.pages; page++) addButton(String(page),page,false,page === result.page);
+            addButton('التالي',result.page + 1,result.page === result.pages);
+            nav.append(summary,controls); container.append(nav);
+        }
+        function customStatusCounts(orders) {
+            const counts = new Map();
+            orders.forEach(order => {
+                const label = String(order.customStatus || '').trim();
+                if (label) counts.set(label, (counts.get(label) || 0) + 1);
+            });
+            return counts;
+        }
+        function matchesOrderFilter(order, status, customStatus) {
+            return customStatus !== null ? String(order.customStatus || '').trim() === customStatus : status === 'all' || normalizedStatus(order.status) === status;
+        }
+        function renderCustomStatusStats() {
+            const container = document.getElementById('customStatusStats');
+            const counts = customStatusCounts(allOrders);
+            if (currentCustomStatusFilter !== null && !counts.has(currentCustomStatusFilter)) {
+                currentCustomStatusFilter = null;
+                currentOrderFilter = 'all';
+                currentOrderPage = 1;
+            }
+            container.replaceChildren();
+            container.hidden = counts.size === 0;
+            counts.forEach((count, label) => {
+                const card = document.createElement('button');
+                card.type = 'button'; card.className = 'admin-kpi rounded-xl p-3 shadow-sm';
+                card.dataset.customStatusFilter = label;
+                const title = document.createElement('span'); title.className = 'text-xs'; title.textContent = label;
+                const number = document.createElement('strong'); number.className = 'block text-2xl'; number.textContent = count;
+                card.setAttribute('aria-label', label + ': ' + count + ' طلبات');
+                card.addEventListener('click', () => {
+                    currentCustomStatusFilter = label; currentOrderFilter = 'all'; currentOrderPage = 1;
+                    document.getElementById('searchInput').value = '';
+                    expandFilteredOrders = true; expandedOrders.clear(); filterOrders();
+                });
+                card.append(title, number); container.append(card);
+            });
+        }
+        let expandFilteredOrders = false;
+        function setOrderFilter(status) {
+            currentOrderFilter = status;
+            currentOrderPage = 1;
+            currentCustomStatusFilter = null;
+            expandFilteredOrders = true;
+            expandedOrders.clear();
+            filterOrders();
+        }
+        function filterOrders() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase().replace(/^#/, '');
+            const filtered = allOrders.filter(ord => {
+                const matchesStatus = matchesOrderFilter(ord, currentOrderFilter, currentCustomStatusFilter);
+                const matchesSearch = !query || [ord.fullName, ord.phone1, ord.phone2, ord.id, ord.orderNumber, ord.displayNumber].some(value => String(value || '').toLowerCase().includes(query));
+                return matchesStatus && matchesSearch;
+            });
+            if (expandFilteredOrders) filtered.forEach(order => expandedOrders.add(order.id));
+            expandFilteredOrders = false;
+            document.querySelectorAll('[data-order-filter]').forEach(card => card.setAttribute('aria-pressed', String(currentCustomStatusFilter === null && card.dataset.orderFilter === currentOrderFilter)));
+            document.querySelectorAll('[data-custom-status-filter]').forEach(card => card.setAttribute('aria-pressed', String(card.dataset.customStatusFilter === currentCustomStatusFilter)));
+            document.getElementById('filteredCountText').textContent = `التصنيف: ${currentCustomStatusFilter !== null ? currentCustomStatusFilter : currentOrderFilter === 'all' ? 'جميع الطلبات' : statusLabels[currentOrderFilter]} — عدد النتائج: ${filtered.length}`;
+            const result = paginateOrders(filtered, currentOrderPage, ordersPageSize);
+            currentOrderPage = result.page;
+            displayOrders(result.items, result.offset);
+            renderOrderPagination(result);
+        }
+
+        const orderStatuses = ['جديد','تحت الملاحظة','مكتمل','ملغاة / خطأ'];
+        const statusLabels = {'جديد':'🟡 قيد الانتظار','تحت الملاحظة':'📝 تحت الملاحظة','مكتمل':'🟢 مكتملة','ملغاة / خطأ':'🔴 ملغاة'};
+        const expandedOrders = new Set();
+        let orderMutationBusy = false;
+        function normalizedStatus(status) { return orderStatuses.includes(status) ? status : 'جديد'; }
+        function phoneActions(phone, number) {
+            const digits = String(phone || '').replace(/[^0-9]/g, '');
+            if (!/^0[0-9]{9}$/.test(digits)) return '';
+            const international = '213' + digits.slice(1);
+            return `<a class="phone-action whatsapp" href="https://wa.me/${international}" target="_blank" rel="noopener noreferrer" aria-label="واتساب الهاتف ${number}">💬 واتساب ${number}</a><a class="phone-action" href="tel:+${international}" aria-label="اتصال الهاتف ${number}">📞 اتصال ${number}</a>`;
+        }
+        async function mutateOrder(method, order, status) {
+            if (orderMutationBusy) return;
+            if (method === 'DELETE' && !confirm('هل تريد حذف الطلب ' + (order.displayNumber || order.orderNumber || order.id) + ' نهائياً؟ لا يمكن التراجع عن الحذف.')) return;
+            orderMutationBusy = true;
+            clearInterval(adminRefreshTimer);
+            document.querySelectorAll('[data-order-action]').forEach(el => el.disabled = true);
+            try {
+                const response = await fetch('/api/orders', {method, headers:{Authorization:'Bearer '+adminPassword,'Content-Type':'application/json'}, body:JSON.stringify({id:order.id,...(typeof status === 'object' ? status : {status})})});
+                if (response.status === 401) { closeAdmin(); alert('انتهت صلاحية الدخول. يرجى تسجيل الدخول مجدداً.'); return; }
+                if (!response.ok) throw new Error('تعذر حفظ التغيير. يرجى المحاولة مجدداً.');
+                return true;
+            } catch (error) { alert(error.message || 'تعذر الاتصال بالخادم.'); return false; }
+            finally {
+                orderMutationBusy = false;
+                if (adminPassword) { await renderAdminOrders(); adminRefreshTimer = setInterval(renderAdminOrders,5000); }
+            }
+        }
+        function formatOrderDate(value) {
+            const date = new Date(value);
+            return Number.isNaN(date.getTime()) ? '—' : new Intl.DateTimeFormat('ar-DZ', {dateStyle:'medium', timeStyle:'short',timeZone:'Africa/Algiers'}).format(date);
+        }
+        const detailFields = [['fullName','👤 الاسم واللقب'],['phone1','📞 الهاتف الأول'],['phone2','📱 الهاتف الثاني'],['wilaya','📍 الولاية'],['baladiya','🏘️ البلدية'],['brand','🛞 العلامة'],['size','📏 المقاس'],['quantity','📦 الكمية'],['nid','🪪 رقم التعريف الوطني'],['dahabia','💳 رقم البطاقة الذهبية'],['expiry','📅 صلاحية البطاقة']];
+        function showOrderDetails(order) {
+            const content = document.getElementById('adminDetailContent'); content.replaceChildren();
+            const fields = [['🆔 رقم الطلبية','#' + (order.displayNumber || order.id)],['🔗 المرجع الأصلي',order.orderNumber || order.id],...detailFields.map(([key,label]) => [label,order[key]]),['📅 تاريخ وساعة الطلب (الجزائر)',formatOrderDate(order.date)],['⚙️ الحالة',[statusLabels[normalizedStatus(order.status)], order.customStatus].filter(Boolean).join(' — ')]];
+            fields.forEach(([label,value]) => {const box = document.createElement('div'); box.className='order-detail'; const dt=document.createElement('dt'),dd=document.createElement('dd'); dt.textContent=label; dd.textContent=value || '—'; box.append(dt,dd);content.append(box);});
+            const actions = document.getElementById('adminDetailActions'); actions.innerHTML = phoneActions(order.phone1,1) + phoneActions(order.phone2,2);
+            const share = document.createElement('button'); share.type='button'; share.textContent='QR / بطاقة الطلبية';
+            const qr = document.createElement('div'); actions.append(share,qr);
+            share.addEventListener('click', async () => {
+                share.disabled=true; qr.textContent='جاري إنشاء الرابط…';
+                try {
+                    const response=await fetch('/api/order-share',{method:'POST',headers:{Authorization:'Bearer '+adminPassword,'Content-Type':'application/json'},body:JSON.stringify({id:order.id})});
+                    const result=await response.json(); if (!response.ok) throw new Error(result.error);
+                    await window.OrderQR.mount(qr,result.sharePath,{admin:true});
+                } catch {qr.textContent='تعذر إنشاء الرابط. تحقق من تهيئة المشاركة والاتصال.';}
+                finally {share.disabled=false;}
+            });
+            document.getElementById('adminDetails').showModal();
+        }
+        function csvCell(value) {
+            let text=String(value ?? '');
+            if (/^[\s]*[=+@-]/.test(text)) text="'"+text;
+            return '"'+text.replace(/"/g,'""')+'"';
+        }
+        function exportOrders() {
+            if (!adminPassword || !allOrders.length) {alert('لا توجد طلبيات للتصدير.');return;}
+            const headers=['رقم الطلبية','المرجع الأصلي',...detailFields.map(f=>f[1]),'تاريخ الطلب','الحالة'];
+            const rows=allOrders.map(o=>['#'+(o.displayNumber||o.id),o.orderNumber||o.id,...detailFields.map(([k])=>o[k]),o.date,[statusLabels[normalizedStatus(o.status)], o.customStatus].filter(Boolean).join(' — ')]);
+            const blob=new Blob(['\uFEFF'+[headers,...rows].map(row=>row.map(csvCell).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8;'});
+            const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='naftal-orders-'+new Date().toISOString().slice(0,10)+'.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+        }
+        function quickCopy(value, label) {
+            const button = document.createElement('button');
+            button.type = 'button'; button.className = 'quick-copy'; button.innerHTML = '<span aria-hidden="true">⧉</span><span class="copy-label"> نسخ</span>';
+            button.setAttribute('aria-label', 'نسخ ' + label); button.title = 'نسخ ' + label; button.setAttribute('aria-live', 'polite');
+            button.addEventListener('click', async () => {
+                button.disabled = true;
+                try {
+                    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(String(value));
+                    else {
+                        const input = document.createElement('textarea'); input.value = String(value);
+                        input.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+                        document.body.append(input); input.select();
+                        try { if (!document.execCommand('copy')) throw new Error('copy'); }
+                        finally { input.remove(); button.focus(); }
+                    }
+                    button.textContent = '✓ تم النسخ'; button.dataset.feedback = 'success';
+                } catch { button.textContent = 'تعذر النسخ'; button.dataset.feedback = 'error'; }
+                setTimeout(() => { button.innerHTML = '<span aria-hidden="true">⧉</span><span class="copy-label"> نسخ</span>'; delete button.dataset.feedback; button.disabled = false; }, 2000);
+            });
+            return button;
+        }
+        function orderCell(label, value, copy = false, mobile = false) {
+            const cell = document.createElement('td'); cell.className = 'p-3' + (mobile ? ' mobile-only' : ''); cell.dataset.label = label;
+            const content = document.createElement('div'); content.className = 'copy-value';
+            const text = document.createElement('span'); text.textContent = value ?? '—';
+            if (copy) text.dir = 'ltr';
+            content.append(text); if (copy && value) content.append(quickCopy(value, label));
+            cell.append(content); return cell;
+        }
+        function createStatusControl(order) {
+            const box = document.createElement('div'); box.className = 'status-control';
+            const select = document.createElement('select'); select.dataset.orderAction = ''; select.className = 'bg-slate-800 rounded-lg p-2';
+            [...orderStatuses, 'custom'].forEach(value => {
+                const option = document.createElement('option'); option.value = value;
+                option.textContent = value === 'custom' ? '✎ ملاحظة / حالة مخصصة' : statusLabels[value]; select.append(option);
+            });
+            select.value = normalizedStatus(order.status);
+            select.dataset.status = normalizedStatus(order.status); select.disabled = orderMutationBusy;
+            select.setAttribute('aria-label', 'حالة الطلب ' + order.id);
+            const input = document.createElement('input'); input.type = 'text'; input.className = 'custom-status-input'; input.maxLength = 120;
+            input.placeholder = 'مثال: لم يرد، مؤجل…'; input.value = order.customStatus || '';
+            input.setAttribute('aria-label', 'ملاحظة مخصصة للطلب ' + order.id); input.hidden = true;
+            const feedback = document.createElement('span'); feedback.className = 'custom-status-feedback'; feedback.setAttribute('role','status');
+            const badge = document.createElement('div'); badge.className = 'custom-status-badge'; badge.hidden = !order.customStatus;
+            const badgeText = document.createElement('span'); badgeText.textContent = order.customStatus || '';
+            const edit = document.createElement('button'); edit.type = 'button'; edit.textContent = '✎'; edit.title = 'تعديل الملاحظة'; edit.setAttribute('aria-label','تعديل الملاحظة');
+            const remove = document.createElement('button'); remove.type = 'button'; remove.textContent = '×'; remove.title = 'إزالة الملاحظة'; remove.setAttribute('aria-label','إزالة الملاحظة'); remove.dataset.orderAction = '';
+            badge.append(badgeText,edit,remove);
+            let timer, saving = false;
+            const beginEdit = () => {badge.hidden = true; input.hidden = false; input.disabled = false; input.focus();};
+            edit.addEventListener('click',beginEdit);
+            remove.addEventListener('pointerdown', e => e.preventDefault());
+            remove.addEventListener('click', async () => {
+                clearTimeout(timer); if (saving) return; saving = true; remove.disabled = true;
+                const ok = await mutateOrder('PATCH',order,{customStatus:''});
+                if (!ok) {saving = false; remove.disabled = false;}
+            });
+            const save = async () => {
+                clearTimeout(timer);
+                if (saving) return;
+                const value = input.value.trim();
+                if (value === (order.customStatus || '')) {input.hidden = true; badge.hidden = !value; return;}
+                saving = true; input.disabled = true;
+                feedback.textContent = 'جارٍ الحفظ…';
+                input.blur(); const ok = await mutateOrder('PATCH', order, {customStatus:value});
+                saving = false; input.disabled = false;
+                if (ok) {order.customStatus = value; badgeText.textContent = value; badge.hidden = !value; input.hidden = true; feedback.textContent = ''; }
+                else {input.hidden = false; feedback.textContent = 'تعذر الحفظ؛ حاول مجدداً';}
+            };
+            input.addEventListener('input', () => {clearTimeout(timer); feedback.textContent = 'تغييرات غير محفوظة'; timer = setTimeout(save,1200);});
+            input.addEventListener('blur',save);
+            input.addEventListener('keydown', e => { if (e.key === 'Enter') {e.preventDefault();save();} });
+            select.addEventListener('change', () => {
+                clearTimeout(timer);
+                if (select.value === 'custom') {beginEdit();}
+                else {input.hidden = true; mutateOrder('PATCH',order,select.value);}
+            });
+            box.append(select,badge,input,feedback); return box;
+        }
+        function reindexDisplayedOrders(orders, offset = 0) {
+            return orders.map((order, index) => ({...order, displayNumber: String(offset + index + 1)}));
+        }
+        function displayOrders(ordersList, offset = 0) {
+            const container = document.getElementById('ordersContainer');
+            container.replaceChildren();
+            if (!ordersList.length) { container.textContent = 'لا توجد طلبيات مطابقة.'; return; }
+            const wrapper = document.createElement('div'); wrapper.className = 'orders-table-wrapper';
+            const table = document.createElement('table'); table.className = 'orders-table w-full text-right text-sm';
+            table.innerHTML = '<caption class="text-right font-bold p-3">الطلبات المخزنة في قاعدة بيانات الموقع</caption><thead class="bg-slate-800"><tr><th class="p-3">🆔 رقم الطلبية</th><th class="p-3">👤 الاسم واللقب</th><th class="p-3">📞 رقم الهاتف</th><th class="p-3">📍 الولاية</th><th class="p-3">📅 تاريخ وساعة الطلب</th><th class="p-3">⚙️ حالة الطلب</th><th class="p-3">الإجراءات</th></tr></thead>';
+            const tbody = document.createElement('tbody');
+            const cards = document.createElement('div'); cards.className = 'ultra-orders';
+            reindexDisplayedOrders(ordersList, offset).forEach(original => {
+                const raw = original;
+                const row = document.createElement('tr'); row.className = 'border-b border-slate-700 order-row';
+                row.append(orderCell('🆔 رقم الطلب', raw.displayNumber, true));
+                row.append(orderCell('👤 الاسم واللقب', raw.fullName));
+                row.append(orderCell('📞 الهاتف الأول', raw.phone1, true));
+                row.append(orderCell('📍 الولاية', raw.wilaya));
+                row.append(orderCell('📅 تاريخ وساعة الطلب', formatOrderDate(raw.date)));
+                detailFields.filter(([key]) => !['fullName','phone1','wilaya'].includes(key)).forEach(([key,label]) => {
+                    row.append(orderCell(label, raw[key], ['phone2','nid','dahabia'].includes(key), true));
+                });
+                const statusCell = document.createElement('td'); statusCell.className = 'p-3'; statusCell.dataset.label = '⚙️ الحالة';
+                const statusControl = createStatusControl(raw); statusCell.append(statusControl); row.append(statusCell);
+                const actions = document.createElement('td'); actions.className = 'p-3'; actions.dataset.label = 'الإجراءات';
+                const button = document.createElement('button'); button.type = 'button'; button.dataset.orderAction = ''; button.textContent = '🗑️ حذف'; button.className = 'rounded-lg px-4 py-2 bg-rose-900 text-rose-200';
+                button.disabled = orderMutationBusy; button.addEventListener('click', () => mutateOrder('DELETE',raw)); const details = document.createElement('button'); details.type = 'button'; details.className = 'phone-action details-button'; details.textContent = '🔎 عرض التفاصيل'; details.addEventListener('click', () => showOrderDetails(raw)); const actionGroup = document.createElement('div'); actionGroup.className = 'order-actions'; actionGroup.innerHTML = phoneActions(raw.phone1,1) + phoneActions(raw.phone2,2); actionGroup.append(details); actions.append(actionGroup); row.append(actions); tbody.append(row);
+                const card = document.createElement('article'); card.className = 'ultra-card';
+                card.setAttribute('aria-label', 'الطلب ' + (raw.displayNumber || raw.orderNumber || raw.id));
+                const top = document.createElement('div'); top.className = 'ultra-line';
+                const id = orderCell('رقم الطلب', raw.displayNumber, true).firstChild;
+                const name = document.createElement('strong'); name.className = 'ultra-name'; name.textContent = raw.fullName || '—';
+                const mobileStatus = createStatusControl(raw);
+                top.classList.add('card-heading');
+                const summary = document.createElement('div'); summary.className = 'order-summary';
+                const identity = document.createElement('div'); identity.className = 'order-identity'; identity.append(id,name);
+                summary.append(identity); top.append(summary);
+                const middle = document.createElement('div'); middle.className = 'card-phone-list';
+                [raw.phone1,raw.phone2].forEach((value,phoneIndex) => {
+                    const phoneRow = document.createElement('div'); phoneRow.className = 'card-phone-row';
+                    const label = document.createElement('span'); label.className = 'card-phone-label'; label.textContent = phoneIndex === 0 ? 'هاتف 1' : 'هاتف 2';
+                    const phone = orderCell('الهاتف ' + (phoneIndex + 1), value, true).firstChild;
+                    const phoneIcons = document.createElement('div'); phoneIcons.className = 'ultra-actions';
+                    phoneIcons.innerHTML = phoneActions(value,phoneIndex + 1);
+                    phoneIcons.querySelectorAll('a').forEach(link => {link.title = link.getAttribute('aria-label');link.textContent = link.classList.contains('whatsapp') ? '💬' : '📞';});
+                    phoneRow.append(label,phone,phoneIcons);middle.append(phoneRow);
+                });
+                const secondary = document.createElement('div'); secondary.className = 'card-meta';
+                const fields = [
+                    ['📍', 'الموقع', [raw.wilaya,raw.baladiya].filter(Boolean).join('، ')],
+                    ['📅', 'تاريخ الطلب', formatOrderDate(raw.date)],
+                    ['🛞', 'العلامة والمقاس', [raw.brand,raw.size].filter(Boolean).join(' · ')],
+                    ['📦', 'الكمية', raw.quantity],
+                    ['🪪', 'رقم التعريف الوطني', raw.nid],
+                    ['💳', 'البطاقة الذهبية', raw.dahabia],
+                    ['⌛', 'صلاحية البطاقة', raw.expiry],
+                    ['📝', 'الملاحظات', raw.notes || raw.note || raw.comments || raw.message]
+                ];
+                fields.forEach(([icon,label,value]) => {
+                    const item = document.createElement('div'); item.className = 'card-meta-item'; item.title = label; item.setAttribute('aria-label',label);
+                    const symbol = document.createElement('span'); symbol.textContent = icon + ' ' + label + ':'; symbol.setAttribute('aria-hidden','true');
+                    const text = document.createElement('span'); text.textContent = value ?? '—';
+                    if (['رقم التعريف الوطني','البطاقة الذهبية','صلاحية البطاقة'].includes(label)) text.dir = 'ltr';
+                    item.append(symbol,text);secondary.append(item);
+                });
+                const remove = button.cloneNode(true); remove.textContent = '🗑'; remove.title = 'حذف الطلب'; remove.setAttribute('aria-label','حذف الطلب ' + (raw.displayNumber || raw.id));
+                remove.addEventListener('click', event => { event.stopPropagation(); mutateOrder('DELETE',raw); });
+                const toggle = document.createElement('button'); toggle.type = 'button'; toggle.className = 'order-toggle';
+                toggle.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
+                const body = document.createElement('div'); body.className = 'order-collapse'; body.id = 'order-body-' + raw.id;
+                const inner = document.createElement('div'); inner.className = 'order-collapse-inner'; const quickTags = document.createElement('div'); quickTags.className = 'order-quick-tags';
+                const tagsLabel = document.createElement('span'); tagsLabel.textContent = 'حالة مخصصة سريعة:'; quickTags.append(tagsLabel);
+                ['مهزش','نعودل مبعد','راكح','50%',''].forEach((tag,index) => { const action = document.createElement('button'); action.type = 'button'; action.textContent = tag || 'إزالة'; action.className = 'quick-tag tag-' + index; action.dataset.orderAction = ''; action.disabled = orderMutationBusy; action.addEventListener('click', () => mutateOrder('PATCH',raw,{customStatus:tag})); quickTags.append(action); });
+                const detailsGrid = document.createElement('div'); detailsGrid.className = 'order-details-grid';
+                detailsGrid.append(...middle.children, ...secondary.children);
+                inner.append(detailsGrid,quickTags); body.append(inner);
+                toggle.setAttribute('aria-controls', body.id);
+                function setExpanded(open) {
+                    card.classList.toggle('is-expanded', open); body.inert = !open;
+                    toggle.setAttribute('aria-expanded', String(open));
+                    toggle.setAttribute('aria-label', (open ? 'إخفاء تفاصيل الطلب ' : 'عرض تفاصيل الطلب ') + (raw.displayNumber || raw.id));
+                    if (open) expandedOrders.add(raw.id); else expandedOrders.delete(raw.id);
+                }
+                setExpanded(expandedOrders.has(raw.id));
+                top.addEventListener('click', event => {
+                    if (event.target.closest('button, select, input, a')) return;
+                    setExpanded(!card.classList.contains('is-expanded'));
+                });
+                toggle.addEventListener('click', () => setExpanded(!card.classList.contains('is-expanded')));
+                const headerActions = document.createElement('div'); headerActions.className = 'ultra-actions'; const editNote = document.createElement('button'); editNote.type = 'button'; editNote.textContent = '✎'; editNote.title = 'تعديل الملاحظة'; editNote.setAttribute('aria-label','تعديل الملاحظة');
+                editNote.addEventListener('click', () => { const select = mobileStatus.querySelector('select'); select.value = 'custom'; select.dispatchEvent(new Event('change')); });
+                const receiptButton=document.createElement('button');receiptButton.type='button';receiptButton.textContent='▦';receiptButton.title='QR / بطاقة الطلبية';receiptButton.setAttribute('aria-label','QR / بطاقة الطلبية');receiptButton.addEventListener('click',()=>showOrderDetails(raw));
+                headerActions.append(receiptButton,editNote,remove,toggle);
+                top.append(mobileStatus,headerActions); card.append(top,body); cards.append(card);
+
+            });
+            table.append(tbody); wrapper.append(table); container.append(wrapper,cards);
+        }
+    </script>
+    <style>
+        .privacy-consent-row{display:flex;align-items:flex-start;gap:.75rem;padding:1rem;border:1px solid #334155;border-radius:.75rem;background:#0f172a;color:#cbd5e1;font-size:.875rem;line-height:1.8}
+        #privacyConsent{flex-shrink:0;width:1.15rem;height:1.15rem;margin-top:.25rem;accent-color:#facc15;cursor:pointer}
+        .privacy-consent-row a{color:#facc15;text-decoration:underline;text-underline-offset:3px}
+        #privacyPolicyDialog{width:min(92vw,36rem);max-height:85vh;overflow:auto;margin:auto;padding:1.5rem;border:1px solid #334155;border-radius:1rem;background:#0f172a;color:#cbd5e1;line-height:1.9}
+        #privacyPolicyDialog::backdrop{background:rgba(2,6,23,.8)}
+        #privacyPolicyDialog h2{color:#facc15;font-size:1.3rem;font-weight:800;margin-bottom:1rem}
+        #privacyPolicyDialog button{margin-top:1rem;padding:.65rem 1.5rem;border-radius:.75rem;background:#facc15;color:#020617;font-weight:700}
+    </style>
+    <dialog id="privacyPolicyDialog" dir="rtl" aria-labelledby="privacyPolicyTitle">
+        <h2 id="privacyPolicyTitle">سياسة الخصوصية واستخدام البيانات</h2>
+        <p>نجمع بياناتك فقط لتنفيذ طلب شراء الإطارات والتواصل معك بشأن هذا الطلب، بما في ذلك تأكيد الطلب ومتابعته وتسليمه.</p>
+        <p>تُرسل بيانات النموذج إلى خدمة Formcarry لاستقبال الطلب والتواصل معك بشأنه.</p>
+        <button type="button" id="closePrivacyPolicy">إغلاق</button>
+    </dialog>
+    <script>
+        const privacyConsent = document.getElementById('privacyConsent');
+        const privacyDialog = document.getElementById('privacyPolicyDialog');
+        document.getElementById('privacyPolicyLink').addEventListener('click', event => {
+            event.preventDefault();
+            privacyDialog.showModal();
+        });
+        document.getElementById('closePrivacyPolicy').addEventListener('click', () => privacyDialog.close());
+    </script>
+
+    <style>
+    #orderSuccessDialog{box-sizing:border-box;width:min(94vw,36rem);max-height:90vh;max-height:90dvh;overflow-y:auto;margin:auto;border:1px solid #334155;border-radius:1.25rem;background:#0b1120;color:#f8fafc;padding:0;box-shadow:0 25px 60px #0008;font-family:'Cairo',sans-serif}
+    #orderSuccessDialog::backdrop{background:#020617dc;backdrop-filter:blur(5px)}
+    .order-header{display:flex;align-items:center;gap:.8rem;padding:1rem 1.25rem;background:#111c30;border-bottom:1px solid #334155}
+    .order-logo{display:grid;place-items:center;background:#facc15;border-radius:.6rem;padding:.35rem;flex-shrink:0}
+    .order-logo svg{width:3rem;height:2.5rem}
+    .order-brand{color:#facc15;font-weight:900;font-size:1.1rem}
+    .order-brand small{display:block;color:#cbd5e1;font-size:.8rem;font-weight:600}
+    .order-content{padding:1.25rem}
+    #orderSuccessTitle{font-size:1.05rem;text-align:center;font-weight:800;color:#f8fafc}
+    .order-reference{text-align:center;font-weight:800;margin:1rem 0 1.4rem;color:#cbd5e1}
+    .order-number{display:block;margin-top:.5rem;color:#facc15;font-size:1rem;overflow-wrap:anywhere;user-select:text}
+    .order-summary{border:1px solid #334155;border-radius:1rem;background:#111a2c;overflow:hidden;text-align:right}
+    .order-card-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;padding:1rem;border-bottom:1px solid #334155}
+    .order-card-heading h3{font-weight:800;font-size:1rem}
+    .order-pending{display:inline-block;color:#fde047;background:#facc151a;border:1px solid #eab30866;border-radius:2rem;padding:.3rem .7rem;font-size:.75rem;font-weight:700}
+    .order-detail-grid{display:grid;gap:1.35rem;padding:1.25rem}
+    .order-detail dt{color:#94a3b8;font-size:.85rem;margin-bottom:.4rem}
+    .order-detail dd{margin:0;color:#f8fafc;font-weight:700;font-size:1rem;text-align:right;overflow-wrap:anywhere}
+    .order-detail dd.order-quantity{color:#facc15;font-size:1.5rem}
+    .order-buyer-note{margin-top:1rem;color:#cbd5e1;font-size:.8rem;line-height:1.9;text-align:center}
+    .order-copy-button,.order-close-button{display:block;width:100%;min-height:3.25rem;padding:.9rem 1rem;border-radius:.75rem;font-family:inherit;font-size:1rem;font-weight:800;cursor:pointer;transition:background .2s}
+    .order-copy-button{margin-top:1rem;border:1px solid #475569;color:#cbd5e1;background:transparent;font-size:.85rem}
+    .order-close-button{margin-top:.8rem;border:2px solid #facc15;background:#facc150d;color:#facc15}
+    .order-close-button:hover,.order-copy-button:hover{background:#334155}
+    .order-copy-button:focus-visible,.order-close-button:focus-visible{outline:3px solid #facc15;outline-offset:3px}
+    .order-footer{display:flex;align-items:center;justify-content:center;gap:.6rem;padding:1rem;border-top:1px solid #334155;color:#94a3b8;font-size:.7rem}
+    .order-footer .order-logo svg{width:2rem;height:1.65rem}
+    @media(max-width:380px){.order-content{padding:1rem}.order-header{padding:.85rem}.order-number{font-size:.85rem}}
+    #registrationSubmit:disabled{opacity:.65;cursor:not-allowed}
+    </style>
+    <dialog id="orderSuccessDialog" dir="rtl" aria-labelledby="orderSuccessTitle" aria-describedby="orderSuccessNote">
+      <header class="order-header">
+        <span class="order-logo"><svg role="img" aria-label="نفطال NAFTAL" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M45 25L25 95H55L65 60H110L95 95H125L145 25H115L105 42H60L65 25H45Z" fill="#0A2540"/>
+                        <rect x="112" y="32" width="38" height="6" rx="3" fill="#0A2540"/>
+                        <rect x="108" y="44" width="42" height="6" rx="3" fill="#0A2540"/>
+                        <rect x="104" y="56" width="46" height="6" rx="3" fill="#0A2540"/>
+                        <rect x="100" y="68" width="50" height="6" rx="3" fill="#0A2540"/>
+                        <text x="80" y="112" font-family="'Cairo', sans-serif" font-weight="900" font-size="22" fill="#0A2540" text-anchor="middle" letter-spacing="1">NAFTAL</text>
+                    </svg></span>
+        <div class="order-brand"><span dir="ltr">E-MAHATA</span><small>محطتي الرقمية</small></div>
+      </header>
+      <div class="order-content">
+        <h2 id="orderSuccessTitle">✓ تم تسجيل الطلبية بنجاح!</h2>
+        <p class="order-reference">🔢 رقم الطلب: <bdi id="successOrderNumber" dir="ltr" class="order-number"></bdi></p>
+        <section class="order-summary" aria-labelledby="orderDetailsTitle">
+          <div class="order-card-heading"><h3 id="orderDetailsTitle">📦 تفاصيل الطلب</h3><span class="order-pending">⏳ قيد الانتظار</span></div>
+          <dl class="order-detail-grid">
+            <div class="order-detail"><dt>👤 الزبون</dt><dd id="successCustomerName"></dd></div>
+            <div class="order-detail"><dt>🆔 رقم بطاقة التعريف / تسجيل المركبة</dt><dd id="successIdentity" dir="ltr"></dd></div>
+            <div class="order-detail"><dt>🛞 الأبعاد</dt><dd><bdi id="successTireSize" dir="ltr"></bdi></dd></div>
+            <div class="order-detail"><dt>🔢 العدد</dt><dd id="successQuantity" class="order-quantity"></dd></div>
+            <div class="order-detail"><dt>📍 العنوان</dt><dd id="successCustomerWilaya"></dd></div>
+            <div class="order-detail"><dt>📅 تاريخ الطلب</dt><dd id="successOrderDate"></dd></div>
+            <div class="order-detail"><dt>🚗 نوع المركبة</dt><dd id="successVehicleType"></dd></div>
+          </dl>
+        </section>
+        <div id="successQR"></div>
+        <p id="orderSuccessNote" class="order-buyer-note">تم استلام طلبك وهو قيد الانتظار. احتفظ برقم الطلب للمتابعة.</p>
+        <button type="button" id="copyOrderNumber" class="order-copy-button">📋 نسخ رقم الطلبية</button>
+        <p id="copyOrderStatus" role="status" class="text-center text-sm mt-2"></p>
+        <button type="button" id="closeOrderSuccess" class="order-close-button">🏠 الرئيسية</button>
+      </div>
+      <footer class="order-footer"><span class="order-logo"><svg role="img" aria-label="نفطال NAFTAL" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M45 25L25 95H55L65 60H110L95 95H125L145 25H115L105 42H60L65 25H45Z" fill="#0A2540"/>
+                        <rect x="112" y="32" width="38" height="6" rx="3" fill="#0A2540"/>
+                        <rect x="108" y="44" width="42" height="6" rx="3" fill="#0A2540"/>
+                        <rect x="104" y="56" width="46" height="6" rx="3" fill="#0A2540"/>
+                        <rect x="100" y="68" width="50" height="6" rx="3" fill="#0A2540"/>
+                        <text x="80" y="112" font-family="'Cairo', sans-serif" font-weight="900" font-size="22" fill="#0A2540" text-anchor="middle" letter-spacing="1">NAFTAL</text>
+                    </svg></span><span>نفطال NAFTAL • محطتي الرقمية</span></footer>
+    </dialog>
+    <script src="tire-options.js"></script>
+    <script src="wheel-photo.js" defer></script>
+    <script src="/order-qr.js"></script>
+    <script src="form-submission.js"></script>
+    <script src="/visitor-tracking.js"></script>
+
+    <style>
+    /* One compact RTL accordion layout at every viewport size. */
+    #adminModal .orders-table-wrapper{display:none}
+    #adminModal .ultra-orders{display:grid;gap:10px}
+    #adminModal .ultra-card{padding:12px;border-radius:11px;min-width:0}
+    #adminModal .card-heading{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;align-items:center;gap:10px;cursor:pointer}
+    #adminModal .card-heading .ultra-name{font-size:14px;overflow-wrap:anywhere}
+    #adminModal .card-heading > .copy-value{font-size:12px;direction:ltr}
+    #adminModal .card-heading > .copy-value .quick-copy{display:none}
+    #adminModal .card-heading .status-control{max-width:170px}
+    #adminModal .ultra-actions{display:flex;gap:5px;align-items:center}
+    #adminModal .ultra-actions a,#adminModal .ultra-actions button{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;padding:5px;border-radius:7px}
+    #adminModal .ultra-actions .order-toggle{background:#eff6ff;color:#2563eb}
+    #adminModal .order-toggle svg{transition:transform .25s ease}
+    #adminModal .is-expanded .order-toggle svg{transform:rotate(180deg)}
+    #adminModal .order-toggle:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+    #adminModal .order-collapse{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .25s ease,visibility .25s}
+    #adminModal .is-expanded .order-collapse{grid-template-rows:1fr;visibility:visible}
+    #adminModal .order-collapse-inner{min-height:0;overflow:hidden}
+    #adminModal .card-phone-list{display:grid;gap:6px;padding:10px 0;border-bottom:1px solid #eff6ff}
+    #adminModal .card-phone-row{display:flex;align-items:center;gap:8px;font-size:13px;min-width:0}
+    #adminModal .card-phone-label{color:#64748b;font-size:12px}
+    #adminModal .card-phone-row .copy-value{flex:1;min-width:0}
+    #adminModal .card-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+    #adminModal .card-meta-item{display:flex;align-items:baseline;gap:6px;min-width:0;font-size:13px;color:#475569}
+    #adminModal .card-meta-item span:last-child{overflow-wrap:anywhere;white-space:pre-wrap}
+    @media(max-width:540px){
+      #adminModal .card-heading{grid-template-columns:minmax(0,1fr) auto;gap:6px}
+      #adminModal .card-heading > .copy-value{grid-row:2;grid-column:1}
+      #adminModal .card-heading > .status-control{grid-row:3;grid-column:1;max-width:none}
+      #adminModal .card-heading > .ultra-actions{grid-column:2;grid-row:1/4}
+      #adminModal .card-meta{grid-template-columns:1fr}
+    }
+    @media(prefers-reduced-motion:reduce){#adminModal .order-collapse,#adminModal .order-toggle svg{transition:none}}
+
+</style>
+
+<style>
+#adminModal .admin-kpi{background:#fff;color:#334155;border:1px solid #e5e7eb;border-radius:16px;padding:16px;text-align:right;cursor:pointer;box-shadow:0 3px 12px #0f172a08;transition:box-shadow .2s,transform .2s}
+#adminModal .admin-kpi span{color:#475569;font-weight:700}
+#adminModal .admin-kpi strong{color:#2563eb;font-weight:900}
+#adminModal #completedOrdersCount{color:#15803d}
+#adminModal #cancelledOrdersCount{color:#be123c}
+#adminModal #pendingOrdersCount{color:#92400e}
+#adminModal .admin-kpi:hover{transform:translateY(-2px)}
+#adminModal .admin-kpi[aria-pressed="true"]{background:#fff;border-color:#2563eb;box-shadow:0 0 0 2px #2563eb33}
+#adminModal .admin-kpi:focus-visible,#adminModal button:focus-visible{outline:3px solid #93c5fd;outline-offset:3px}
+#adminModal .ultra-card{background:#2563eb;border:1px solid #ffffff40;border-radius:16px;padding:16px;box-shadow:0 8px 22px #2563eb25;text-align:right;direction:rtl}
+#adminModal .ultra-card,#adminModal .ultra-card *{color:#fff!important;font-weight:800}
+#adminModal .card-heading{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:12px}
+#adminModal .order-summary{grid-column:1;grid-row:1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;min-width:0}
+#adminModal .order-summary>.copy-value{direction:ltr;font-size:13px;flex-shrink:0}
+#adminModal .order-summary .ultra-name{font-size:16px;line-height:1.6;overflow-wrap:anywhere}
+#adminModal .card-heading>.status-control{grid-column:1;grid-row:2;max-width:100%;width:fit-content;min-width:0}
+#adminModal .card-heading>.ultra-actions{grid-column:2;grid-row:1/3;display:flex;align-items:center;gap:6px}
+#adminModal .ultra-card select,#adminModal .ultra-card input{background:#1e40af;border:1px solid #ffffff66;border-radius:10px;min-height:40px;padding:8px;max-width:100%;color-scheme:dark}
+#adminModal .ultra-card option{background:#1e40af;color:#fff}
+#adminModal .card-phone-list{gap:8px;padding:14px 0;border-color:#ffffff40}
+#adminModal .card-phone-row{padding:10px;background:rgb(255 255 255 / .2);border:1px solid #ffffff40;border-radius:12px;flex-wrap:wrap}
+#adminModal .card-phone-row .copy-value{direction:ltr;justify-content:flex-end}
+#adminModal .card-phone-label,#adminModal .card-phone-row,#adminModal .card-meta-item{font-size:12px}
+#adminModal .card-meta-item{line-height:1.8}
+#adminModal .ultra-card .quick-copy,#adminModal .ultra-actions a,#adminModal .ultra-actions button{background:rgb(255 255 255 / .2);border:1px solid #ffffff40;border-radius:9px}
+#adminModal .ultra-card .quick-copy{min-height:34px;padding:5px 8px}
+#adminModal .ultra-card .custom-status-badge{background:#ffffff20;border-color:#ffffff40}
+@media(max-width:540px){#adminModal .ultra-card{padding:12px}#adminModal .order-summary{align-items:flex-start;flex-direction:column;gap:4px}#adminModal .card-heading{gap:10px}#adminModal .card-phone-row .ultra-actions{margin-inline-start:auto}}
+@media(prefers-reduced-motion:reduce){#adminModal .admin-kpi{transition:none}}
+
+/* Reference design: dark dashboard with vivid blue order cards. */
+#adminModal{background:rgba(2,6,23,.85);color:#fff;color-scheme:dark}
+#adminModal .admin-shell{background:#0b1329;color:#fff;border:1px solid #ffffff18;max-width:960px}
+#adminModal .admin-shell>div,#adminModal .admin-shell>div:first-child,#adminModal #ordersContainer{background:#0b1329;color:#fff;border-color:#ffffff18}
+#adminModal h2,#adminModal strong{color:#fff}
+#adminModal .admin-kpi,#adminModal .admin-kpi[aria-pressed="true"]{background:linear-gradient(135deg,#172137,#0f172a);border:1px solid #ffffff20;color:#fff;box-shadow:0 6px 20px #0002}
+#adminModal .admin-kpi[aria-pressed="true"]{border-color:#60a5fa;box-shadow:0 0 0 2px #3b82f633}
+#adminModal .admin-kpi span,#adminModal .text-slate-400,#adminModal .text-blue-200{color:#a9b5ca}
+#adminModal .admin-kpi strong{color:#fff}
+#adminModal #pendingOrdersCount{color:#fbbf24}#adminModal #completedOrdersCount{color:#34d399}#adminModal #cancelledOrdersCount{color:#fb7185}
+#adminModal #searchInput{background:#0f172a;color:#fff;border:1px solid #334155;border-radius:14px;padding:14px}
+#adminModal #searchInput::placeholder,#adminModal #filteredCountText{color:#a9b5ca}
+#adminModal button[onclick="exportOrders()"]{background:#2563eb;border-radius:14px;box-shadow:0 8px 20px #2563eb33}
+#adminModal .ultra-orders{gap:16px}
+#adminModal .ultra-card{background:linear-gradient(135deg,#1d4ed8,#1e40af);border:1px solid #ffffff40;border-radius:20px;padding:18px;box-shadow:0 10px 25px #1d4ed830;overflow:hidden}
+#adminModal .ultra-card,#adminModal .ultra-card *{color:#fff!important;font-weight:900}
+#adminModal .card-heading{grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px}
+#adminModal .order-summary{grid-column:1;grid-row:1;flex-direction:row;align-items:center;flex-wrap:nowrap;gap:10px}
+#adminModal .order-sequence{display:flex;align-items:center;justify-content:center;flex:0 0 38px;min-height:42px;border:1px solid #ffffff50;border-radius:13px;background:#ffffff15;font-size:20px}
+#adminModal .order-identity{min-width:0;text-align:right}
+#adminModal .order-identity>.copy-value{direction:ltr;justify-content:flex-end;font-size:12px;white-space:nowrap;letter-spacing:.4px}
+#adminModal .order-identity .quick-copy{display:none}
+#adminModal .order-identity .ultra-name{display:block;font-size:16px;line-height:1.5;overflow-wrap:anywhere}
+#adminModal .card-heading>.status-control{grid-column:3;grid-row:1;max-width:170px}
+#adminModal .card-heading>.ultra-actions{grid-column:2;grid-row:1;gap:6px}
+#adminModal .ultra-card select,#adminModal .ultra-card input{background:#0f172a;border-color:#ffffff30;font-size:12px}
+#adminModal .card-heading>.ultra-actions button{width:36px;min-height:38px;padding:4px;background:#ffffff15}
+#adminModal .card-heading>.ultra-actions button[aria-label^="حذف"]{background:#f43f5e25;border-color:#fb718560}
+#adminModal .order-collapse-inner{border-top:0}
+#adminModal .is-expanded .order-collapse-inner{margin-top:16px;border-top:1px solid #ffffff25}
+#adminModal .card-phone-list{padding:16px 0 0;border:0;gap:10px}
+#adminModal .card-phone-row{background:#0f172a99;border:1px solid #ffffff20;padding:12px;border-radius:14px}
+#adminModal .card-phone-label{font-size:12px}
+#adminModal .card-phone-row .copy-value{font-size:13px}
+#adminModal .card-phone-row .ultra-actions a{background:#059669;border-color:transparent}
+#adminModal .card-meta{background:#0f172a88;border:1px solid #ffffff20;padding:14px;border-radius:14px;gap:12px;margin-top:12px}
+#adminModal .card-meta-item{font-size:12px;line-height:1.8;flex-wrap:wrap}
+#adminModal .order-quick-tags{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:7px;margin-top:16px}
+#adminModal .order-quick-tags>span{width:100%;font-size:12px}
+#adminModal .quick-tag{border:0;border-radius:10px;padding:8px 10px;font-size:12px;background:#2563eb}
+#adminModal .tag-1{background:#e11d48}#adminModal .tag-2{background:#d97706}#adminModal .tag-3{background:#334155}
+@media(max-width:640px){#adminModal{padding:8px}#adminModal .ultra-card{padding:14px}#adminModal .card-heading{grid-template-columns:minmax(0,1fr) auto;gap:10px}#adminModal .order-summary{grid-column:1;grid-row:1}#adminModal .card-heading>.ultra-actions{grid-column:2;grid-row:1}#adminModal .card-heading>.status-control{grid-column:1/-1;grid-row:2;justify-self:end;max-width:100%}#adminModal .card-heading>.status-control select{max-width:100%}#adminModal .card-meta{grid-template-columns:1fr}#adminModal .order-identity .ultra-name{font-size:15px}#adminModal .order-sequence{flex-basis:32px;font-size:18px}}
+</style>
+
+<style id="reference-orders-design">
+#adminModal{background:#f8fafc;color:#334155;color-scheme:light;padding:12px}
+#adminModal .admin-shell{background:#f8fafc;color:#334155;border:0;box-shadow:none;max-width:1152px}
+#adminModal .admin-shell>div,#adminModal #ordersContainer{background:#f8fafc;color:#334155;border-color:#e2e8f0}
+#adminModal .admin-shell>div:first-child{background:white;border:1px solid #e2e8f0;border-radius:20px;padding:24px;margin-bottom:12px}
+#adminModal h2{color:#0f172a;font-size:24px;line-height:1.5}
+#adminModal .text-blue-200,#adminModal .text-slate-400,#adminModal #filteredCountText{color:#64748b}
+#adminModal .admin-kpi,#adminModal .admin-kpi[aria-pressed="true"]{background:#fff;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 2px 4px #0f172a08;padding:16px;text-align:right}
+#adminModal .admin-kpi[aria-pressed="true"]{border:2px solid #3b82f6}
+#adminModal .admin-kpi span{color:#64748b}
+#adminModal .admin-kpi strong{color:#0f172a;font-size:30px}
+#adminModal #pendingOrdersCount{color:#d97706}#adminModal #completedOrdersCount{color:#059669}#adminModal #cancelledOrdersCount{color:#e11d48}#adminModal #registeredUsersCount{color:#7e22ce}#adminModal #totalVisitorsCount{color:#0284c7}#adminModal #todayVisitorsCount{color:#047857}
+#adminModal .today-kpi{border-color:#a7f3d0;background:#f0fdf450}
+#adminModal #searchInput{background:#f8fafc;color:#334155;border:1px solid #e2e8f0;border-radius:14px}
+#adminModal #searchInput::placeholder{color:#94a3b8}
+#adminModal button[onclick="exportOrders()"]{background:#059669;color:white;border-radius:14px;box-shadow:none}
+#adminModal .ultra-card{background:#2563eb;border:1px solid #3b82f6;border-radius:20px;padding:0;box-shadow:0 4px 10px #0f172a15}
+#adminModal .card-heading{padding:20px;grid-template-columns:minmax(0,1fr) auto;gap:16px}
+#adminModal .order-summary{background:none;border:0;padding:0;grid-column:1;grid-row:1}
+#adminModal .order-sequence{display:none}
+#adminModal .order-identity{display:flex;align-items:center;gap:16px;width:100%}
+#adminModal .order-identity>.copy-value{background:#ffffff26;border:1px solid #ffffff40;padding:8px 12px;border-radius:10px;font-size:12px;white-space:normal}
+#adminModal .order-identity .ultra-name{font-size:20px}
+#adminModal .card-heading>.ultra-actions{grid-column:2;grid-row:1}
+#adminModal .card-heading>.status-control{grid-column:1/-1;grid-row:2;max-width:100%;justify-self:stretch;background:#1d4ed850;padding:12px 0;border-top:1px solid #ffffff20}
+#adminModal .ultra-card select,#adminModal .ultra-card input{background:#1e40af;border-radius:12px;border-color:#ffffff20}
+#adminModal .is-expanded .order-collapse-inner{margin:0;border-top:1px solid #ffffff20;padding:0 16px 16px}
+#adminModal .card-phone-list{padding:16px 0;gap:12px;border:0}
+#adminModal .card-phone-row{background:#1d4ed860;border:1px solid #ffffff15;padding:14px;border-radius:14px}
+#adminModal .card-phone-row .ultra-actions a{background:#10b981}
+#adminModal .card-meta{background:none;border:0;padding:0;grid-template-columns:1fr;gap:12px;margin-top:0}
+#adminModal .card-meta-item{background:#1e40af55;border:1px solid #ffffff15;border-radius:14px;padding:12px 16px;font-size:14px;line-height:1.8;flex-wrap:wrap}
+#adminModal .card-meta-item span:first-child{font-weight:500;color:#bfdbfe!important}
+#adminModal .order-quick-tags{padding:0 16px 16px}
+@media(min-width:1024px){#adminModal [aria-live="polite"].grid{grid-template-columns:repeat(7,minmax(0,1fr))}}
+@media(max-width:640px){#adminModal .card-heading{padding:16px;grid-template-columns:minmax(0,1fr) auto}#adminModal .order-identity{gap:10px}#adminModal .order-identity .ultra-name{font-size:17px}#adminModal .admin-kpi{min-height:114px}#adminModal .admin-shell>div:first-child{padding:18px}#adminModal h2{font-size:21px}}
+</style>
+
+<style id="compact-order-grid">
+#adminModal .admin-shell{max-width:1280px}
+#adminModal .ultra-orders{gap:12px}
+#adminModal .card-heading{padding:12px 16px;gap:8px 14px}
+#adminModal .card-heading>.status-control{padding:6px 0}
+#adminModal .order-identity .ultra-name{font-size:17px}
+#adminModal .order-identity>.copy-value{padding:5px 9px}
+#adminModal .order-details-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding-top:10px}
+#adminModal .order-details-grid>.card-phone-row,#adminModal .order-details-grid>.card-meta-item{margin:0;padding:9px 10px;min-width:0;gap:6px;font-size:12px;line-height:1.6;align-items:center;grid-column:auto}
+#adminModal .order-details-grid>.card-phone-row{flex-wrap:wrap}
+#adminModal .order-details-grid .copy-value{font-size:12px;overflow-wrap:anywhere}
+#adminModal .order-details-grid .ultra-actions{gap:4px;margin:0}
+#adminModal .order-details-grid .ultra-actions a,#adminModal .order-details-grid .ultra-actions button{min-width:30px;min-height:30px;padding:4px}
+#adminModal .order-details-grid .card-meta-item span{min-width:0;overflow-wrap:anywhere}
+#adminModal .order-quick-tags{padding:0;margin-top:10px;gap:5px}
+#adminModal .order-quick-tags>span{width:auto;align-self:center}
+#adminModal .quick-tag{padding:6px 8px}
+#adminModal .registrations-kpi{cursor:default;border-color:#c7d2fe}
+#adminModal #todayRegistrationsCount{color:#4f46e5}
+@media(min-width:900px){#adminModal .order-details-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1024px){#adminModal [aria-live="polite"].grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:1250px){#adminModal [aria-live="polite"].grid{grid-template-columns:repeat(8,minmax(0,1fr))}}
+@media(max-width:640px){#adminModal .admin-kpi{min-height:100px}#adminModal .card-heading{padding:10px}#adminModal .is-expanded .order-collapse-inner{padding:0 10px 10px}#adminModal .order-details-grid>.card-phone-row{display:grid;grid-template-columns:1fr}#adminModal .order-details-grid .card-phone-row .copy-value{justify-content:flex-start}#adminModal .order-details-grid .card-meta-item{align-content:center}}
+</style>
+<style id="simple-order-number">
+#adminModal .order-identity{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;direction:rtl;gap:12px}
+#adminModal .order-identity>.copy-value{display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:44px;min-height:40px;font-size:20px;font-weight:900;direction:ltr;white-space:nowrap;background:#ffffff26;border:1px solid #ffffff50;border-radius:10px}
+#adminModal .order-identity .ultra-name{min-width:0;overflow-wrap:anywhere}
+#adminModal .tag-0{background:#e11d48}#adminModal .tag-1{background:#d97706}#adminModal .tag-2{background:#059669}#adminModal .tag-3{background:#7c3aed}#adminModal .tag-4{background:#475569}
+</style>
+<style>#adminModal #customStatusStats[hidden]{display:none}#adminModal #customStatusStats{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}#adminModal #customStatusStats .admin-kpi{border-color:#c7d2fe}#adminModal #customStatusStats strong{color:#4f46e5}#adminModal #customStatusStats .admin-kpi[aria-pressed="true"]{border-color:#4f46e5;background:#eef2ff}</style>
+<style id="orders-pagination-design">
+#adminModal .orders-page-size{display:flex;align-items:center;gap:12px;color:#475569;font-size:13px;font-weight:700}
+#adminModal #ordersPageSize{background:#fff;color:#334155;border:1px solid #cbd5e1;border-radius:10px;padding:8px 12px;font:inherit}
+#adminModal .orders-pagination{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#adminModal .pagination-summary{color:#64748b;font-size:13px}
+#adminModal .pagination-controls{display:flex;gap:6px;flex-wrap:wrap}
+#adminModal .pagination-controls button{border:1px solid #e2e8f0;background:#f8fafc;color:#334155;min-width:36px;min-height:38px;padding:6px 10px;border-radius:10px;font:inherit;font-size:13px;cursor:pointer}
+#adminModal .pagination-controls button[aria-current="page"]{background:#2563eb;color:#fff;border-color:#2563eb}
+#adminModal .pagination-controls button:disabled{opacity:.4;cursor:not-allowed}
+</style>
+</body>
+</html>
